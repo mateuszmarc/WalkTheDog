@@ -27,7 +27,7 @@ public class AppUserServiceImpl implements AppUserService {
     }
 
     @Override
-    public AppUser save(RegistrationRequest request) {
+    public AppUser register(RegistrationRequest request) {
 
         Optional<AppUser> foundUser = appUserRepository.findByEmail(request.email());
 

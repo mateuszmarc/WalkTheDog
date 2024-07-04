@@ -10,7 +10,7 @@ public interface AppUserService {
 
     List<AppUser> getAll();
 
-    AppUser save(RegistrationRequest request);
+    AppUser register(RegistrationRequest request);
 
     Optional<AppUser> findByEmail(String email);
 }
