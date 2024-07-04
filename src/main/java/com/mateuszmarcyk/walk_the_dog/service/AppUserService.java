@@ -1,6 +1,7 @@
-package com.mateuszmarcyk.walk_the_dog.registration;
+package com.mateuszmarcyk.walk_the_dog.service;
 
 import com.mateuszmarcyk.walk_the_dog.model.AppUser;
+import com.mateuszmarcyk.walk_the_dog.registration.RegistrationRequest;
 
 import java.util.List;
 import java.util.Optional;

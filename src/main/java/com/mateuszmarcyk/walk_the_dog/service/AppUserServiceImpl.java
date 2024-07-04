@@ -3,7 +3,6 @@ package com.mateuszmarcyk.walk_the_dog.service;
 import com.mateuszmarcyk.walk_the_dog.exception.UserAlreadyExistsException;
 import com.mateuszmarcyk.walk_the_dog.model.AppUser;
 import com.mateuszmarcyk.walk_the_dog.model.AppUserRole;
-import com.mateuszmarcyk.walk_the_dog.registration.AppUserService;
 import com.mateuszmarcyk.walk_the_dog.registration.RegistrationRequest;
 import com.mateuszmarcyk.walk_the_dog.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
