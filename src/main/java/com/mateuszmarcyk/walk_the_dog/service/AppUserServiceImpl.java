@@ -4,6 +4,8 @@ import com.mateuszmarcyk.walk_the_dog.exception.UserAlreadyExistsException;
 import com.mateuszmarcyk.walk_the_dog.model.AppUser;
 import com.mateuszmarcyk.walk_the_dog.model.AppUserRole;
 import com.mateuszmarcyk.walk_the_dog.registration.RegistrationRequest;
+import com.mateuszmarcyk.walk_the_dog.registration.token.VerificationToken;
+import com.mateuszmarcyk.walk_the_dog.registration.token.VerificationTokenRepository;
 import com.mateuszmarcyk.walk_the_dog.repository.AppUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +22,7 @@ public class AppUserServiceImpl implements AppUserService {
 
     private final AppUserRepository appUserRepository;
     private final PasswordEncoder passwordEncoder;
+    private final VerificationTokenRepository verificationTokenRepository;
 
     @Override
     public List<AppUser> getAll() {
@@ -52,4 +55,13 @@ public class AppUserServiceImpl implements AppUserService {
     public Optional<AppUser> findByEmail(String email) {
         return appUserRepository.findByEmail(email);
     }
+
+    @Override
+    public void saveVerificationToken(AppUser appUser, String verificationToken) {
+
+        VerificationToken token = new VerificationToken(verificationToken, appUser);
+        verificationTokenRepository.save(token);
+    }
+
+
 }

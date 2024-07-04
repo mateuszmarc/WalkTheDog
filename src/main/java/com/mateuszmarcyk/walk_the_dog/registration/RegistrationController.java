@@ -34,4 +34,5 @@ public class RegistrationController {
     public String applicationUrl(HttpServletRequest httpServletRequest) {
         return "http://" + httpServletRequest.getServerName() + ":" + httpServletRequest.getServerPort() + httpServletRequest.getContextPath();
     }
+
 }

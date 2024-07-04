@@ -13,4 +13,6 @@ public interface AppUserService {
     AppUser register(RegistrationRequest request);
 
     Optional<AppUser> findByEmail(String email);
+
+    void saveVerificationToken(AppUser appUser, String verificationToken);
 }
