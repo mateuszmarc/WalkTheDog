@@ -2,7 +2,6 @@ package com.mateuszmarcyk.walk_the_dog.service;
 
 import com.mateuszmarcyk.walk_the_dog.exception.UserAlreadyExistsException;
 import com.mateuszmarcyk.walk_the_dog.model.AppUser;
-import com.mateuszmarcyk.walk_the_dog.model.AppUserRole;
 import com.mateuszmarcyk.walk_the_dog.registration.RegistrationRequest;
 import com.mateuszmarcyk.walk_the_dog.registration.token.VerificationToken;
 import com.mateuszmarcyk.walk_the_dog.registration.token.VerificationTokenRepository;
@@ -45,7 +44,7 @@ public class AppUserServiceImpl implements AppUserService {
         appUser.setUsername(request.username());
         appUser.setEmail(request.email());
         appUser.setPassword(passwordEncoder.encode(request.password()));
-        appUser.setAppUserRole(AppUserRole.valueOf(request.role()));
+        appUser.setAppUserRole(request.role());
 
 
         return appUserRepository.save(appUser);

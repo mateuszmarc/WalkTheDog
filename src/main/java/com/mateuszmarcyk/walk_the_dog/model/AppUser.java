@@ -47,9 +47,8 @@ public class AppUser {
     @Column(name = "profile_image_url")
     private String profileImageUrl;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "app_user_role")
-    private AppUserRole appUserRole;
+    private String appUserRole;
 
 
     @Column(name = "enabled")
