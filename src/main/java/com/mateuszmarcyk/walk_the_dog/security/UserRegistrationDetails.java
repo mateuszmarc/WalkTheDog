@@ -1,6 +1,6 @@
 package com.mateuszmarcyk.walk_the_dog.security;
 
-import com.mateuszmarcyk.walk_the_dog.model.AppUser;
+import com.mateuszmarcyk.walk_the_dog.model.User;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,11 +19,11 @@ public class UserRegistrationDetails implements UserDetails {
     private boolean isEnabled;
     private List<GrantedAuthority> authorities;
 
-    public UserRegistrationDetails(AppUser appUser) {
-        this.username = appUser.getUsername();
-        this.userPassword = appUser.getPassword();
-        this.isEnabled = appUser.getEnabled();
-        this.authorities = Arrays.stream(appUser.getAppUserRole().split(","))
+    public UserRegistrationDetails(User user) {
+        this.username = user.getUsername();
+        this.userPassword = user.getPassword();
+        this.isEnabled = user.getEnabled();
+        this.authorities = Arrays.stream(user.getAppUserRole().split(","))
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }

@@ -1,7 +1,7 @@
 package com.mateuszmarcyk.walk_the_dog.controller;
 
-import com.mateuszmarcyk.walk_the_dog.model.AppUser;
-import com.mateuszmarcyk.walk_the_dog.service.AppUserService;
+import com.mateuszmarcyk.walk_the_dog.model.User;
+import com.mateuszmarcyk.walk_the_dog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,12 +12,12 @@ import java.util.List;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
-public class AppUserController {
+public class UserController {
 
-private final AppUserService appUserService;
+private final UserService userService;
 
     @GetMapping
-    public List<AppUser> findAll() {
-        return appUserService.getAll();
+    public List<User> findAll() {
+        return userService.getAll();
     }
 }

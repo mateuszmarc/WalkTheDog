@@ -1,12 +1,13 @@
 package com.mateuszmarcyk.walk_the_dog.registration;
 
 import com.mateuszmarcyk.walk_the_dog.event.RegistrationCompleteEvent;
-import com.mateuszmarcyk.walk_the_dog.model.AppUser;
-import com.mateuszmarcyk.walk_the_dog.service.AppUserService;
+import com.mateuszmarcyk.walk_the_dog.model.User;
+import com.mateuszmarcyk.walk_the_dog.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,15 +20,15 @@ public class RegistrationController {
             "Success! Please check your email to confirm your registration.";
 
 
-    private final AppUserService appUserService;
+    private final UserService userService;
     private final  ApplicationEventPublisher publisher;
 
     @PostMapping
-    public String registerUser(RegistrationRequest request, HttpServletRequest httpServletRequest) {
+    public String registerUser(@RequestBody RegistrationRequest request, HttpServletRequest httpServletRequest) {
 
-        AppUser appUser = appUserService.register(request);
+        User user = userService.register(request);
 
-        publisher.publishEvent(new RegistrationCompleteEvent(appUser, applicationUrl(httpServletRequest)));
+        publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(httpServletRequest)));
         return REGISTRATION_SUCCESS_MESSAGE;
     }
 

@@ -14,7 +14,7 @@ import org.hibernate.annotations.NaturalId;
 @AllArgsConstructor
 @Entity
 @Table(name="app_user")
-public class AppUser {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

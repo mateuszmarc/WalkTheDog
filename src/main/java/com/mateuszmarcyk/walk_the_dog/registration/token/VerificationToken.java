@@ -1,6 +1,6 @@
 package com.mateuszmarcyk.walk_the_dog.registration.token;
 
-import com.mateuszmarcyk.walk_the_dog.model.AppUser;
+import com.mateuszmarcyk.walk_the_dog.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,11 +32,11 @@ public class VerificationToken {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private AppUser appUser;
+    private User user;
 
-    public VerificationToken(String token, AppUser appUser) {
+    public VerificationToken(String token, User user) {
         this.token = token;
-        this.appUser = appUser;
+        this.user = user;
         this.expirationTime = getTokenExpirationTime();
     }
 

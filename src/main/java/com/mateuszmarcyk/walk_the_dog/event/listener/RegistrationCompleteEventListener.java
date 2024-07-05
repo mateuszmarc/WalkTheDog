@@ -1,8 +1,8 @@
 package com.mateuszmarcyk.walk_the_dog.event.listener;
 
 import com.mateuszmarcyk.walk_the_dog.event.RegistrationCompleteEvent;
-import com.mateuszmarcyk.walk_the_dog.model.AppUser;
-import com.mateuszmarcyk.walk_the_dog.service.AppUserService;
+import com.mateuszmarcyk.walk_the_dog.model.User;
+import com.mateuszmarcyk.walk_the_dog.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
@@ -15,16 +15,16 @@ import java.util.UUID;
 @Slf4j
 public class RegistrationCompleteEventListener implements ApplicationListener<RegistrationCompleteEvent> {
 
-    private final AppUserService appUserService;
+    private final UserService userService;
 
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent event) {
 
-        AppUser appUser = event.getAppUser();
+        User user = event.getUser();
 
         String verificationToken = UUID.randomUUID().toString();
 
-        appUserService.saveVerificationToken(appUser, verificationToken);
+        userService.saveVerificationToken(user, verificationToken);
 
         String url = event.getApplicationUrl() + "/register/verifyEmail?token=" + verificationToken;
         log.info("Click the link to complete your registration: {}", url);
