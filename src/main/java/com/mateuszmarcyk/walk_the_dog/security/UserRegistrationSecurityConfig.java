@@ -20,40 +20,22 @@ public class UserRegistrationSecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-//        return httpSecurity
-//                .cors()
-//                .and()
-//                .csrf().disable()
-//                .authorizeHttpRequests()
-//                .requestMatchers("/register")
-//                .permitAll()
-//                .and()
-//                .authorizeHttpRequests()
-//                .requestMatchers("").hasAnyAuthority("USER", "ADMIN")
-//                .and()
-//                .formLogin("/users")
-//                .and()
-//                .build();
-
-//    }
-
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .cors(withDefaults())
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/register").permitAll()
+                        .requestMatchers("/register/**").permitAll()
                         .requestMatchers("/users/**").hasAnyAuthority("USER", "ADMIN")
-                        .anyRequest().authenticated()
-                );
+                ).formLogin();
 //                .formLogin(formLogin -> formLogin
 //                        .loginPage("/login")
-//                        .loginProcessingUrl("/login")
+//                        .loginProcessingUrl("/process")
+//                        .defaultSuccessUrl("/users")
 //                        .permitAll()
+//                ).logout(logout ->
+//                        logout.permitAll()
 //                );
 
         return httpSecurity.build();
