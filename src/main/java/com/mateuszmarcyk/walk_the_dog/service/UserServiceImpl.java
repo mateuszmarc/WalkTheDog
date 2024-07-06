@@ -7,17 +7,22 @@ import com.mateuszmarcyk.walk_the_dog.registration.token.VerificationToken;
 import com.mateuszmarcyk.walk_the_dog.registration.token.VerificationTokenRepository;
 import com.mateuszmarcyk.walk_the_dog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private static final String USER_ALREADY_EXISTS_MESSAGE = "User with email '%s' already exists.";
+
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -52,7 +57,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
+        Optional<User> user = userRepository.findByEmail(email);
+        if (user.isPresent()) {
+            log.info("{}", user.get());
+        } else {
+            log.info("User is null");
+        }
+        return user;
     }
 
     @Override
@@ -62,5 +73,25 @@ public class UserServiceImpl implements UserService {
         verificationTokenRepository.save(token);
     }
 
+    @Override
+    public String validateToken(String token) {
+        VerificationToken verificationToken = verificationTokenRepository.findByToken(token);
+
+        if (verificationToken == null) {
+            return "Invalid verification token";
+        }
+        User user = verificationToken.getUser();
+
+        Calendar calendar = Calendar.getInstance();
+
+        if (verificationToken.getExpirationTime().getTime() - calendar.getTime().getTime() <= 0) {
+            verificationTokenRepository.delete(verificationToken);
+            return "Token already expired";
+        }
+
+        user.setEnabled(true);
+        userRepository.save(user);
+        return "valid";
+    }
 
 }
