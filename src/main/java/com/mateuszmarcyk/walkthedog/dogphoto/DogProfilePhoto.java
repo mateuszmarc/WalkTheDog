@@ -11,9 +11,8 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 @Entity
-@Table(name = "photo")
-public class DogPhoto {
-
+@Table(name = "dog_profile_photo")
+public class DogProfilePhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -22,7 +21,7 @@ public class DogPhoto {
     @Column(name = "url")
     private String url;
 
-    public DogPhoto(String url) {
+    public DogProfilePhoto(String url) {
         this.url = url;
     }
 }
