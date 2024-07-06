@@ -1,0 +1,167 @@
+/* General body styles */
+body {
+    background-color: #f9f8f5;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Navbar styles from the dashboard page */
+.navbar {
+    background-color: #f7a50d;
+    z-index: 1000;
+}
+
+.navbar-nav .nav-link {
+    color: #fff;
+}
+
+.navbar-nav .nav-link:hover {
+    background-color: #e6910c;
+}
+
+/* Main content area */
+.main-content {
+    padding: 20px;
+}
+
+
+/* Profile form styles */
+.profile-form, .dog-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.profile-form .form-control:disabled, .profile-form .form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+.profile-form .form-group label, .dog-form .form-group label {
+    font-weight: bold;
+}
+
+.profile-form .btn-container, .dog-form .btn-container {
+    text-align: right;
+}
+
+.profile-form .btn-container .btn, .dog-form .btn-container .btn {
+    margin-left: 10px;
+}
+
+/* Footer styles */
+.footer {
+    background-color: #f7a50d;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Header section */
+.header {
+    padding: 20px;
+    text-align: center;
+    background: #f7a50d;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Custom container */
+.custom-container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 980px) {
+    .feature-box {
+        margin-bottom: 15px;
+    }
+
+    .navbar-nav .nav-item {
+        order: 0;
+    }
+
+    .navbar-nav .nav-item:nth-child(1) {
+        order: 4;
+    }
+
+    .navbar-nav .nav-item:nth-child(2) {
+        order: 7;
+    }
+
+    .navbar-nav .nav-item:nth-child(3) {
+        order: 6;
+    }
+
+    .navbar-nav .nav-item:nth-child(4) {
+        order: 5;
+    }
+
+    .navbar-nav .nav-item:nth-child(5) {
+        order: 2;
+    }
+
+    .navbar-nav .nav-item:nth-child(6) {
+        order: 3;
+    }
+
+    .navbar-nav .nav-item:nth-child(7) {
+        order: 1;
+    }
+
+    .navbar-nav .nav-item:nth-child(8) {
+        order: 8;
+    }
+
+    .navbar-nav .nav-item {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+
+    .navbar-nav .nav-item:last-child {
+        margin-bottom: 0;
+    }
+
+    /* Badge positioning adjustments for small screens */
+    .badge {
+        top: 20px;
+        right: 100px;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .header {
+        padding: 10px;
+    }
+
+    .profile-form .form-group, .dog-form .form-group {
+        margin-bottom: 15px;
+    }
+
+    .profile-form .form-group .form-control, .dog-form .form-group .form-control {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .footer {
+        padding: 10px 0;
+    }
+
+    .profile-form .btn-container, .dog-form .btn-container {
+        text-align: center;
+    }
+
+    .profile-form .btn-container .btn, .dog-form .btn-container .btn {
+        width: 48%;
+        margin-bottom: 10px;
+    }
+}
