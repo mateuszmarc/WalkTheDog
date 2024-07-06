@@ -1,6 +1,9 @@
 package com.mateuszmarcyk.walkthedog.dog;
 
+import com.mateuszmarcyk.walkthedog.dog.dogenums.ActivityLevel;
+import com.mateuszmarcyk.walkthedog.dog.dogenums.Gender;
 import com.mateuszmarcyk.walkthedog.dogphoto.DogPhoto;
+import com.mateuszmarcyk.walkthedog.dogphoto.DogProfilePhoto;
 import com.mateuszmarcyk.walkthedog.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -46,6 +49,9 @@ public class Dog {
     @Column(name = "height")
     private double height;
 
+    @Column(name = "preferred_activities")
+    private String preferredActivities;
+
     @Column(name = "activity_level")
     @Enumerated(EnumType.STRING)
     private ActivityLevel activityLevel;
@@ -56,13 +62,32 @@ public class Dog {
     @Column(name = "training_level")
     private int trainingLevel;
 
+    @Column(name = "socialization_level")
+    private int socializationLevel;
+
     @Column(name = "behavioral_issues")
     private String behavioralIssues;
+
+    @Column(name = "triggers")
+    private String triggers;
+
+    @Column(name = "microchip_number")
+    private String microChipNumber;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "profile_photo_id")
+    private DogProfilePhoto profilePhoto;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<DogPhoto> photos;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id")
     private User owner;
+
+
+    public void setOwner(User user) {
+        this.owner = user;
+        owner.addDog(this);
+    }
 }

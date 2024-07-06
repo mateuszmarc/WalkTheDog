@@ -5,7 +5,12 @@ import com.mateuszmarcyk.walkthedog.registration.RegistrationRequest;
 import java.util.List;
 import java.util.Optional;
 
+
 public interface UserService {
+
+    User findById(Long id);
+
+    User findUserByIdJoinFetchDogs(Long id);
 
     List<User> getAll();
 

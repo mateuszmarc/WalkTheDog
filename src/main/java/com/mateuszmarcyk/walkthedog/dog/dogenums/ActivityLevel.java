@@ -1,4 +1,4 @@
-package com.mateuszmarcyk.walkthedog.dog;
+package com.mateuszmarcyk.walkthedog.dog.dogenums;
 
 public enum ActivityLevel {
     LOW,
