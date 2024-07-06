@@ -54,6 +54,7 @@ public class User {
     @Column(name = "enabled")
     private Boolean enabled = false;
 
+    @ToString.Exclude
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Dog> dogs;
 

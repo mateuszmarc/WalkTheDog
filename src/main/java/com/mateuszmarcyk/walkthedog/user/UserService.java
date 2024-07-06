@@ -10,6 +10,8 @@ public interface UserService {
 
     User findById(Long id);
 
+    User findUserByIdJoinFetchDogs(Long id);
+
     List<User> getAll();
 
     User register(RegistrationRequest request);
