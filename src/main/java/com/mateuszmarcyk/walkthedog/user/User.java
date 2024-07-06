@@ -51,10 +51,13 @@ public class User {
     @Column(name = "app_user_role")
     private String appUserRole;
 
-
     @Column(name = "enabled")
     private Boolean enabled = false;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Dog> dogs;
+
+    public void addDog(Dog dog) {
+        dogs.add(dog);
+    }
 }
