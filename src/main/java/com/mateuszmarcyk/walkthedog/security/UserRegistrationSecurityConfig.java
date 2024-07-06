@@ -26,9 +26,10 @@ public class UserRegistrationSecurityConfig {
                 .cors(withDefaults())
                 .csrf(configurer -> configurer.disable())
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/register/**").permitAll()
-                        .requestMatchers("/users/**").hasAnyAuthority("USER", "ADMIN")
-                ).formLogin();
+                                .requestMatchers("/**").permitAll());
+//                        .requestMatchers("/register/**").permitAll()
+//                        .requestMatchers("/users/**").hasAnyAuthority("USER", "ADMIN")
+//                ).formLogin();
 //                .formLogin(formLogin -> formLogin
 //                        .loginPage("/login")
 //                        .loginProcessingUrl("/process")
