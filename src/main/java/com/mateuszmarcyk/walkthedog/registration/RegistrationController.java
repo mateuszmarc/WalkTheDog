@@ -1,7 +1,9 @@
 package com.mateuszmarcyk.walkthedog.registration;
 
+import com.mateuszmarcyk.walkthedog.event.RegistrationCompleteEvent;
 import com.mateuszmarcyk.walkthedog.registration.token.VerificationToken;
 import com.mateuszmarcyk.walkthedog.registration.token.VerificationTokenRepository;
+import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -33,14 +35,14 @@ public class RegistrationController {
     }
 
     @PostMapping
-    @ResponseBody
     public String registerUser(RegistrationRequest request, HttpServletRequest httpServletRequest) {
 
         log.info("{}", request);
-//        User user = userService.register(request);
+        request.setRole("USER");
+        User user = userService.register(request);
 
-//        publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(httpServletRequest)));
-        return REGISTRATION_SUCCESS_MESSAGE;
+        publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(httpServletRequest)));
+        return "register-email-info";
     }
 
     public String applicationUrl(HttpServletRequest httpServletRequest) {
