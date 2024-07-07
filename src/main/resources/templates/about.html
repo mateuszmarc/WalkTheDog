@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <th:block th:replace="~{commonviewparts/metadata}"></th:block>
+    <title>O Aplikacji</title>
+    <th:block th:replace="~{commonviewparts/dashboard-css-styles-links}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/index-custom-styles.css}">
+
+</head>
+<body>
+
+<div th:insert="~{commonviewparts/index-navbar :: navbar}"></div>
+
+<!-- About App Section -->
+<section class="container py-5">
+    <div class="row">
+        <div class="col-md-8 mx-auto">
+            <h2 class="text-center mb-4">O Walk The Dog</h2>
+            <p>Pet Walk to aplikacja stworzona dla właścicieli psów, mająca na celu ulepszenie ich doświadczeń podczas spacerów z ich futrzanymi towarzyszami. Niezależnie od tego, czy szukasz pobliskich parków przyjaznych psom, chcesz połączyć się z innymi właścicielami psów na wspólne spacery, czy śledzić swoje spacery i ustalać cele, Pet Walk zapewnia Ci wszystkie niezbędne narzędzia.</p>
+            <p>Naszą misją jest promowanie aktywnego stylu życia zarówno dla psów, jak i ich właścicieli, tworzenie społeczności, w której każdy może dzielić się swoją pasją do spacerów i opieki nad psami.</p>
+            <p>Dołącz do Pet Walk już dziś i odkryj nowy sposób na spędzanie czasu z psem, pozostając zdrowym i aktywnym!</p>
+        </div>
+
+    </div>
+</section>
+
+<section th:fragment="contact" id="contact" class="bg-light contact-section">
+    <div th:insert="~{commonviewparts/contact-section :: contact}"></div>
+</section>
+
+
+<div th:insert="~{commonviewparts/footer :: footer}"></div>
+
+
+<th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+
+</body>
+</html>
