@@ -1,119 +1,78 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.tymeleaf.org">
-
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:replace="~{commonviewparts/metadata}"></th:block>
-
   <title>Aplikacja do spacerów z psami</title>
   <th:block th:replace="~{commonviewparts/dashboard-css-styles-links}"></th:block>
-
-  <link rel="stylesheet" href="/css/index-custom-styles.css">
+  <link rel="stylesheet" th:href="@{/css/index-custom-styles.css}">
 </head>
 <body>
 
 <!-- Pasek nawigacyjny -->
 <div th:insert="~{commonviewparts/index-navbar :: navbar}"></div>
 
-
 <section class="py-5 text-center">
   <div class="container">
     <div class="row">
       <div class="col-md-12">
-        <h1 class="display-4">Witamy w Pet Walk</h1>
+        <h1 class="display-4">Witamy w Walk The Dog</h1>
         <p class="lead">Najlepsza aplikacja dla miłośników spacerów z psami. Znajdź pobliskie parki, połącz się z innymi właścicielami psów i śledź swoje spacery.</p>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <img src="/images/happy-dogs.webp" class="img-fluid" alt="Obraz Aplikacji">
+        <img th:src="@{/images/happy-dogs.webp}" class="img-fluid" alt="Dwa szczęśliwe psy">
       </div>
     </div>
   </div>
 </section>
 <section class="py-5 text-center">
   <div class="container">
-    <a href="#" class="btn btn-primary btn-lg">Załóż konto</a>
+    <a th:href="@{/register}" class="btn btn-primary btn-lg">Załóż konto</a>
   </div>
 </section>
 
 <!-- Sekcja opisu aplikacji -->
 <section id="about" class="bg-light py-5">
   <div class="container text-center">
-    <h2>Funkcje Pet Walk</h2>
+    <h2>Walk the dog - Rozwija moźliwości!</h2>
     <div class="row mt-4">
       <div class="col-md-4">
-        <img src="/images/dogs-walking.webp" class="feature-img" alt="Ludzie spacerujący z psami w parku">
-        <h3>Funkcja 1</h3>
+        <img th:src="@{/images/dogs-walking.webp}" class="feature-img" alt="Ludzie spacerujący z psami w parku">
+        <h3>Odkrywaj ciekawe miejsca</h3>
         <p>Znajdź pobliskie parki przyjazne psom i trasy na codzienne spacery.</p>
       </div>
       <div class="col-md-4">
-        <img src="/images/dog-owners-chatting.webp" class="feature-img" alt="Rozmawiający właściciele psów">
-        <h3>Funkcja 2</h3>
+        <img th:src="@{/images/dog-owners-chatting.webp}" class="feature-img" alt="Rozmawiający właściciele psów">
+        <h3>Poznawaj nowych ludzi</h3>
         <p>Połącz się z innymi właścicielami psów w okolicy, aby umawiać wspólne spacery.</p>
       </div>
       <div class="col-md-4">
-        <img src="/images/walk-tracking.webp" class="feature-img" alt="Właściciel psa śledzący aplikację">
-        <h3>Funkcja 3</h3>
+        <img th:src="@{/images/walk-tracking.webp}" class="feature-img" alt="Właściciel psa śledzący aplikację">
+        <h3>Śledź swoe spacery</h3>
         <p>Śledź swoje spacery i ustalaj cele zarówno dla siebie, jak i dla swojego czworonożnego przyjaciela.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Sekcja karuzeli: Poznaj nasze psy -->
+
 <section class="container py-5">
-  <h2 class="text-center mb-4">Poznaj nasze psy</h2>
-  <div id="carouselExample" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-      <!-- Przykład profilu psa (element karuzeli Bootstrap) -->
-      <div class="carousel-item active">
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card">
-              <img src="dog-profile1.jpg" class="card-img-top" alt="Pies 1">
-              <div class="card-body">
-                <h5 class="card-title">Imię psa 1</h5>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card">
-              <img src="dog-profile2.jpg" class="card-img-top" alt="Pies 2">
-              <div class="card-body">
-                <h5 class="card-title">Imię psa 2</h5>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card">
-              <img src="dog-profile3.jpg" class="card-img-top" alt="Pies 3">
-              <div class="card-body">
-                <h5 class="card-title">Imię psa 3</h5>
-              </div>
-            </div>
-          </div>
-        </div>
+  <div class="container text-center">
+    <h2>Profile naszych użytkowników</h2>
+    <div class="row mt-4">
+      <div class="col-md-4">
+        <img th:src="@{/images/dogs-walking.webp}" class="feature-img" alt="Ludzie spacerujący z psami w parku">
+        <h3>Odkrywaj ciekawe miejsca</h3>
+        <p>Znajdź pobliskie parki przyjazne psom i trasy na codzienne spacery.</p>
       </div>
-      <!-- Dodaj więcej elementów karuzeli w razie potrzeby -->
     </div>
-    <!-- Kontrolki karuzeli -->
-    <a class="carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="sr-only">Poprzedni</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExample" role="button" data-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="sr-only">Następny</span>
-    </a>
   </div>
 </section>
 
 <!-- Sekcja kontaktowa -->
-<section id="contact" class="bg-light py-5">
-  <div class="container text-center">
-    <h2>Skontaktuj się z nami</h2>
-    <p>W razie jakichkolwiek pytań prosimy o kontakt na <a href="mailto:contact@example.com">contact@example.com</a>.</p>
-  </div>
+<section th:fragment="contact" id="contact" class="bg-light contact-section">
+  <div th:insert="~{commonviewparts/contact-section :: contact}"></div>
 </section>
 
 <!-- Stopka -->
