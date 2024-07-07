@@ -1,18 +1,20 @@
 package com.mateuszmarcyk.walkthedog.registration;
 
-import com.mateuszmarcyk.walkthedog.event.RegistrationCompleteEvent;
-import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.registration.token.VerificationToken;
 import com.mateuszmarcyk.walkthedog.registration.token.VerificationTokenRepository;
 import com.mateuszmarcyk.walkthedog.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RequiredArgsConstructor
-@RestController
 @RequestMapping("/register")
+@Controller
 public class RegistrationController {
 
     private static final String REGISTRATION_SUCCESS_MESSAGE =
@@ -23,12 +25,21 @@ public class RegistrationController {
     private final UserService userService;
     private final  ApplicationEventPublisher publisher;
 
+    @GetMapping
+    public String displayRegistrationForm(Model model) {
+        model.addAttribute("request", new RegistrationRequest());
+
+        return "register";
+    }
+
     @PostMapping
-    public String registerUser(@RequestBody RegistrationRequest request, HttpServletRequest httpServletRequest) {
+    @ResponseBody
+    public String registerUser(RegistrationRequest request, HttpServletRequest httpServletRequest) {
 
-        User user = userService.register(request);
+        log.info("{}", request);
+//        User user = userService.register(request);
 
-        publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(httpServletRequest)));
+//        publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(httpServletRequest)));
         return REGISTRATION_SUCCESS_MESSAGE;
     }
 
@@ -37,6 +48,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/verifyEmail")
+    @ResponseBody
     public String verifyUser(@RequestParam String token) {
 
         VerificationToken verificationToken = tokenRepository.findByToken(token);
