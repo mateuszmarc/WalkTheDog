@@ -1,6 +1,7 @@
 package com.mateuszmarcyk.walkthedog.user;
 
 
+import com.mateuszmarcyk.walkthedog.conversation.Conversation;
 import com.mateuszmarcyk.walkthedog.dog.Dog;
 import com.mateuszmarcyk.walkthedog.friendrequest.FriendRequest;
 import jakarta.persistence.*;
@@ -59,10 +60,6 @@ public class User {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Dog> dogs;
 
-    public void addDog(Dog dog) {
-        dogs.add(dog);
-    }
-
     @OneToMany(cascade = CascadeType.ALL)
     @Column(name = "sent_friend_request")
     private List<FriendRequest> sentFriendRequests;
@@ -73,5 +70,16 @@ public class User {
 
     @ManyToMany
     private List<User> friends;
+
+    @ManyToMany
+    @JoinTable(name = "users_conversations",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "conversation_id")
+    )
+    private List<Conversation> conversations;
+
+    public void addDog(Dog dog) {
+        dogs.add(dog);
+    }
 
 }
