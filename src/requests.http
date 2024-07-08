@@ -1,0 +1,12 @@
+# Create user
+POST localhost:8080/app/register
+Content-Type: application/json
+
+{
+    "firstName": "mimi",
+    "lastName": "Marcyk",
+    "username": "mat",
+    "email": "mma@gmail.com",
+    "password": "1",
+    "role": "ADMIN"
+}
