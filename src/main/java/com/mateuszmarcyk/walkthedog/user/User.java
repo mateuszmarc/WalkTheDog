@@ -2,6 +2,7 @@ package com.mateuszmarcyk.walkthedog.user;
 
 
 import com.mateuszmarcyk.walkthedog.dog.Dog;
+import com.mateuszmarcyk.walkthedog.friendrequest.FriendRequest;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
@@ -61,4 +62,14 @@ public class User {
     public void addDog(Dog dog) {
         dogs.add(dog);
     }
+
+    @OneToMany(mappedBy = "sender" , cascade = CascadeType.ALL)
+    @Column(name = "sent_friend_request")
+    private List<FriendRequest> sentFriendRequests;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @Column(name = "received_friend_request")
+    private List<FriendRequest> receivedFriendRequests;
+
+
 }
