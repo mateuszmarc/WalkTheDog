@@ -63,13 +63,15 @@ public class User {
         dogs.add(dog);
     }
 
-    @OneToMany(mappedBy = "sender" , cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @Column(name = "sent_friend_request")
     private List<FriendRequest> sentFriendRequests;
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     @Column(name = "received_friend_request")
     private List<FriendRequest> receivedFriendRequests;
 
+    @ManyToMany
+    private List<User> friends;
 
 }
