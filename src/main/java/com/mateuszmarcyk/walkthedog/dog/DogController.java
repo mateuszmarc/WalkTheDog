@@ -5,27 +5,28 @@ import com.mateuszmarcyk.walkthedog.user.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Slf4j
 @Controller
-@RequestMapping("/users/{userId}/dogs")
+@RequestMapping("/users/dogs")
 public class DogController {
 
     private final DogServiceImpl dogService;
     private final UserService userService;
 
     @GetMapping
-    @ResponseBody
-    public List<Dog> findAllDogsForUser(@PathVariable Long userId) {
-        User user = userService.findById(userId);
+    public String findAllDogsForUser(@AuthenticationPrincipal UserDetails userDetails) {
+
+        String email = userDetails.getUsername();
+        User user = userService.findUserByEmailJoinFetchDogs(email);
         log.info("{}", user.getDogs());
-        return user.getDogs();
+        return "user-dogs";
     }
 
     @GetMapping("/{dogId}")

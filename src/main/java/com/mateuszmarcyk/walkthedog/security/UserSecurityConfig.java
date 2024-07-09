@@ -35,10 +35,20 @@ public class UserSecurityConfig {
                                 "/images/**"
                                 ).permitAll()
                         .requestMatchers("/users/**").hasAnyAuthority("USER", "ADMIN")
+                        .anyRequest().authenticated()
                 )
-                .formLogin(login -> login.loginPage("/login")
+                .formLogin(login -> login
+                        .loginPage("/login")
                         .defaultSuccessUrl("/users/dashboard", true)
-                        .permitAll());
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login")
+                        .permitAll()
+                )
+                .sessionManagement(session -> session
+                        .invalidSessionUrl("/login")
+                );
 
         return httpSecurity.build();
     }

@@ -12,6 +12,8 @@ public interface UserService {
 
     User findUserByIdJoinFetchDogs(Long id);
 
+    User findUserByEmailJoinFetchDogs(String email);
+
     List<User> getAll();
 
     User register(RegistrationRequest request);
