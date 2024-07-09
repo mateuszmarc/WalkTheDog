@@ -69,20 +69,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User register(RegistrationRequest request) {
 
-        Optional<User> foundUser = userRepository.findByEmail(request.email());
+        Optional<User> foundUser = userRepository.findByEmail(request.getEmail());
 
         if (foundUser.isPresent()) {
-            throw new UserAlreadyExistsException(USER_ALREADY_EXISTS_MESSAGE.formatted(request.email()));
+            throw new UserAlreadyExistsException(USER_ALREADY_EXISTS_MESSAGE.formatted(request.getEmail()));
         }
 
         User user = new User();
 
-        user.setFirstName(request.firstName());
-        user.setLastName(request.lastName());
-        user.setUsername(request.username());
-        user.setEmail(request.email());
-        user.setPassword(passwordEncoder.encode(request.password()));
-        user.setAppUserRole(request.role());
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setUsername(request.getUsername());
+        user.setEmail(request.getEmail());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+        user.setAppUserRole(request.getRole());
 
 
         return userRepository.save(user);

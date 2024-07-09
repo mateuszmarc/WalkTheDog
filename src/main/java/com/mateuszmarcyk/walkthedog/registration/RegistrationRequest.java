@@ -1,11 +1,20 @@
 package com.mateuszmarcyk.walkthedog.registration;
 
-public record RegistrationRequest(
-        String firstName,
-        String lastName,
-        String username,
-        String email,
-        String password,
-        String role
-) {
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
+public class RegistrationRequest {
+    private String firstName;
+    private String lastName;
+    private String username;
+    private String email;
+    private String password;
+    private String passwordConfirm;
+    private String role;
 }

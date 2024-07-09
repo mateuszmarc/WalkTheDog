@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class UserRegistrationDetailsService implements UserDetailsService {
 
-   @Value("${userWithEmailNotFoundException}")
-   private String userWithEmailNotFoundException;
+   @Value("${userWithEmailNotFoundExceptionMessage}")
+   private String userWithEmailNotFoundExceptionMessage;
 
     private final UserRepository userRepository;
 
@@ -25,7 +25,7 @@ public class UserRegistrationDetailsService implements UserDetailsService {
         UserDetails userDetails = userRepository
                 .findByEmail(email)
                 .map(UserRegistrationDetails::new)
-                .orElseThrow(() -> new UsernameNotFoundException(userWithEmailNotFoundException.formatted(email)));
+                .orElseThrow(() -> new UsernameNotFoundException(userWithEmailNotFoundExceptionMessage.formatted(email)));
         log.info("UserDetails loaded: {}", userDetails);
         return userDetails;
     }
