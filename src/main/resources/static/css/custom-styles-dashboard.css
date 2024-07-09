@@ -279,6 +279,20 @@ body {
     }
 }
 
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .header {
+        padding: 10px;
+    }
+
+    .section {
+        padding: 10px;
+    }
+
+    .footer {
+        padding: 10px 0;
+    }
+}
 
 .btn-edit {
     background-color: #28a745;
@@ -352,4 +366,68 @@ body {
 
 .walk-event .event-info label {
     font-weight: bold;
+}
+
+/* Section styles */
+.section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.section h4 {
+    margin-bottom: 20px;
+}
+
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.group-item .btn-group {
+    display: flex;
+}
+
+.group-item .btn-group .btn {
+    margin-left: 5px;
+}
+
+.friend-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.friend-item img {
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.friend-item .friend-info {
+    display: flex;
+    align-items: center;
+}
+
+/* Header section */
+.header {
+    padding: 20px;
+    text-align: center;
+    background: #f7a50d;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Custom container */
+.custom-container {
+    max-width: 1200px;
+    margin: auto;
 }
