@@ -3,64 +3,64 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Navbar</title>
 </head>
 <body>
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <!-- Pet Walk Logo and Title -->
-        <a class="navbar-brand" href="#">
-            Pet Walk
-        </a>
-        <!-- Toggler Button for Mobile View -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <!-- Navbar Items -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ml-auto">
-                <!-- See My Dogs -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-dog"></i> My Dogs</a>
-                </li>
-                <!-- Walk Events -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-walking"></i> Walk Events</a>
-                </li>
-                <!-- Statistics -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-chart-line"></i> Statistics</a>
-                </li>
-                <!-- Friends -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-user-friends"></i> Friends</a>
-                </li>
-                <!-- Notifications -->
-                <li class="nav-item position-relative">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-bell"></i> Notifications
-                        <span class="badge badge-danger">5</span>
-                    </a>
-                </li>
-                <!-- Messages -->
-                <li class="nav-item position-relative">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-envelope"></i> Messages
-                        <span class="badge badge-danger">3</span>
-                    </a>
-                </li>
-                <!-- My Profile -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-user"></i> My Profile</a>
-                </li>
-                <!-- Log Out -->
-                <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Log Out</a>
-                </li>
-            </ul>
+    <nav  th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <!-- Pet Walk Logo and Title -->
+            <a class="navbar-brand" th:href="@{/main}">
+                Walk The Dog
+            </a>
+            <!-- Toggler Button for Mobile View -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar Items -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <!-- See My Dogs -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users/dogs}"><i class="fas fa-dog"></i>Psy</a>
+                    </li>
+                    <!-- Walk Events -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users/walks}"><i class="fas fa-walking"></i>Spacery</a>
+                    </li>
+                    <!-- Statistics -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users/statistics}"><i class="fas fa-chart-line"></i>Statystyki</a>
+                    </li>
+                    <!-- Friends -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users/friends}"><i class="fas fa-user-friends"></i>Znajomi</a>
+                    </li>
+                    <!-- Notifications -->
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" th:href="@{/users/notifications}">
+                            <i class="fas fa-bell"></i> Powiadomienia
+                            <span class="badge badge-danger">5</span>
+                        </a>
+                    </li>
+                    <!-- Messages -->
+                    <li class="nav-item position-relative">
+                        <a class="nav-link" th:href="@{/users/messages}">
+                            <i class="fas fa-envelope"></i>Wiadomości
+s                            <span class="badge badge-danger">3</span>
+                        </a>
+                    </li>
+                    <!-- My Profile -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users/profile}">
+                            <i class="fas fa-user"></i>Mój Profil</a>
+                    </li>
+                    <!-- Log Out -->
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users/logout}"><i class="fas fa-sign-out-alt"></i>Wyloguj się</a>
+                    </li>
+                </ul>
+            </div>
         </div>
-    </div>
-</nav>
+    </nav>
 </body>
 </html>
