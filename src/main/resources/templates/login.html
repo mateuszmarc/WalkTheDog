@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.tymeleaf.org">
+
+<head>
+  <th:block th:replace="~{commonviewparts/metadata}"></th:block>
+  <title>Login</title>
+  <th:block th:replace="~{commonviewparts/css-styles-links}"></th:block>
+  <link rel="stylesheet" th:href="@{/css/index-custom-styles.css}">
+
+</head>
+<body>
+<!-- Navigation Bar -->
+<div th:insert="~{commonviewparts/index-navbar :: navbar}"></div>
+
+<!-- Login Section -->
+<section class="container py-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <!-- Login Form (Bootstrap example) -->
+      <h2 class="mb-4 text-center">Zaloguj się</h2>
+      <form th:action="@{/login}" th:method="POST">
+        <div class="form-group">
+          <label for="username">Adres Email</label>
+          <input type="email" class="form-control" id="username" name="username" aria-describedby="emailHelp" placeholder="Wprowadź email">
+        </div>
+        <div class="form-group">
+          <label for="password">Hasło</label>
+          <input type="password" class="form-control" name="password" id="password" placeholder="Hasło">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Zaloguj się</button>
+      </form>
+      <!-- Register and Forgot Password links -->
+      <div class="text-center mt-3">
+        <p>Nie masz jeszcze konta? <a th:href="@{/register}">Zarejetruj się tutaj</a></p>
+        <p><a th:href="@{/resetpassword}">Zpomniałeś hasła?</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Contact Section -->
+<section th:fragment="contact" id="contact" class="bg-light contact-section">
+  <div th:insert="~{commonviewparts/contact-section :: contact}"></div>
+</section>
+<!-- Footer -->
+<div th:insert="~{commonviewparts/footer :: footer}"></div>
+
+<!-- Bootstrap JS and dependencies (jQuery, Popper.js) -->
+<th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+</body>
+</html>

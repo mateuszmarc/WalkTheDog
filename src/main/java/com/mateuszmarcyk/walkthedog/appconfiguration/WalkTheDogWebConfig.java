@@ -1,8 +1,6 @@
 package com.mateuszmarcyk.walkthedog.appconfiguration;
 
-import com.mateuszmarcyk.walkthedog.appconfiguration.converters.StringToActivityLevelConverter;
-import com.mateuszmarcyk.walkthedog.appconfiguration.converters.StringToPhotoConverter;
-import com.mateuszmarcyk.walkthedog.appconfiguration.converters.StringToProfilePhotoConverter;
+import com.mateuszmarcyk.walkthedog.appconfiguration.converters.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -26,10 +24,28 @@ public class WalkTheDogWebConfig implements WebMvcConfigurer {
         return new StringToActivityLevelConverter();
     }
 
+    @Bean
+    StringToRequestStatusConverter getStringToRequestConverter() {
+        return new StringToRequestStatusConverter();
+    }
+
+    @Bean
+    StringToWalkStatusConverter getStringToWalkStatusConverter() {
+        return new StringToWalkStatusConverter();
+    }
+
+    @Bean
+    StringToNotificationStatusConverter getstringToNotificationStatusConverter() {
+        return new StringToNotificationStatusConverter();
+    }
+
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(getStringToPhotoConverter());
         registry.addConverter(getStringToProfilePhotoConverter());
         registry.addConverter(getStringToActivityLevelConverter());
+        registry.addConverter(getStringToRequestConverter());
+        registry.addConverter(getStringToWalkStatusConverter());
+        registry.addConverter(getstringToNotificationStatusConverter());
     }
 }
