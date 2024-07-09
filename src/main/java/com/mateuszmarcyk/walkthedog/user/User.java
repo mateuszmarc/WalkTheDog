@@ -112,4 +112,9 @@ public class User {
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<WalkInvitation> receivedWalkInvitations;
+
+
+    @OneToMany(mappedBy = "creator")
+    @JoinColumn(name = "created_walk_events")
+    private List<WalkEvent> createdWalkEvents;
 }
