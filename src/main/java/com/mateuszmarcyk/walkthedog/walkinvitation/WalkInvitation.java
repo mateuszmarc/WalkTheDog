@@ -1,14 +1,15 @@
-package com.mateuszmarcyk.walkthedog.friendrequest;
+package com.mateuszmarcyk.walkthedog.walkinvitation;
 
 import com.mateuszmarcyk.walkthedog.friendrequest.enums.RequestStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
+import com.mateuszmarcyk.walkthedog.walkevent.WalkEvent;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "friendRequest")
-public class FriendRequest {
+@Table(name = "walk_invitation")
+public class WalkInvitation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,8 +17,8 @@ public class FriendRequest {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "requestStatus")
-    private RequestStatus requestStatus;
+    @Column(name = "status")
+    private RequestStatus status;
 
     @Column(name = "sent_at")
     private LocalDateTime sentAt;
@@ -25,14 +26,16 @@ public class FriendRequest {
     @Column(name = "responded_at")
     private LocalDateTime respondedAt;
 
-    @Column(name = "message")
-    private String message;
+    @OneToOne
+    @JoinColumn(name = "walk_event")
+    private WalkEvent walkEvent;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "sender")
     private User sender;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne
     @JoinColumn(name = "receiver")
     private User receiver;
+
 }

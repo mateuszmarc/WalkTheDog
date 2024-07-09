@@ -1,6 +1,6 @@
 package com.mateuszmarcyk.walkthedog.friendrequest.enums;
 
-public enum FriendRequestStatus {
+public enum RequestStatus {
     PENDING,
     ACCEPTED,
     REJECTED
