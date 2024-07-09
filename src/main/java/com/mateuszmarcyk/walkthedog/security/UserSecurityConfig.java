@@ -12,7 +12,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
-public class UserRegistrationSecurityConfig {
+public class UserSecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -21,27 +21,27 @@ public class UserRegistrationSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        Object AbstractHttpConfigurer;
         httpSecurity
                 .cors(withDefaults())
                 .csrf(configurer -> configurer.disable())
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                                .requestMatchers("/**").permitAll());
-//                        .requestMatchers("/register/**").permitAll()
-//                        .requestMatchers("/users/**").hasAnyAuthority("USER", "ADMIN")
-//                ).formLogin();
-//                .formLogin(formLogin -> formLogin
-//                        .loginPage("/login")
-//                        .loginProcessingUrl("/process")
-//                        .defaultSuccessUrl("/users")
-//                        .permitAll()
-//                ).logout(logout ->
-//                        logout.permitAll()
-//                );
+                        .requestMatchers(
+                                "/register/**",
+                                "/login/**",
+                                "/about/**",
+                                "/contact/**",
+                                "/main/**",
+                                "/css/**",
+                                "/images/**"
+                                ).permitAll()
+                        .requestMatchers("/users/**").hasAnyAuthority("USER", "ADMIN")
+                )
+                .formLogin(login -> login.loginPage("/login")
+                        .defaultSuccessUrl("/users/dashboard", true)
+                        .permitAll());
 
         return httpSecurity.build();
     }
-
 
 }
 
