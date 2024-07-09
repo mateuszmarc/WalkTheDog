@@ -3,20 +3,22 @@ package com.mateuszmarcyk.walkthedog.user;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-@RestController
 @RequestMapping("/users")
+@Controller
 public class UserController {
 
 private final UserService userService;
 
     @GetMapping
+    @ResponseBody
     public List<User> findAll() {
         return userService.getAll();
     }
@@ -24,7 +26,7 @@ private final UserService userService;
     @GetMapping("/dashboard")
     public String displayDashboard(@AuthenticationPrincipal UserDetails userDetails) {
 
-        return userDetails.toString();
+        return "dashboard";
     }
 
 

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <th:block th:replace="~{commonviewparts/metadata}"></th:block>
+  <title>Aplikacja do spacerów z psami - pies znajomego</title>
+  <th:block th:replace="~{commonviewparts/css-styles-links.html}"></th:block>
+  <link rel="stylesheet" th:href="@{/css/custom-styles-dashboard.css}">
+</head>
+<body>
+<!-- Navigation Bar -->
+<div th:insert="~{commonviewparts/dashboard-navbar :: navbar}"></div>
+
+<!-- Main Content -->
+<div class="main-content custom-container">
+  <button class="btn btn-secondary mb-3" onclick="history.back()">
+    <i class="fas fa-arrow-left"></i> Go Back
+  </button>
+  <!-- Owner Info -->
+  <div class="owner-info">
+    <img src="owner-avatar.jpg" alt="Owner Avatar">
+    <a href="owner-profile.html">OwnerUsername</a>
+  </div>
+  <!-- Dog Info -->
+  <div class="dog-info">
+    <h2>Dog Name</h2>
+    <img src="dog-picture.jpg" alt="Dog Picture">
+    <div class="info-group">
+      <label>Breed:</label>
+      <p id="dogBreed">Breed</p>
+    </div>
+    <div class="info-group">
+      <label>Date of Birth:</label>
+      <p id="dogDob">Date of Birth</p>
+    </div>
+    <div class="info-group">
+      <label>Gender:</label>
+      <p id="dogGender">Gender</p>
+    </div>
+    <div class="info-group">
+      <label>Spayed/Neutered:</label>
+      <p id="dogSpayed">Yes/No</p>
+    </div>
+    <div class="info-group">
+      <label>Weight:</label>
+      <p id="dogWeight">Weight</p>
+    </div>
+    <div class="info-group">
+      <label>Height:</label>
+      <p id="dogHeight">Height</p>
+    </div>
+    <div class="info-group">
+      <label>Preferred Activities:</label>
+      <p id="dogActivities">Activities</p>
+    </div>
+    <div class="info-group">
+      <label>Activity Level:</label>
+      <p id="dogActivityLevel">Activity Level</p>
+    </div>
+    <div class="info-group">
+      <label>General Behaviour:</label>
+      <p id="dogBehaviour">Behaviour</p>
+    </div>
+    <div class="info-group">
+      <label>Socialization Info:</label>
+      <p id="dogSocialization">Socialization</p>
+    </div>
+    <div class="info-group">
+      <label>Training Level:</label>
+      <p id="dogTraining">Training</p>
+    </div>
+    <div class="info-group">
+      <label>Behavioral Issues:</label>
+      <p id="dogIssues">Issues</p>
+    </div>
+    <div class="info-group">
+      <label>Triggers:</label>
+      <p id="dogTriggers">Triggers</p>
+    </div>
+    <div class="info-group">
+      <label>Microchip:</label>
+      <p id="dogMicrochip">Microchip</p>
+    </div>
+    <div class="info-group">
+      <label>Photos:</label>
+      <div id="dogPhotos">
+        <!-- Placeholder for multiple photos -->
+        <img src="dog-photo1.jpg" alt="Dog Photo 1" class="img-thumbnail mr-2">
+        <img src="dog-photo2.jpg" alt="Dog Photo 2" class="img-thumbnail">
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- Stopka -->
+<div th:insert="~{commonviewparts/footer :: footer}"></div>
+
+<th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+</body>
+</html>
+
