@@ -115,6 +115,5 @@ public class User {
 
 
     @OneToMany(mappedBy = "creator")
-    @JoinColumn(name = "created_walk_events")
     private List<WalkEvent> createdWalkEvents;
 }
