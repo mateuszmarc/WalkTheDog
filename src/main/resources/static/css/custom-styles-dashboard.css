@@ -506,3 +506,59 @@ body {
 .message-actions a {
     color: #fff;
 }
+
+.feature-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.feature-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.feature-box h5 {
+    margin-top: 10px;
+}
+
+/* Section styles */
+.profile-section {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.profile-picture {
+    border-radius: 50%;
+    max-width: 150px;
+    margin-bottom: 10px;
+}
+
+.dogs-section {
+    padding: 20px 0;
+}
+
+.dog-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.dog-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.dog-box h5 {
+    margin-top: 10px;
+}
