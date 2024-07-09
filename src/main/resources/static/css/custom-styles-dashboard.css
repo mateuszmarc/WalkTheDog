@@ -677,3 +677,37 @@ body {
     max-width: 1200px;
     margin: auto;
 }
+
+
+/* Walk details styles */
+.walk-details {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.walk-details h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+
+.walk-details .info-group {
+    margin-bottom: 15px;
+}
+
+.walk-details .info-group label {
+    font-weight: bold;
+}
+
+.walk-details .info-group p {
+    margin: 0;
+}
+
+.walk-details .map {
+    margin-top: 20px;
+    height: 400px;
+    width: 100%;
+    background-color: #e9ecef;
+}

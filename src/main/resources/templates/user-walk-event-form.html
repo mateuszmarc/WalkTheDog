@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{commonviewparts/metadata}"></th:block>
+    <title>Aplikacja do spacerów z psami - nowy spacer</title>
+    <th:block th:replace="~{commonviewparts/css-styles-links.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/custom-styles-dashboard.css}">
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Navigation Bar -->
+    <div th:insert="~{commonviewparts/dashboard-navbar :: navbar}"></div>
+
+    <!-- Main Content -->
+    <div class="content container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Create Walk Event</h2>
+            <button class="btn btn-secondary mb-3" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i> Go Back
+            </button>
+        </div>
+        <div class="walk-details">
+            <form id="createWalkEventForm">
+                <div class="form-group">
+                    <label for="eventName">Event Name:</label>
+                    <input type="text" class="form-control" id="eventName" placeholder="Enter event name">
+                </div>
+                <div class="form-group">
+                    <label for="startDate">Start Date:</label>
+                    <input type="date" class="form-control" id="startDate">
+                </div>
+                <div class="form-group">
+                    <label for="startTime">Start Time:</label>
+                    <input type="time" class="form-control" id="startTime">
+                </div>
+                <div class="form-group">
+                    <label for="inviteFriends">Invite Friends:</label>
+                    <select multiple class="form-control" id="inviteFriends">
+                        <option value="friend1">Friend 1</option>
+                        <option value="friend2">Friend 2</option>
+                        <option value="friend3">Friend 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inviteGroups">Invite Groups:</label>
+                    <select multiple class="form-control" id="inviteGroups">
+                        <option value="group1">Group 1</option>
+                        <option value="group2">Group 2</option>
+                        <option value="group3">Group 3</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Create Event</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+<!-- Stopka -->
+<div th:insert="~{commonviewparts/footer :: footer}"></div>
+
+<th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+</body>
+</html>
