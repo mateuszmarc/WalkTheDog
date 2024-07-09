@@ -34,6 +34,11 @@ public class WalkTheDogWebConfig implements WebMvcConfigurer {
         return new StringToWalkStatusConverter();
     }
 
+    @Bean
+    StringToNotificationStatusConverter getstringToNotificationStatusConverter() {
+        return new StringToNotificationStatusConverter();
+    }
+
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addConverter(getStringToPhotoConverter());
@@ -41,5 +46,6 @@ public class WalkTheDogWebConfig implements WebMvcConfigurer {
         registry.addConverter(getStringToActivityLevelConverter());
         registry.addConverter(getStringToRequestConverter());
         registry.addConverter(getStringToWalkStatusConverter());
+        registry.addConverter(getstringToNotificationStatusConverter());
     }
 }
