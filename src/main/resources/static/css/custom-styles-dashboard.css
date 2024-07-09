@@ -719,3 +719,27 @@ body {
     width: 100%;
     background-color: #e9ecef;
 }
+
+/* Owner info styles */
+.owner-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.owner-info img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+}
+
+.owner-info a {
+    font-size: 1.25rem;
+    color: #000;
+    text-decoration: none;
+}
+
+.owner-info a:hover {
+    text-decoration: underline;
+}
