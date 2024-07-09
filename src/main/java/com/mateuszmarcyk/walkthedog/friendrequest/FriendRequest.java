@@ -1,6 +1,7 @@
 package com.mateuszmarcyk.walkthedog.friendrequest;
 
-import com.mateuszmarcyk.walkthedog.friendrequest.enums.FriendRequestStatus;
+import com.mateuszmarcyk.walkthedog.friendrequest.enums.RequestStatus;
+import com.mateuszmarcyk.walkthedog.user.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -16,7 +17,7 @@ public class FriendRequest {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "requestStatus")
-    private FriendRequestStatus requestStatus;
+    private RequestStatus requestStatus;
 
     @Column(name = "sent_at")
     private LocalDateTime sentAt;
@@ -27,4 +28,11 @@ public class FriendRequest {
     @Column(name = "message")
     private String message;
 
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "sender")
+    private User sender;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "receiver")
+    private User receiver;
 }

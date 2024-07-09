@@ -4,6 +4,11 @@ package com.mateuszmarcyk.walkthedog.user;
 import com.mateuszmarcyk.walkthedog.conversation.Conversation;
 import com.mateuszmarcyk.walkthedog.dog.Dog;
 import com.mateuszmarcyk.walkthedog.friendrequest.FriendRequest;
+import com.mateuszmarcyk.walkthedog.notification.FriendRequestNotification;
+import com.mateuszmarcyk.walkthedog.notification.MessageNotification;
+import com.mateuszmarcyk.walkthedog.notification.WalkEventInvitationNotification;
+import com.mateuszmarcyk.walkthedog.walkevent.WalkEvent;
+import com.mateuszmarcyk.walkthedog.walkinvitation.WalkInvitation;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
@@ -60,11 +65,11 @@ public class User {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
     private List<Dog> dogs;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
     @Column(name = "sent_friend_request")
     private List<FriendRequest> sentFriendRequests;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     @Column(name = "received_friend_request")
     private List<FriendRequest> receivedFriendRequests;
 
@@ -78,8 +83,33 @@ public class User {
     )
     private List<Conversation> conversations;
 
+    @ManyToMany
+    @JoinTable(name = "users_walk_events",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "walk_event_id")
+    )
+    private List<WalkEvent> walkEvents;
+
     public void addDog(Dog dog) {
         dogs.add(dog);
     }
 
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<FriendRequestNotification> friendRequestNotifications;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<WalkEventInvitationNotification> walkEventInvitationNotifications;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<MessageNotification> messageNotifications;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<WalkInvitation> walkInvitations;
+
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private List<WalkInvitation> sentWalkInvitations;
+
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<WalkInvitation> receivedWalkInvitations;
 }
