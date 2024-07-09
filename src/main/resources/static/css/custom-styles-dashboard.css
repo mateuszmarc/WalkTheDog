@@ -277,5 +277,79 @@ body {
     .dog-box h5 {
         margin-top: 10px;
     }
+}
 
+
+.btn-edit {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-edit:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn-chat {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.btn-chat:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+}
+
+.btn-join {
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-join:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.btn-reject {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-reject:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+}
+
+
+/* Walk events styles */
+.walk-event {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.walk-event.future {
+    border-left: 5px solid #28a745;
+}
+
+.walk-event.past {
+    border-left: 5px solid #dc3545;
+}
+
+.walk-event.pending {
+    border-left: 5px solid #ffc107;
+}
+
+.walk-event h5 {
+    margin-top: 0;
+}
+
+.walk-event .event-info {
+    margin-bottom: 10px;
+}
+
+.walk-event .event-info label {
+    font-weight: bold;
 }
