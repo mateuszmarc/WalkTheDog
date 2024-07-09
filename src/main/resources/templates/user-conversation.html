@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{commonviewparts/metadata}"></th:block>
+    <title>Aplikacja do spacerów z psami - rozmowa</title>
+    <th:block th:replace="~{commonviewparts/css-styles-links.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/custom-styles-dashboard.css}">
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Navigation Bar -->
+    <div th:insert="~{commonviewparts/dashboard-navbar :: navbar}"></div>
+
+    <!-- Main Content -->
+    <div class="content container py-5">
+        <button class="btn btn-secondary mb-3" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Go Back
+        </button>
+        <div class="conversation-header">
+            <img src="friend-avatar.jpg" alt="Friend Avatar">
+            <a href="#">Friend456</a>
+        </div>
+        <h2 class="mb-4">Conversation</h2>
+        <div class="conversation">
+            <div class="message message-sent">
+                <div class="message-content">Hey there! How are you?</div>
+                <div class="message-timestamp">2024-06-24 14:35</div>
+            </div>
+            <div class="message message-received">
+                <img src="friend-avatar.jpg" alt="Friend Avatar" class="avatar">
+                <div class="message-content">I'm good, thanks! How about you?</div>
+                <div class="message-timestamp">2024-06-24 14:36</div>
+            </div>
+            <div class="message message-sent">
+                <div class="message-content">Doing well! Want to go for a walk later?</div>
+                <div class="message-timestamp">2024-06-24 14:37</div>
+            </div>
+            <div class="message message-received">
+                <img src="friend-avatar.jpg" alt="Friend Avatar" class="avatar">
+                <div class="message-content">Sure, that sounds great!</div>
+                <div class="message-timestamp">2024-06-24 14:38</div>
+            </div>
+        </div>
+        <form class="message-form">
+            <textarea class="form-control" rows="10" placeholder="Type your message here..."></textarea>
+            <button type="submit" class="btn btn-primary">Send</button>
+        </form>
+    </div>
+
+</div>
+<!-- Stopka -->
+<div th:insert="~{commonviewparts/footer :: footer}"></div>
+
+<th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+</body>
+</html>
+
+

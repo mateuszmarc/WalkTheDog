@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{commonviewparts/metadata}"></th:block>
+    <title>Aplikacja do spacerów z psami - dashboard</title>
+    <th:block th:replace="~{commonviewparts/css-styles-links.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/custom-styles-dashboard.css}">
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Navigation Bar -->
+    <div th:insert="~{commonviewparts/dashboard-navbar :: navbar}"></div>
+
+    <!-- Main Content -->
+    <div class="content">
+        <section class="container py-5">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2>Welcome to Your Dashboard</h2>
+                    <p>Content specific to the user's dashboard goes here.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features-section container py-5">
+            <div class="row">
+                <div class="col-sm-6 col-lg-3 mb-4">
+                    <div class="feature-box">
+                        <img src="placeholder.jpg" alt="Feature Image 1">
+                        <h5>Feature Title 1</h5>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-4">
+                    <div class="feature-box">
+                        <img src="placeholder.jpg" alt="Feature Image 2">
+                        <h5>Feature Title 2</h5>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-4">
+                    <div class="feature-box">
+                        <img src="placeholder.jpg" alt="Feature Image 3">
+                        <h5>Feature Title 3</h5>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-lg-3 mb-4">
+                    <div class="feature-box">
+                        <img src="placeholder.jpg" alt="Feature Image 4">
+                        <h5>Feature Title 4</h5>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fun Facts Section -->
+        <section class="container py-4">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3>Fun Facts About Dogs</h3>
+                    <p>Did you know that dogs have been our loyal companions for over 15,000 years? They have a powerful sense of smell, which is estimated to be between 10,000 to 100,000 times more acute than that of humans. The Basenji, a breed from Central Africa, is known as the "barkless dog" due to its unique yodel-like sound instead of a traditional bark. Dogs also have their own unique nose print, just like human fingerprints!</p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+    <!-- Stopka -->
+    <div th:insert="~{commonviewparts/footer :: footer}"></div>
+
+    <th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+</body>
+</html>

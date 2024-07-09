@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{commonviewparts/metadata}"></th:block>
+    <title>Aplikacja do spacerów z psami - moje spacery</title>
+    <th:block th:replace="~{commonviewparts/css-styles-links.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/custom-styles-dashboard.css}">
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Navigation Bar -->
+    <div th:insert="~{commonviewparts/dashboard-navbar :: navbar}"></div>
+
+    <!-- Main Content -->
+    <div class="content container py-5">
+        <button class="btn btn-secondary mb-3" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Wróć
+        </button>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Walk Events</h2>
+            <button class="btn btn-primary" onclick="window.location.href='create-event.html'">Zorganizuj spacer
+            </button>
+        </div>
+
+        <!-- Walk Event 1 (Pending Event) -->
+        <div class="walk-event pending">
+            <h5>Morning Walk at Central Park</h5>
+            <div class="event-info">
+                <label>Date:</label> <span>2024-07-10</span>
+            </div>
+            <div class="event-info">
+                <label>Time:</label> <span>08:00 AM</span>
+            </div>
+            <div class="event-info">
+                <label>Organizer:</label> <span>Friend123</span>
+            </div>
+            <div class="event-info">
+                <button class="btn btn-primary btn-sm" onclick="window.location.href='event-details.html'">View
+                    Details
+                </button>
+                <button class="btn btn-join btn-sm">Join</button>
+                <button class="btn btn-reject btn-sm">Reject</button>
+            </div>
+        </div>
+
+        <!-- Walk Event 2 (Future Event) -->
+        <div class="walk-event future">
+            <h5>Afternoon Walk at Dog Park</h5>
+            <div class="event-info">
+                <label>Date:</label> <span>2024-08-15</span>
+            </div>
+            <div class="event-info">
+                <label>Time:</label> <span>04:00 PM</span>
+            </div>
+            <div class="event-info">
+                <label>Organizer:</label> <span>Friend789</span>
+            </div>
+            <div class="event-info">
+                <button class="btn btn-primary btn-sm" onclick="window.location.href='event-details.html'">View
+                    Details
+                </button>
+                <button class="btn btn-chat btn-sm" onclick="window.location.href='chat.html'"><i
+                        class="fas fa-comments"></i> Open Chat
+                </button>
+                <!-- Edit button if the user is the owner -->
+                <button class="btn btn-edit btn-sm" onclick="window.location.href='edit-event.html'">Edit Event</button>
+            </div>
+        </div>
+
+        <!-- Walk Event 3 (Past Event) -->
+        <div class="walk-event past">
+            <h5>Evening Walk at Riverside</h5>
+            <div class="event-info">
+                <label>Date:</label> <span>2024-05-22</span>
+            </div>
+            <div class="event-info">
+                <label>Time:</label> <span>06:00 PM</span>
+            </div>
+            <div class="event-info">
+                <label>Organizer:</label> <span>Friend456</span>
+            </div>
+            <div class="event-info">
+                <button class="btn btn-primary btn-sm" onclick="window.location.href='event-details.html'">View
+                    Details
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Stopka -->
+<div th:insert="~{commonviewparts/footer :: footer}"></div>
+
+<th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+</body>
+</html>
