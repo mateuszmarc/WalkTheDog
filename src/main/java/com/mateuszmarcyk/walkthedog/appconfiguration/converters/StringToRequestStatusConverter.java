@@ -5,7 +5,7 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 @Component
-public class StringToFriendRequestStatusConverter implements Converter<String, RequestStatus> {
+public class StringToRequestStatusConverter implements Converter<String, RequestStatus> {
 
     @Override
     public RequestStatus convert(String source) {
