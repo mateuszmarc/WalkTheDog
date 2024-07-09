@@ -105,8 +105,7 @@ body {
     margin-top: 10px;
 }
 
-/* Responsive adjustments */
-@media (max-width: 980px) {
+/* Responsive adjustments */  @media (max-width: 980px) {
     .feature-box {
         margin-bottom: 15px;
     }
@@ -217,64 +216,6 @@ body {
 }
 
 /* Responsive adjustments */
-@media (max-width: 980px) {
-    .feature-box {
-        margin-bottom: 15px;
-    }
-
-    .navbar-nav .nav-item {
-        order: 0;
-    }
-
-    .navbar-nav .nav-item:nth-child(1) {
-        order: 4;
-    }
-
-    .navbar-nav .nav-item:nth-child(2) {
-        order: 7;
-    }
-
-    .navbar-nav .nav-item:nth-child(3) {
-        order: 6;
-    }
-
-    .navbar-nav .nav-item:nth-child(4) {
-        order: 5;
-    }
-
-    .navbar-nav .nav-item:nth-child(5) {
-        order: 2;
-    }
-
-    .navbar-nav .nav-item:nth-child(6) {
-        order: 3;
-    }
-
-    .navbar-nav .nav-item:nth-child(7) {
-        order: 1;
-    }
-
-    .navbar-nav .nav-item:nth-child(8) {
-        order: 8;
-    }
-
-    .navbar-nav .nav-item {
-        margin-right: 0;
-        margin-bottom: 5px;
-    }
-
-    .navbar-nav .nav-item:last-child {
-        margin-bottom: 0;
-    }
-
-    /* Badge positioning adjustments for small screens */
-    .badge {
-        top: 20px;
-        right: 100px;
-    }
-}
-
-/* Responsive adjustments */
 @media (max-width: 767px) {
     .header {
         padding: 10px;
@@ -301,4 +242,40 @@ body {
         width: 48%;
         margin-bottom: 10px;
     }
+
+    .profile-section {
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .profile-picture {
+        border-radius: 50%;
+        max-width: 150px;
+        margin-bottom: 10px;
+    }
+
+    .dogs-section {
+        padding: 20px 0;
+    }
+
+    .dog-box {
+        border: 1px solid #ddd;
+        padding: 20px;
+        border-radius: 8px;
+        background-color: #fff;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .dog-box img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .dog-box h5 {
+        margin-top: 10px;
+    }
+
 }
