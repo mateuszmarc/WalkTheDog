@@ -30,7 +30,9 @@ public class UserSecurityConfig {
                                 "/login/**",
                                 "/about/**",
                                 "/contact/**",
-                                "/main/**"
+                                "/main/**",
+                                "/css/**",
+                                "/images/**"
                                 ).permitAll()
                         .requestMatchers("/users/**").hasAnyAuthority("USER", "ADMIN")
                 )
