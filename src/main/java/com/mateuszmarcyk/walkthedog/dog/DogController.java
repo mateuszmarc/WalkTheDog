@@ -2,7 +2,6 @@ package com.mateuszmarcyk.walkthedog.dog;
 
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.user.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,55 +13,47 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 @Controller
-@RequestMapping("/users/dogs")
 public class DogController {
 
     private final DogServiceImpl dogService;
     private final UserService userService;
 
-    @GetMapping
-    public String findAllDogsForUser(@AuthenticationPrincipal UserDetails userDetails) {
 
-        String email = userDetails.getUsername();
-        User user = userService.findUserByEmailJoinFetchDogs(email);
+    @GetMapping("/users/dogs")
+    public String findAllDogsForUser(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+
+        User user = userService.findUserByEmailJoinFetchDogs(userDetails.getUsername());
         log.info("{}", user.getDogs());
+        model.addAttribute("dogs", user.getDogs());
         return "user-dogs";
     }
 
     @GetMapping("/{dogId}")
     @ResponseBody
-    public Dog getDogDetails(@PathVariable Long userId, @PathVariable Long dogId) {
-
-        User user = userService.findById(userId);
-
+    public Dog getDogDetails(@PathVariable Long dogId) {
         return dogService.findById(dogId);
     }
 
     @GetMapping("/addDog")
-    public String showAddDogForm(@PathVariable Long userId, @ModelAttribute Dog dog, HttpServletRequest request) {
-
-        User user = userService.findById(userId);
-        request.setAttribute("userId", userId);
-
+    public String showAddDogForm(@ModelAttribute Dog dog) {
         return "dog-form";
     }
 
     @PostMapping("/addDog")
-    @ResponseBody
-    private String processDogForm(@PathVariable Long userId, Dog dog) {
+    private String processDogForm( Dog dog) {
 
-        User dogOwner = userService.findById(userId);
-        dog.setOwner(dogOwner);
+//        String email = userDetails.getUsername();
+//
+//        User dogOwner = userService.findByEmail(email);
+//        dog.setOwner(dogOwner);
 
         dogService.add(dog);
-        return "Dog added sucessfully";
+        return "redirect:/users/dogs";
     }
 
-    @SuppressWarnings("unused")
-    @GetMapping("/editDog/{dogId}")
-    private String showEditDogForm(@PathVariable Long userId, @PathVariable Long dogId, Model model) {
 
-        User user = userService.findById(userId);
+    @GetMapping("/editDog/{dogId}")
+    private String showEditDogForm(@PathVariable Long dogId, Model model) {
 
         Dog dog = dogService.findById(dogId);
 
@@ -72,13 +63,12 @@ public class DogController {
 
     }
 
-    @SuppressWarnings("unused")
     @DeleteMapping("/deleteDog/{dogId}")
-    @ResponseBody
-    private Dog deleteDogById(@PathVariable Long userId, @PathVariable Long dogId) {
+    private String deleteDogById( @PathVariable Long dogId) {
 
-        User user = userService.findById(userId);
+//        User user = userService.findUserByEmail(userDetails.getUsername());
 
-        return dogService.delete(dogId);
+        dogService.delete(dogId);
+        return "redirect:/users/dogs";
     }
 }

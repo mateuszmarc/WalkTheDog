@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
     @Value("${resourceNotFoundExceptionMessage}")
     private String resourceNotFoundExceptionMessage;
 
-    @Value("${userWithEmailNotFoundException}")
-    private String userWithEmailNotFoundException;
+    @Value("${userWithEmailNotFoundExceptionMessage}")
+    private String userWithEmailNotFoundExceptionMessage;
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
     public User findUserByEmailJoinFetchDogs(String email) {
         User user = userRepository.findUserJoinFetchDogs(email);
         if (user == null) {
-            throw new UsernameNotFoundException(userWithEmailNotFoundException.formatted(email));
+            throw new UsernameNotFoundException(userWithEmailNotFoundExceptionMessage.formatted(email));
         }
         return user;
     }
