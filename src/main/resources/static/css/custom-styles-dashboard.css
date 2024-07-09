@@ -243,9 +243,11 @@ body {
         margin-bottom: 10px;
     }
 
-    .profile-section {
-        text-align: center;
-        padding: 20px 0;
+    .profile-section .profile-picture {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        margin-bottom: 20px;
     }
 
     .profile-picture {
@@ -539,8 +541,13 @@ body {
     margin-bottom: 10px;
 }
 
-.dogs-section {
-    padding: 20px 0;
+/* Dogs Section */
+.dogs-section  {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .dog-box {
@@ -550,6 +557,7 @@ body {
     background-color: #fff;
     text-align: center;
     margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .dog-box img {
