@@ -431,3 +431,49 @@ body {
     max-width: 1200px;
     margin: auto;
 }
+
+/* Notification styles */
+.notification-item {
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-item.unread {
+    background-color: #ffeeba; /* light yellow for unread notifications */
+}
+
+.notification-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Section styles */
+.features-section {
+    padding: 20px 0;
+}
+
+.feature-box {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #fff;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.feature-box img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.feature-box h5 {
+    margin-top: 10px;
+}

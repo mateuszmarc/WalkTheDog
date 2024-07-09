@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{commonviewparts/metadata}"></th:block>
+    <title>Aplikacja do spacerów z psami - powiadomienia</title>
+    <th:block th:replace="~{commonviewparts/css-styles-links.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/custom-styles-dashboard.css}">
+</head>
+
+</head>
+<body>
+
+<div class="wrapper">
+    <!-- Navigation Bar -->
+    <div th:insert="~{commonviewparts/dashboard-navbar :: navbar}"></div>
+
+    <!-- Main Content -->
+    <div class="content container py-5">
+        <button class="btn btn-secondary mb-3" onclick="history.back()">
+            <i class="fas fa-arrow-left"></i> Go Back
+        </button>
+        <h2 class="mb-4">Notifications</h2>
+        <div class="notification-item unread">
+            <div>
+                <p>You have a new friend request from <strong>User123</strong>.</p>
+            </div>
+            <div class="notification-actions">
+                <button class="btn btn-primary btn-sm">Accept</button>
+                <button class="btn btn-secondary btn-sm">Decline</button>
+            </div>
+        </div>
+        <div class="notification-item unread">
+            <div>
+                <p>You have a new message from <strong>Friend456</strong>.</p>
+            </div>
+            <div class="notification-actions">
+                <a href="conversation.html" class="btn btn-primary btn-sm">View Message</a>
+            </div>
+        </div>
+        <div class="notification-item unread">
+            <div>
+                <p>You have been invited to a walk event by <strong>Group789</strong>.</p>
+            </div>
+            <div class="notification-actions">
+                <a href="walk-details.html" class="btn btn-primary btn-sm">View Details</a>
+            </div>
+        </div>
+        <div class="notification-item">
+            <div>
+                <p>Your friend request to <strong>User456</strong> has been accepted.</p>
+            </div>
+        </div>
+        <div class="notification-item">
+            <div>
+                <p>Your walk event with <strong>Group123</strong> is confirmed for tomorrow.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!-- Stopka -->
+<div th:insert="~{commonviewparts/footer :: footer}"></div>
+
+<th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+</body>
+</html>
+
+
