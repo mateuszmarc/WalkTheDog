@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,6 +29,20 @@ private final UserService userService;
 
         return "dashboard";
     }
+
+    @GetMapping("/profile")
+    public String displayProfileDetails(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+
+        String email = userDetails.getUsername();
+
+        User user = userService.findUserByEmailJoinFetchDogs(email);
+
+        model.addAttribute("user", user);
+
+        return "user-profile";
+
+    }
+
 
 
 }
