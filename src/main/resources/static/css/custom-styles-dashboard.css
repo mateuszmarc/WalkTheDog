@@ -743,3 +743,29 @@ body {
 .owner-info a:hover {
     text-decoration: underline;
 }
+
+/* Profile form styles */
+.profile-form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.profile-form .form-control:disabled, .profile-form .form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1;
+}
+
+.profile-form .form-group label {
+    font-weight: bold;
+}
+
+.profile-form .btn-container {
+    text-align: right;
+}
+
+.profile-form .btn-container .btn {
+    margin-left: 10px;
+}

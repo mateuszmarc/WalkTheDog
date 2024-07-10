@@ -60,6 +60,13 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
+    public User findUserByEmailFetchAll(String email) {
+        Optional<User> foundUser = userRepository.findUserByEmailFetchAll(email);
+
+        return foundUser.orElseThrow(() -> new ResourceNotFoundException(resourceNotFoundExceptionMessage.formatted("User", email)));
+    }
+
 
     @Override
     public List<User> getAll() {
@@ -122,5 +129,17 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return "valid";
     }
+
+    @Override
+    public User save(User user) {
+
+        String plainPassword = user.getPassword();
+
+        user.setPassword(passwordEncoder.encode(plainPassword));
+
+       return userRepository.save(user);
+
+    }
+
 
 }
