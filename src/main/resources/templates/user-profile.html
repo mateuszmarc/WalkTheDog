@@ -14,54 +14,41 @@
     <div th:insert="~{commonviewparts/dashboard-navbar :: navbar}"></div>
 
     <!-- Main Content -->
-    <div class="content">
+    <div class="main-content custom-container">
         <button class="btn btn-secondary mb-3" onclick="history.back()">
-            <i class="fas fa-arrow-left"></i> Go Back
+            <i class="fas fa-arrow-left"></i> Wróć
         </button>
         <!-- Profile Section -->
         <section class="profile-section container">
             <img alt="User Profile Picture" class="profile-picture" src="user-profile-picture.jpg">
-            <h3>John Doe</h3>
-            <p>Quick bio about the user goes here. It can include hobbies, interests, and other relevant details.</p>
-            <button class="btn btn-primary">Edit Profile</button>
+            <h3 th:text="${user.firstName} + ' ' + ${user.lastName}"></h3>
+            <p th:text="${user.bio}"></p>
+
+            <a th:href="@{/users/profile/edit}">
+                <button class="btn btn-primary">Edytuj Profil</button>
+            </a>
+
         </section>
 
         <!-- Dogs Section -->
         <section class="dogs-section container py-5">
-            <h4 class="text-center mb-4">My Dogs</h4>
+            <h4 class="text-center mb-4">Moje Psy</h4>
             <div class="row">
-                <div class="col-sm-6 col-lg-3 mb-4">
-                    <div class="dog-box">
-                        <img alt="Dog 1 Picture" src="dog1.jpg">
-                        <h5>Dog Name 1</h5>
-                        <button class="btn btn-primary btn-sm">Edit Dog Data</button>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-4">
-                    <div class="dog-box">
-                        <img alt="Dog 2 Picture" src="dog2.jpg">
-                        <h5>Dog Name 2</h5>
-                        <button class="btn btn-primary btn-sm">Edit Dog Data</button>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-4">
-                    <div class="dog-box">
-                        <img alt="Dog 3 Picture" src="dog3.jpg">
-                        <h5>Dog Name 3</h5>
-                        <button class="btn btn-primary btn-sm">Edit Dog Data</button>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-lg-3 mb-4">
-                    <div class="dog-box">
-                        <img alt="Dog 4 Picture" src="dog4.jpg">
-                        <h5>Dog Name 4</h5>
-                        <button class="btn btn-primary btn-sm">Edit Dog Data</button>
-                    </div>
+                <div class="dog-box" th:each="dog : ${user.dogs}">
+                    <img alt="Dog picture" th:src="${dog.profilePhoto}">
+                    <h5 th:text="${dog.name}"></h5>
+                    <a th:href="@{/users/dogs/{id}(id=${dog.id})}">
+                        <button class="btn btn-primary btn-sm">Pokaż</button>
+                    </a>
+                    <a th:href="@{/users/dogs/edit/{id}(id=${dog.id})}">
+                        <button class="btn btn-primary btn-sm">Edytuj</button>
+                    </a>
+                    <a th:href="@{/users/dogs/delete/{id}(id=${dog.id})}">
+                        <button class="btn btn-danger btn-sm" onclick="confirmAction()">Usuń</button>
+                    </a>
                 </div>
             </div>
         </section>
-
-
     </div>
 
 </div>
