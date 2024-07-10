@@ -43,6 +43,14 @@ private final UserService userService;
 
     }
 
+    @GetMapping("/proflie/edit")
+    public String showUserEditForm(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
+        String email = userDetails.getUsername();
+        User user = userService.findByEmail(email);
 
+        model.addAttribute("user", user);
+
+        return "user-edit-form";
+    }
 }
