@@ -15,11 +15,15 @@
 
     <!-- Main Content -->
     <div class="content">
-        <button class="btn btn-secondary mb-3" onclick="history.back()">
-            <i class="fas fa-arrow-left"></i> Wróć
-        </button>
         <!-- Dogs Section -->
-        <section class="dogs-section container py-5">
+        <section class="main-content custom-container">
+
+            <div class="main-content custom-container">
+            <button class="btn btn-secondary mb-3" onclick="history.back()">
+                <i class="fas fa-arrow-left"></i> Wróć
+            </button>
+            </div>
+
             <div class="dog-box" th:each="dog : ${dogs}">
                 <img alt="Dog picture" th:src="${dog.profilePhoto}">
                 <h5 th:text="${dog.name}"></h5>
@@ -33,6 +37,9 @@
                     <button class="btn btn-danger btn-sm" onclick="confirmAction()">Usuń</button>
                 </a>
             </div>
+            <a th:href="@{/users/dogs/addDog}">
+                <button class="btn btn-primary btn-sm">Dodaj psa</button>
+            </a>
         </section>
     </div>
 </div>
