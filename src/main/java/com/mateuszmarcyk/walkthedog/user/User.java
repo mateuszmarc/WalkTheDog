@@ -13,6 +13,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -66,55 +67,55 @@ public class User {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
-    private List<Dog> dogs;
+    private List<Dog> dogs = new ArrayList<>();
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
     @Column(name = "sent_friend_request")
-    private List<FriendRequest> sentFriendRequests;
+    private List<FriendRequest> sentFriendRequests = new ArrayList<>();
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     @Column(name = "received_friend_request")
-    private List<FriendRequest> receivedFriendRequests;
+    private List<FriendRequest> receivedFriendRequests = new ArrayList<>();
 
     @ManyToMany
-    private List<User> friends;
+    private List<User> friends = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "users_conversations",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "conversation_id")
     )
-    private List<Conversation> conversations;
+    private List<Conversation> conversations = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "users_walk_events",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "walk_event_id")
     )
-    private List<WalkEvent> walkEvents;
+    private List<WalkEvent> walkEvents = new ArrayList<>();
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    private List<FriendRequestNotification> friendRequestNotifications;
+    private List<FriendRequestNotification> friendRequestNotifications = new ArrayList<>();
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    private List<WalkEventInvitationNotification> walkEventInvitationNotifications;
+    private List<WalkEventInvitationNotification> walkEventInvitationNotifications = new ArrayList<>();
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    private List<MessageNotification> messageNotifications;
+    private List<MessageNotification> messageNotifications = new ArrayList<>();
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    private List<WalkInvitation> walkInvitations;
+    private List<WalkInvitation> walkInvitations = new ArrayList<>();
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-    private List<WalkInvitation> sentWalkInvitations;
+    private List<WalkInvitation> sentWalkInvitations = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    private List<WalkInvitation> receivedWalkInvitations;
+    private List<WalkInvitation> receivedWalkInvitations = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "creator")
-    private List<WalkEvent> createdWalkEvents;
+    private List<WalkEvent> createdWalkEvents = new ArrayList<>();
 
     public void addDog(Dog dog) {
         dogs.add(dog);

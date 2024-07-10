@@ -13,7 +13,8 @@ public interface UserService {
 
     User findUserByEmailJoinFetchDogs(String email);
 
-    User findUserByEmailFetchAll(String email);
+    User findUserByEmailFetchFriends(String email);
+
 
     List<User> getAll();
 

@@ -63,4 +63,17 @@ private final UserService userService;
 
         return "redirect:/users/dashboard";
     }
+
+    @GetMapping("/friends")
+    public String showAllFriends(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+
+        String email = userDetails.getUsername();
+
+        User user = userService.findUserByEmailFetchFriends(email);
+
+        log.info(user.toString());
+        model.addAttribute("user", user);
+
+        return "user-friends";
+    }
 }
