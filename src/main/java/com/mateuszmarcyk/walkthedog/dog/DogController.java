@@ -2,12 +2,14 @@ package com.mateuszmarcyk.walkthedog.dog;
 
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.user.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -37,21 +39,27 @@ public class DogController {
         return "user-dog-info";
     }
 
-    @GetMapping("/addDog")
-    public String showAddDogForm(@ModelAttribute Dog dog) {
-        return "dog-form";
+    @GetMapping("/users/dogs/addDog")
+    public String showAddDogForm(Model model) {
+        model.addAttribute("dog", new Dog());
+
+        return "user-dog-form";
     }
 
-    @PostMapping("/addDog")
-    private String processDogForm( Dog dog) {
+    @PostMapping("/users/dogs/addDog")
+    private String processDogForm(@Valid @ModelAttribute("dog") Dog dog,
+                                  @AuthenticationPrincipal UserDetails userDetails,
+                                  BindingResult bindingResult) {
 
-//        String email = userDetails.getUsername();
-//
-//        User dogOwner = userService.findByEmail(email);
-//        dog.setOwner(dogOwner);
-
-        dogService.add(dog);
-        return "redirect:/users/dogs";
+        if (bindingResult.hasErrors()) {
+            return "index";
+        } else {
+            String email = userDetails.getUsername();
+            User dogOwner = userService.findByEmail(email);
+            dog.setOwner(dogOwner);
+            dogService.add(dog);
+            return "redirect:/users/dogs";
+        }
     }
 
 
@@ -62,7 +70,7 @@ public class DogController {
 
         model.addAttribute("dog", dog);
 
-        return "dog-form";
+        return "user-dog-form";
 
     }
 
