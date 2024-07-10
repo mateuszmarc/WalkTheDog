@@ -3,126 +3,88 @@
 
 <head>
     <th:block th:replace="~{commonviewparts/metadata}"></th:block>
-    <title>Aplikacja do spacerów z psami - znajomi</title>
+    <title>Aplikacja do spacerów z psami - znajomi i zaproszenia do znajomych</title>
     <th:block th:replace="~{commonviewparts/css-styles-links.html}"></th:block>
     <link rel="stylesheet" th:href="@{/css/custom-styles-dashboard.css}">
 </head>
 
 <body>
+<div class="wrapper">
 <!-- Navigation Bar -->
 <div th:insert="~{commonviewparts/dashboard-navbar :: navbar}"></div>
 
 <!-- Header Section -->
 <div class="header">
-    <h1>Friend Requests and Groups</h1>
+    <h1>Znajomi i zaproszenia do znajomych</h1>
 </div>
 <!-- Main Content -->
 <div class="main-content custom-container">
     <button class="btn btn-secondary mb-3" onclick="history.back()">
-        <i class="fas fa-arrow-left"></i> Go Back
+        <i class="fas fa-arrow-left"></i> Wróć
     </button>
     <!-- Send Friend Request Section -->
     <div class="section">
-        <h4>Send Friend Request</h4>
-        <form id="sendFriendRequestForm">
+        <h4>Wyślij zaproszenie do znajomych</h4>
+        <form id="sendFriendRequestForm" th:action="@{/users/friends/sendFriendRequest}">
             <div class="form-group">
                 <label for="searchUser">Search User</label>
-                <input type="text" class="form-control" id="searchUser" placeholder="Type username or login">
+                <input type="text" class="form-control" id="searchUser" name="friend" placeholder="Type username or login">
             </div>
-            <div class="form-group">
-                <label for="selectUser">Select User</label>
-                <select class="form-control" id="selectUser">
-                    <!-- Options would be dynamically populated based on search -->
-                    <option value="user1">User 1</option>
-                    <option value="user2">User 2</option>
-                    <option value="user3">User 3</option>
-                </select>
-            </div>
-            <button type="button" class="btn btn-primary" onclick="sendFriendRequest()">Send Request</button>
+            <button type="submit" class="btn btn-primary">Wyślij zaproszenie</button>
         </form>
     </div>
 
     <!-- Friend Invitations Section -->
     <div class="section">
-        <h4>Friend Invitations</h4>
+        <h4>Otrzymane zaproszenia</h4>
         <ul class="list-group">
-            <li class="list-group-item">
-                User 4
+            <li class="list-group-item" th:each="request : ${user.receivedFriendRequests}">
+                <h4 th:text="${request.sender}"></h4>
                 <div>
-                    <button class="btn btn-success btn-sm" onclick="acceptInvitation('user4')">Accept</button>
-                    <button class="btn btn-danger btn-sm" onclick="declineInvitation('user4')">Decline</button>
-                </div>
-            </li>
-            <li class="list-group-item">
-                User 5
-                <div>
-                    <button class="btn btn-success btn-sm" onclick="acceptInvitation('user5')">Accept</button>
-                    <button class="btn btn-danger btn-sm" onclick="declineInvitation('user5')">Decline</button>
+                    <form th:action="@{/users/friends/accept}" th:method="POST">
+                        <input type="hidden" th:value="${request.id}">
+                        <button class="btn btn-success btn-sm">Zaakceptuj</button>
+                    </form>
+
+                    <form th:action="@{/users/friends/decline}" th:method="POST">
+                        <input type="hidden" th:value="${request.id}">
+                        <button class="btn btn-success btn-sm" onclick="confirmAction()" >Odrzuć</button>
+                    </form>
                 </div>
             </li>
         </ul>
     </div>
     <!-- Sent Friend Requests Section -->
     <div class="section">
-        <h4>Sent Friend Requests</h4>
+        <h4>Wysłane zaproszenia do znajomych</h4>
         <ul class="list-group">
-            <li class="list-group-item">
-                User 1
-                <button class="btn btn-danger btn-sm" onclick="cancelRequest('user1')">Cancel Request</button>
-            </li>
-            <li class="list-group-item">
-                User 2
-                <button class="btn btn-danger btn-sm" onclick="cancelRequest('user2')">Cancel Request</button>
+            <li class="list-group-item" th:each="request : ${user.sentFriendRequests}">
+                <h4 th:text="${request.sender}"></h4>
+
+                <form th:action="@{/users/friends/cancel}" th:method="POST">
+                    <input type="hidden" th:value="${request.id}">
+                    <button class="btn btn-success btn-sm" onclick="confirmDecline()" >Usuń</button>
+                </form>
             </li>
         </ul>
     </div>
     <!-- Friends List Section -->
     <div class="section">
-        <h4>My Friends</h4>
+        <h4>Moi znajomi</h4>
         <ul class="list-group">
-            <li class="list-group-item friend-item">
+            <li class="list-group-item friend-item" th:each="friend : ${user.friends}">
                 <div class="friend-info">
-                    <img src="friend1.jpg" alt="Friend 1" width="40" height="40">
-                    <a href="#" class="friend-link">User 1</a>
+                    <img th:src="" alt="Friend 1" width="40" height="40">
+                    <a th:text="${friend.name}" th:href="@{/users/friends/{id}(id=${friend.id})}" class="friend-link"></a>
                 </div>
-                <button class="btn btn-danger btn-sm" onclick="deleteFriend('user1')">Delete Friend</button>
+
+                <form th:action="@{/users/friends/delete}" th:method="POST">
+                    <input type="hidden" th:value="${friend.id}">
+                    <button class="btn btn-success btn-sm" onclick="confirmAction()">Usuń</button>
+                </form>
             </li>
-            <li class="list-group-item friend-item">
-                <div class="friend-info">
-                    <img src="friend2.jpg" alt="Friend 2" width="40" height="40">
-                    <a href="#" class="friend-link">User 2</a>
-                </div>
-                <button class="btn btn-danger btn-sm" onclick="deleteFriend('user2')">Delete Friend</button>
-            </li>
+
         </ul>
-    </div>
-    <!-- Groups Section -->
-    <div class="section">
-        <h4>My Groups</h4>
-        <div class="list-group">
-            <div class="list-group-item group-item">
-                <div>
-                    <h5>Group 1</h5>
-                    <p>Members: 10</p>
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-info btn-sm" onclick="openGroup('group1')">Open Group</button>
-                    <button class="btn btn-warning btn-sm" onclick="quitGroup('group1')">Quit Group</button>
-                    <button class="btn btn-secondary btn-sm" onclick="openGroupChat('group1')"><i class="fas fa-comments"></i></button>
-                </div>
-            </div>
-            <div class="list-group-item group-item">
-                <div>
-                    <h5>Group 2</h5>
-                    <p>Members: 15</p>
-                </div>
-                <div class="btn-group">
-                    <button class="btn btn-info btn-sm" onclick="openGroup('group2')">Open Group</button>
-                    <button class="btn btn-warning btn-sm" onclick="quitGroup('group2')">Quit Group</button>
-                    <button class="btn btn-secondary btn-sm" onclick="openGroupChat('group2')"><i class="fas fa-comments"></i></button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 </div>
@@ -130,5 +92,23 @@
 <div th:insert="~{commonviewparts/footer :: footer}"></div>
 
 <th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+
+<script type="text/javascript">
+    function confirmAction() {
+        const confirmed = confirm("Czy jesteś tego pewien?");
+        if (confirmed) {
+            // Action confirmed
+            alert("Usunięto pomyślnie!");
+        }
+    }
+
+    function confirmDecline() {
+        const confirmed = confirm("Czy jesteś tego pewien?");
+        if (confirmed) {
+            // Action confirmed
+            alert("Zaproszenie usunięte pomyślnie!");
+        }
+    }
+</script>
 </body>
 </html>
