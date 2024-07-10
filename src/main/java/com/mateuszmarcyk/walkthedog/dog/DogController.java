@@ -28,10 +28,13 @@ public class DogController {
         return "user-dogs";
     }
 
-    @GetMapping("/{dogId}")
-    @ResponseBody
-    public Dog getDogDetails(@PathVariable Long dogId) {
-        return dogService.findById(dogId);
+    @GetMapping("/users/dogs/{id}")
+    public String showDogDetails(@PathVariable Long id, Model model) {
+        Dog dog =  dogService.findById(id);
+        log.info("{}", dog);
+        model.addAttribute("dog", dog);
+
+        return "user-dog-info";
     }
 
     @GetMapping("/addDog")

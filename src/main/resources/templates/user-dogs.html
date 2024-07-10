@@ -23,6 +23,9 @@
             <div class="dog-box" th:each="dog : ${dogs}">
                 <img alt="Dog picture" th:src="${dog.profilePhoto}">
                 <h5 th:text="${dog.name}"></h5>
+                <a th:href="@{/users/dogs/{id}(id=${dog.id})}">
+                    <button class="btn btn-primary btn-sm">Pokaż</button>
+                </a>
                 <a th:href="@{/users/dogs/edit/{id}(id=${dog.id})}">
                     <button class="btn btn-primary btn-sm">Edytuj</button>
                 </a>

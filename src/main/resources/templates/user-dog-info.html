@@ -18,75 +18,83 @@
   </button>
   <!-- Dog Info -->
   <div class="dog-info">
-    <h2>Dog Name</h2>
-    <img src="dog-picture.jpg" alt="Dog Picture">
+    <h2 th:text="${dog.name}"></h2>
+    <img th:src="@{/${dog.profilePhoto}}" alt="Dog Picture">
     <div class="info-group">
-      <label>Breed:</label>
-      <p id="dogBreed">Breed</p>
+      <label>Rasa:</label>
+      <p th:text="${dog.breed}" id="dogBreed"></p>
     </div>
     <div class="info-group">
-      <label>Date of Birth:</label>
-      <p id="dogDob">Date of Birth</p>
+      <label>Data urodzenia:</label>
+      <p th:text="${dog.dateOfBirth}" id="dogDob"></p>
     </div>
     <div class="info-group">
-      <label>Gender:</label>
-      <p id="dogGender">Gender</p>
+      <label>Płeć:</label>
+      <p th:text="${dog.gender}" id="dogGender"></p>
     </div>
     <div class="info-group">
-      <label>Spayed/Neutered:</label>
-      <p id="dogSpayed">Yes/No</p>
+      <label>Sterylizowany:</label>
+      <!--      <div th:swith="${dog.spayed}">-->
+      <!--        <p th:case="true">Tak</p>-->
+      <!--        <p th:case="false">Nie</p>-->
+      <!--      </div>-->
+      <p th:text="${dog.spayed}"></p>
     </div>
     <div class="info-group">
-      <label>Weight:</label>
-      <p id="dogWeight">Weight</p>
+      <label>Waga w kg:</label>
+      <p th:text="${dog.weight}" id="dogWeight"></p>
     </div>
     <div class="info-group">
-      <label>Height:</label>
-      <p id="dogHeight">Height</p>
+      <label>Wysokość  cm:</label>
+      <p th:height="${dog.height}" id="dogHeight">Height</p>
     </div>
     <div class="info-group">
-      <label>Preferred Activities:</label>
-      <p id="dogActivities">Activities</p>
+      <label>Preferowana aktywność:</label>
+      <p th:text="${dog.preferredActivities}" id="dogActivities"></p>
     </div>
     <div class="info-group">
-      <label>Activity Level:</label>
-      <p id="dogActivityLevel">Activity Level</p>
+      <label>Poziom aktywności</label>
+      <p th:text="${dog.activityLevel}" id="dogActivityLevel"></p>
     </div>
     <div class="info-group">
-      <label>General Behaviour:</label>
-      <p id="dogBehaviour">Behaviour</p>
+      <label>Zachowanie:</label>
+      <p th:text="${dog.generalBehaviour}" id="dogBehaviour"></p>
     </div>
     <div class="info-group">
-      <label>Socialization Info:</label>
-      <p id="dogSocialization">Socialization</p>
+      <label>Poziom socjalizacji (1 - 10):</label>
+      <p th:text="${dog.socializationLevel}" id="dogSocialization"></p>
     </div>
     <div class="info-group">
-      <label>Training Level:</label>
-      <p id="dogTraining">Training</p>
+      <label>Poziom wytrenowania (1 - 10):</label>
+      <p th:text="${dog.trainingLevel}" id="dogTraining"></p>
     </div>
     <div class="info-group">
-      <label>Behavioral Issues:</label>
-      <p id="dogIssues">Issues</p>
+      <label>Problemy behawiorystyzczne:</label>
+      <p th:text="${dog.behavioralIssues}" id="dogIssues"></p>
     </div>
     <div class="info-group">
-      <label>Triggers:</label>
-      <p id="dogTriggers">Triggers</p>
+      <label>Bodźce:</label>
+      <p th:text="${dog.triggers}" id="dogTriggers">Triggers</p>
     </div>
     <div class="info-group">
-      <label>Microchip:</label>
-      <p id="dogMicrochip">Microchip</p>
+      <label>Numer microchipu:</label>
+      <p th:text="${dog.microChipNumber}" id="dogMicrochip"></p>
     </div>
     <div class="info-group">
-      <label>Photos:</label>
+      <label>Zdjęcia:</label>
       <div id="dogPhotos">
         <!-- Placeholder for multiple photos -->
-        <img src="dog-photo1.jpg" alt="Dog Photo 1" class="img-thumbnail mr-2">
-        <img src="dog-photo2.jpg" alt="Dog Photo 2" class="img-thumbnail">
+        <img th:each="picture : ${dog.photos}" th:src="@{/${picture}}" alt="Dog Photo" class="img-thumbnail">
       </div>
     </div>
-    <div class="text-center mt-4">
-      <button class="btn btn-primary" onclick="editDogData()">Edit Dog Data</button>
-    </div>
+      <div class="dog-box">
+        <a th:href="@{/users/dogs/edit/{id}(id=${dog.id})}"></a>
+        <button class="btn btn-primary">Edytuj</button>
+
+        <a th:href="@{/users/dogs/delete/{id}(id=${dog.id})}"></a>
+        <button class="btn btn-primary">Usuń</button>
+
+      </div>
   </div>
 </div>
 <!-- Stopka -->
