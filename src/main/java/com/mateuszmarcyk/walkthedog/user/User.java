@@ -49,6 +49,9 @@ public class User {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "address")
+    private String address;
+
     @Column(name = "bio")
     private String bio;
 
@@ -90,10 +93,6 @@ public class User {
     )
     private List<WalkEvent> walkEvents;
 
-    public void addDog(Dog dog) {
-        dogs.add(dog);
-    }
-
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<FriendRequestNotification> friendRequestNotifications;
 
@@ -116,4 +115,8 @@ public class User {
 
     @OneToMany(mappedBy = "creator")
     private List<WalkEvent> createdWalkEvents;
+
+    public void addDog(Dog dog) {
+        dogs.add(dog);
+    }
 }

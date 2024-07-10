@@ -13,6 +13,8 @@ public interface UserService {
 
     User findUserByEmailJoinFetchDogs(String email);
 
+    User findUserByEmailFetchAll(String email);
+
     List<User> getAll();
 
     User register(RegistrationRequest request);
@@ -22,4 +24,6 @@ public interface UserService {
     void saveVerificationToken(User user, String verificationToken);
 
     String validateToken(String token);
+
+    User save(User user);
 }

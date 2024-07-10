@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{commonviewparts/metadata}"></th:block>
+    <title>Aplikacja do spacerów z psami - Edytuj profil</title>
+    <th:block th:replace="~{commonviewparts/css-styles-links.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/custom-styles-dashboard.css}">
+</head>
+
+<body>
+
+<!-- Navigation Bar -->
+<div th:insert="~{commonviewparts/dashboard-navbar :: navbar}"></div>
+
+<!-- Header Section -->
+<div class="header">
+    <h1>Edytuj Profil</h1>
+</div>
+
+<!-- Main Content -->
+<div class="main-content custom-container">
+    <button class="btn btn-secondary mb-3" onclick="history.back()">
+        <i class="fas fa-arrow-left"></i> Go Back
+    </button>
+    <!-- Profile Form -->
+    <div class="profile-form">
+        <form id="profileForm" th:action="@{/users/profile/edit}" th:method="POST" th:object="${user}">
+            <div class="form-group">
+                <label for="firstName">Imię</label>
+                <input type="text" class="form-control" id="firstName" th:field="${user.firstName}">
+            </div>
+            <div class="form-group">
+                <label for="lastName">Nazwisko</label>
+                <input type="text" class="form-control" id="lastName" th:field="${user.lastName}">
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" class="form-control" id="email" th:field="${user.email}">
+            </div>
+            <div class="form-group">
+                <label for="login">Nazwa użytkownika</label>
+                <input type="text" class="form-control" id="login" th:field="${user.username}">
+            </div>
+            <div class="form-group">
+                <label for="password">Hasło</label>
+                <input type="password" class="form-control" id="password" th:field="${user.password}">
+            </div>
+            <div class="form-group">
+                <label for="passwordRepeat">Powtórz hasło</label>
+                <input type="password" class="form-control" id="passwordRepeat" name="passwordRepeat">
+            </div>
+            <div class="form-group">
+                <label for="phone">Numer Telefonu</label>
+                <input type="text" class="form-control" id="phone" th:field="${user.phoneNumber}">
+            </div>
+            <div class="form-group">
+                <label for="address">Addres</label>
+                <input type="text" class="form-control" id="address" th:field="${user.address}">
+            </div>
+
+            <div class="form-group">
+                <label for="bio">Bio</label>
+                <input type="text" class="form-control" id="bio" th:field="${user.bio}">
+            </div>
+
+            <div class="form-group">
+                <label for="profilePhoto">Profile picture</label>
+                <input type="file" class="form-control" id="profilePhoto" th:field="${user.profileImageUrl}">
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="role" th:field="${user.appUserRole}">
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="enabled" th:field="${user.enabled}">
+            </div>
+
+            <div class="form-group">
+                <input type="hidden" class="form-control" id="id" th:field="${user.id}">
+            </div>
+
+            <div class="btn-container">
+                <button type="submit" class="btn btn-success" id="saveBtn">Zapisz
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+</div>
+<!-- Stopka -->
+<div th:insert="~{commonviewparts/footer :: footer}"></div>
+
+<th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+</body>
+</html>
+
+
