@@ -8,6 +8,7 @@ import com.mateuszmarcyk.walkthedog.registration.token.VerificationTokenReposito
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,10 +24,10 @@ public class UserServiceImpl implements UserService {
     private static final String USER_ALREADY_EXISTS_MESSAGE = "User with email '%s' already exists.";
 
     @Value("${resourceNotFoundExceptionMessage}")
-    private String getResourceNotFoundExceptionMessage;
-
-    @Value("${resourceNotFoundExceptionMessage}")
     private String resourceNotFoundExceptionMessage;
+
+    @Value("${userWithEmailNotFoundExceptionMessage}")
+    private String userWithEmailNotFoundExceptionMessage;
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -46,6 +47,15 @@ public class UserServiceImpl implements UserService {
 
         if (user == null) {
             throw new ResourceNotFoundException(resourceNotFoundExceptionMessage.formatted("User", id));
+        }
+        return user;
+    }
+
+    @Override
+    public User findUserByEmailJoinFetchDogs(String email) {
+        User user = userRepository.findUserJoinFetchDogs(email);
+        if (user == null) {
+            throw new UsernameNotFoundException(userWithEmailNotFoundExceptionMessage.formatted(email));
         }
         return user;
     }
