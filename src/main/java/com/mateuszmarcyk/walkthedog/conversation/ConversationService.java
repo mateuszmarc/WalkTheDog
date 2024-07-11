@@ -1,5 +1,10 @@
 package com.mateuszmarcyk.walkthedog.conversation;
 
+import com.mateuszmarcyk.walkthedog.conversation.dto.ConversationDto;
+import com.mateuszmarcyk.walkthedog.user.User;
+
+import java.util.List;
+
 public interface ConversationService {
 
     Conversation findById(Long id);
@@ -9,5 +14,7 @@ public interface ConversationService {
     Conversation save(Conversation conversation);
 
     Conversation deleteById(Long id);
+
+    public List<ConversationDto> getConversationDtos(User user);
 
 }

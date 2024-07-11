@@ -1,6 +1,8 @@
 package com.mateuszmarcyk.walkthedog.conversation;
 
+import com.mateuszmarcyk.walkthedog.conversation.dto.ConversationDto;
 import com.mateuszmarcyk.walkthedog.exception.ResourceNotFoundException;
+import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.user.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -65,5 +68,25 @@ public class ConversationServiceImpl implements ConversationService {
                     return foundConversation;
                 })
                 .orElseThrow(() -> new ResourceNotFoundException(resourceNotFoundExceptionMessage.formatted("Conversation", id)));
+    }
+
+    @Override
+    public List<ConversationDto> getConversationDtos(User user) {
+        return user.getConversations().stream().map(conversation ->
+        {
+            User firstUser = conversation.getUsers().get(0);
+            User secondUser = conversation.getUsers().get(1);
+
+            if (!conversation.getUsers().get(0).equals(user)) {
+                firstUser = conversation.getUsers().get(1);
+                secondUser = conversation.getUsers().get(0);
+            }
+
+            return new ConversationDto(
+                    conversation.getId(),
+                    firstUser,
+                    secondUser
+            );
+        }).toList();
     }
 }
