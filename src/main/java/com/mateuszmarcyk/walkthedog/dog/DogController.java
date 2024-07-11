@@ -22,10 +22,9 @@ public class DogController {
 
 
     @GetMapping("/users/dogs")
-    public String findAllDogsForUser(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String showAllDogsForUser(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        User user = userService.findUserByEmailJoinFetchDogs(userDetails.getUsername());
-        log.info("{}", user.getDogs());
+        User user = userService.findByEmailJoinFetchDogs(userDetails.getUsername());
         model.addAttribute("dogs", user.getDogs());
         return "user-dogs";
     }
@@ -57,7 +56,7 @@ public class DogController {
             String email = userDetails.getUsername();
             User dogOwner = userService.findByEmail(email);
             dog.setOwner(dogOwner);
-            dogService.add(dog);
+            dogService.save(dog);
             return "redirect:/users/dogs";
         }
     }
@@ -79,7 +78,7 @@ public class DogController {
 
 //        User user = userService.findUserByEmail(userDetails.getUsername());
 
-        dogService.delete(dogId);
+        dogService.deleteById(dogId);
         return "redirect:/users/dogs";
     }
 }
