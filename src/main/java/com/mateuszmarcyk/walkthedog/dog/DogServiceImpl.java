@@ -27,7 +27,19 @@ public class DogServiceImpl implements DogService{
     @Override
     public Dog save(Dog dog) {
         log.info(" New dog {}", dog);
-        return dogRepository.save(dog);
+
+        dogRepository.save(dog);
+
+        User user = dog.getOwner();
+
+        if (user != null) {
+            List<Dog> ownerDogs = user.getDogs();
+            if (!ownerDogs.contains(dog)) {
+                ownerDogs.add(dog);
+                userRepository.save(user);
+            }
+        }
+        return dog;
     }
 
     @Override
