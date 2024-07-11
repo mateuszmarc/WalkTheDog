@@ -1,6 +1,7 @@
 package com.mateuszmarcyk.walkthedog.message;
 
 import com.mateuszmarcyk.walkthedog.conversation.Conversation;
+import com.mateuszmarcyk.walkthedog.messagenotification.MessageNotification;
 import com.mateuszmarcyk.walkthedog.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -35,10 +36,17 @@ public class Message {
     @JoinColumn(name = "sender_id")
     private User sender;
 
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
+
     @Column(name = "content")
     private String content;
 
     @Column(name = "sent_at")
     private LocalDateTime sentAt;
+
+    @OneToOne(mappedBy = "message" , cascade = CascadeType.ALL)
+    private MessageNotification messageNotification;
 
 }

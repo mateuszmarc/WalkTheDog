@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter@Setter
@@ -28,24 +29,14 @@ public class Conversation {
             CascadeType.MERGE,
             CascadeType.REFRESH
     })
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     @Column(name = "created_ad")
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL)
-    private List<Message> messages;
+    private List<Message> messages = new ArrayList<>();
 
-
-    public void addUser(User user) {
-        users.add(user);
-        user.getConversations().add(this);
-    }
-
-    public void removeUser(User user) {
-        users.remove(user);
-        user.getConversations().remove(this);
-    }
 
     public void addMessage(Message message) {
         messages.add(message);
