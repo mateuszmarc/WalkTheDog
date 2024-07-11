@@ -48,7 +48,6 @@ public class FriendRequestServiceImpl implements FriendRequestService {
             throw new ResourceNotFoundException("Cannot save Friend Request Without Sender and Receiver");
         }
 
-
     }
 
     public FriendRequest deleteById(Long id) {
