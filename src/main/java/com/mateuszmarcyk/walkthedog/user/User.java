@@ -232,4 +232,28 @@ public class User {
         messageNotifications.remove(messageNotification);
         messageNotification.setReceiver(null);
     }
+
+    public void addCreatedWAlkEvent(WalkEvent walkEvent) {
+
+        createdWalkEvents.add(walkEvent);
+        walkEvent.setCreator(this);
+    }
+
+    public void removeCreatedWalkEvent(WalkEvent walkEvent) {
+
+        createdWalkEvents.remove(walkEvent);
+        walkEvent.setCreator(null);
+    }
+
+    public void addWalkEvent(WalkEvent walkEvent) {
+
+        walkEvents.add(walkEvent);
+        walkEvent.addParticipant(this);
+    }
+
+    public void removeWalkEvent(WalkEvent walkEvent) {
+
+        walkEvents.remove(walkEvent);
+        walkEvent.removeParticipant(this);
+    }
 }

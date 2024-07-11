@@ -2,10 +2,18 @@ package com.mateuszmarcyk.walkthedog.walkevent;
 
 import com.mateuszmarcyk.walkthedog.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "walk_event")
 public class WalkEvent {
@@ -15,7 +23,12 @@ public class WalkEvent {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    }
+    )
     @JoinColumn(name = "creator_id")
     private User creator;
 
@@ -32,4 +45,12 @@ public class WalkEvent {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private WalkStatus status;
+
+    public void addParticipant(User user) {
+        participants.add(user);
+    }
+
+    public void removeParticipant(User user) {
+        participants.remove(user);
+    }
 }
