@@ -46,4 +46,14 @@ public class Conversation {
         users.remove(user);
         user.getConversations().remove(this);
     }
+
+    public void addMessage(Message message) {
+        messages.add(message);
+        message.setConversation(this);
+    }
+
+    public void removeMessage(Message message) {
+        messages.remove(message);
+        message.setConversation(null);
+    }
 }
