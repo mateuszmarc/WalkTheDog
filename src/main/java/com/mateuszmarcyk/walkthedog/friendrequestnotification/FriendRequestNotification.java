@@ -1,9 +1,19 @@
-package com.mateuszmarcyk.walkthedog.notification;
+package com.mateuszmarcyk.walkthedog.friendrequestnotification;
 
 import com.mateuszmarcyk.walkthedog.friendrequest.FriendRequest;
+import com.mateuszmarcyk.walkthedog.notification.Notification;
+import com.mateuszmarcyk.walkthedog.notification.NotificationStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@NoArgsConstructor
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "friend_request_notification")
 public class FriendRequestNotification implements Notification {
@@ -17,7 +27,7 @@ public class FriendRequestNotification implements Notification {
     @JoinColumn(name = "receiver")
     private User receiver;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "friend_request")
     private FriendRequest friendRequest;
 
@@ -26,5 +36,9 @@ public class FriendRequestNotification implements Notification {
     private NotificationStatus status;
 
 
-
+    public FriendRequestNotification(User receiver, FriendRequest friendRequest, NotificationStatus status) {
+        this.receiver = receiver;
+        this.friendRequest = friendRequest;
+        this.status = status;
+    }
 }
