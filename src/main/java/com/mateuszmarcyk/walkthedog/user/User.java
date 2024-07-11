@@ -5,7 +5,8 @@ import com.mateuszmarcyk.walkthedog.conversation.Conversation;
 import com.mateuszmarcyk.walkthedog.dog.Dog;
 import com.mateuszmarcyk.walkthedog.friendrequest.FriendRequest;
 import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotification;
-import com.mateuszmarcyk.walkthedog.notification.MessageNotification;
+import com.mateuszmarcyk.walkthedog.message.Message;
+import com.mateuszmarcyk.walkthedog.messagenotification.MessageNotification;
 import com.mateuszmarcyk.walkthedog.notification.WalkEventInvitationNotification;
 import com.mateuszmarcyk.walkthedog.walkevent.WalkEvent;
 import com.mateuszmarcyk.walkthedog.walkinvitation.WalkInvitation;
@@ -74,6 +75,12 @@ public class User {
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<FriendRequest> receivedFriendRequests = new ArrayList<>();
+
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    private List<Message> sentMessages;
+
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    private List<Message> receivedMessages;
 
     @ManyToMany
     private List<User> friends = new ArrayList<>();
@@ -181,5 +188,48 @@ public class User {
         friendRequestNotifications.remove(friendRequestNotification);
         friendRequestNotification.setReceiver(null);
 
+    }
+
+    public void addSentMessage(Message message) {
+
+        sentMessages.add(message);
+
+    }
+
+    public void removeSentMessage(Message message) {
+        sentMessages.remove(message);
+
+    }
+
+    public void addReceivedMessage(Message message) {
+
+        receivedMessages.add(message);
+
+        MessageNotification messageNotification = message.getMessageNotification();
+
+        if (messageNotification != null) {
+            addMessageNotification(messageNotification);
+        }
+    }
+
+    public void removeReceivedMessage(Message message) {
+
+        receivedMessages.remove(message);
+        MessageNotification messageNotification = message.getMessageNotification();
+
+        if (messageNotification != null) {
+            removeMessageNotification(messageNotification);
+        }
+    }
+
+    public void addMessageNotification(MessageNotification messageNotification) {
+
+        messageNotifications.add(messageNotification);
+        messageNotification.setReceiver(this);
+    }
+
+    public void removeMessageNotification(MessageNotification messageNotification) {
+        messageNotifications.remove(messageNotification);
+        messageNotification.setReceiver(null);
     }
 }
