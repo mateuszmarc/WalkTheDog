@@ -4,7 +4,7 @@ package com.mateuszmarcyk.walkthedog.user;
 import com.mateuszmarcyk.walkthedog.conversation.Conversation;
 import com.mateuszmarcyk.walkthedog.dog.Dog;
 import com.mateuszmarcyk.walkthedog.friendrequest.FriendRequest;
-import com.mateuszmarcyk.walkthedog.notification.FriendRequestNotification;
+import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotification;
 import com.mateuszmarcyk.walkthedog.notification.MessageNotification;
 import com.mateuszmarcyk.walkthedog.notification.WalkEventInvitationNotification;
 import com.mateuszmarcyk.walkthedog.walkevent.WalkEvent;
@@ -143,6 +143,7 @@ public class User {
     public void removeReceivedFriendRequest(FriendRequest friendRequest) {
 
         receivedFriendRequests.remove(friendRequest);
+        removeFriendRequestNotification(friendRequest.getFriendRequestNotification());
         friendRequest.setReceiver(null);
     }
 
@@ -155,6 +156,11 @@ public class User {
     public void addReceivedFriendRequest(FriendRequest friendRequest) {
 
         receivedFriendRequests.add(friendRequest);
+
+        FriendRequestNotification notification =friendRequest.getFriendRequestNotification();
+        if (notification != null) {
+            addFriendRequestNotification(notification);
+        }
         friendRequest.setReceiver(this);
     }
 
@@ -162,5 +168,18 @@ public class User {
 
         sentFriendRequests.add(friendRequest);
         friendRequest.setSender(this);
+    }
+
+    public void addFriendRequestNotification(FriendRequestNotification notification) {
+
+        friendRequestNotifications.add(notification);
+        notification.setReceiver(this);
+    }
+
+    public void removeFriendRequestNotification(FriendRequestNotification friendRequestNotification) {
+
+        friendRequestNotifications.remove(friendRequestNotification);
+        friendRequestNotification.setReceiver(null);
+
     }
 }

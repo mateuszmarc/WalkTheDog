@@ -2,6 +2,9 @@ package com.mateuszmarcyk.walkthedog.friendrequest;
 
 import com.mateuszmarcyk.walkthedog.exception.ResourceNotFoundException;
 import com.mateuszmarcyk.walkthedog.friendrequest.enums.RequestStatus;
+import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotification;
+import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotificationRepository;
+import com.mateuszmarcyk.walkthedog.notification.NotificationStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +27,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 
     private final FriendRequestRepository friendRequestRepository;
     private final UserRepository userRepository;
+    private final FriendRequestNotificationRepository friendRequestNotificationRepository;
 
     @Override
     public FriendRequest save(FriendRequest friendRequest) {
@@ -35,8 +39,17 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 
             friendRequest.setRequestStatus(RequestStatus.PENDING);
 
+            FriendRequestNotification friendRequestNotification = new FriendRequestNotification(
+                    receiver,
+                    friendRequest,
+                    NotificationStatus.UNREAD
+            );
+
             sender.addSentFriendRequest(friendRequest);
+            friendRequest.setFriendRequestNotification(friendRequestNotification);
             receiver.addReceivedFriendRequest(friendRequest);
+
+            friendRequestNotificationRepository.save(friendRequestNotification);
 
             friendRequestRepository.save(friendRequest);
 
@@ -65,6 +78,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 
                sender.removeSentFriendRequest(foundRequest);
                receiver.removeReceivedFriendRequest(foundRequest);
+
                userRepository.save(sender);
                userRepository.save(receiver);
 

@@ -1,6 +1,7 @@
 package com.mateuszmarcyk.walkthedog.friendrequest;
 
 import com.mateuszmarcyk.walkthedog.friendrequest.enums.RequestStatus;
+import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotification;
 import com.mateuszmarcyk.walkthedog.user.User;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -51,4 +52,12 @@ public class FriendRequest {
     })
     @JoinColumn(name = "receiver_id")
     private User receiver;
+
+    @OneToOne(mappedBy = "friendRequest", cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    })
+    private FriendRequestNotification friendRequestNotification;
+
 }
