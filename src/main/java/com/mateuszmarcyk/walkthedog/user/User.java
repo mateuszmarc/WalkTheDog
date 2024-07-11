@@ -70,17 +70,19 @@ public class User {
     private List<Dog> dogs = new ArrayList<>();
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-    @Column(name = "sent_friend_request")
     private List<FriendRequest> sentFriendRequests = new ArrayList<>();
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    @Column(name = "received_friend_request")
     private List<FriendRequest> receivedFriendRequests = new ArrayList<>();
 
     @ManyToMany
     private List<User> friends = new ArrayList<>();
 
-    @ManyToMany
+    @ManyToMany(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    })
     @JoinTable(name = "users_conversations",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "conversation_id")
@@ -119,5 +121,15 @@ public class User {
 
     public void addDog(Dog dog) {
         dogs.add(dog);
+    }
+
+    public void addConversation(Conversation conversation) {
+        conversations.add(conversation);
+        conversation.getUsers().add(this);
+    }
+
+    public void removeConversation(Conversation conversation) {
+        conversations.remove(conversation);
+        conversation.getUsers().remove(this);
     }
 }
