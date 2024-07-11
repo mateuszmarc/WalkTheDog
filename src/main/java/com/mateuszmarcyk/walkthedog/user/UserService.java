@@ -15,6 +15,8 @@ public interface UserService {
 
     User findUserByEmailFetchFriends(String email);
 
+    User findByEmailFetchConversations(String email);
+
 
     List<User> getAll();
 

@@ -63,8 +63,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserByEmailFetchFriends(String email) {
+
         Optional<User> foundUser = userRepository.findUserByEmailFetchFriends(email);
         return foundUser.orElseThrow(() -> new ResourceNotFoundException(userWithEmailNotFoundExceptionMessage.formatted("User", email)));
+
+    }
+
+    @Override
+    public User findByEmailFetchConversations(String email) {
+
+        Optional<User> foundUser = userRepository.findByEmailFetchConversations(email);
+        return foundUser.orElseThrow(() -> new ResourceNotFoundException(userWithEmailNotFoundExceptionMessage.formatted("User", email)));
+
     }
 
     @Override
