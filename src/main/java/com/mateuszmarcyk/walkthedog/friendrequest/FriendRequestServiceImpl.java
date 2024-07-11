@@ -3,7 +3,7 @@ package com.mateuszmarcyk.walkthedog.friendrequest;
 import com.mateuszmarcyk.walkthedog.exception.ResourceNotFoundException;
 import com.mateuszmarcyk.walkthedog.friendrequest.enums.RequestStatus;
 import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotification;
-import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotificationRepository;
+import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotificationService;
 import com.mateuszmarcyk.walkthedog.notification.NotificationStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.user.UserRepository;
@@ -27,7 +27,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
 
     private final FriendRequestRepository friendRequestRepository;
     private final UserRepository userRepository;
-    private final FriendRequestNotificationRepository friendRequestNotificationRepository;
+    private final FriendRequestNotificationService friendRequestNotificationService;
 
     @Override
     public FriendRequest save(FriendRequest friendRequest) {
@@ -49,7 +49,7 @@ public class FriendRequestServiceImpl implements FriendRequestService {
             friendRequest.setFriendRequestNotification(friendRequestNotification);
             receiver.addReceivedFriendRequest(friendRequest);
 
-            friendRequestNotificationRepository.save(friendRequestNotification);
+            friendRequestNotificationService.save(friendRequestNotification);
 
             friendRequestRepository.save(friendRequest);
 
