@@ -140,31 +140,27 @@ public class User {
         dog.setOwner(null);
     }
 
-    public void rejectFriendRequest(FriendRequest friendRequest) {
+    public void removeReceivedFriendRequest(FriendRequest friendRequest) {
 
         receivedFriendRequests.remove(friendRequest);
-        friendRequest.setSender(null);
         friendRequest.setReceiver(null);
     }
 
-    public void cancelSentFriendRequest(FriendRequest friendRequest) {
+    public void removeSentFriendRequest(FriendRequest friendRequest) {
 
         sentFriendRequests.remove(friendRequest);
         friendRequest.setSender(null);
-        friendRequest.setReceiver(null);
     }
 
-    public void addReceivedFriendRequest(FriendRequest friendRequest, User sender) {
+    public void addReceivedFriendRequest(FriendRequest friendRequest) {
 
         receivedFriendRequests.add(friendRequest);
         friendRequest.setReceiver(this);
-        friendRequest.setSender(sender);
     }
 
-    public void addSentFriendRequest(FriendRequest friendRequest, User receiver) {
+    public void addSentFriendRequest(FriendRequest friendRequest) {
 
         sentFriendRequests.add(friendRequest);
-        friendRequest.setReceiver(receiver);
         friendRequest.setSender(this);
     }
 }
