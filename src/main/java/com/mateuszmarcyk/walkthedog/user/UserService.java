@@ -9,11 +9,11 @@ public interface UserService {
 
     User findById(Long id);
 
-    User findUserByIdJoinFetchDogs(Long id);
+    User findByIdJoinFetchDogs(Long id);
 
-    User findUserByEmailJoinFetchDogs(String email);
+    User findByEmailJoinFetchDogs(String email);
 
-    User findUserByEmailFetchFriends(String email);
+    User findByEmailFetchFriends(String email);
 
     User findByEmailFetchConversations(String email);
 

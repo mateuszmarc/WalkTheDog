@@ -35,7 +35,7 @@ private final UserService userService;
 
         String email = userDetails.getUsername();
 
-        User user = userService.findUserByEmailJoinFetchDogs(email);
+        User user = userService.findByEmailJoinFetchDogs(email);
 
         model.addAttribute("user", user);
 
@@ -69,7 +69,7 @@ private final UserService userService;
 
         String email = userDetails.getUsername();
 
-        User user = userService.findUserByEmailFetchFriends(email);
+        User user = userService.findByEmailFetchFriends(email);
 
         log.info(user.toString());
         model.addAttribute("user", user);

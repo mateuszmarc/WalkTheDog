@@ -119,9 +119,6 @@ public class User {
     @OneToMany(mappedBy = "creator")
     private List<WalkEvent> createdWalkEvents = new ArrayList<>();
 
-    public void addDog(Dog dog) {
-        dogs.add(dog);
-    }
 
     public void addConversation(Conversation conversation) {
         conversations.add(conversation);
@@ -131,5 +128,15 @@ public class User {
     public void removeConversation(Conversation conversation) {
         conversations.remove(conversation);
         conversation.getUsers().remove(this);
+    }
+
+    public void addDog(Dog dog) {
+        dogs.add(dog);
+        dog.setOwner(this);
+    }
+
+    public void removeDog(Dog dog) {
+        dogs.remove(dog);
+        dog.setOwner(null);
     }
 }

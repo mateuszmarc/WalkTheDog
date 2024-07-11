@@ -11,14 +11,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
 @Slf4j
-@Service
 @RequiredArgsConstructor
+@Transactional
+@Service
 public class UserServiceImpl implements UserService {
 
     private static final String USER_ALREADY_EXISTS_MESSAGE = "User with email '%s' already exists.";
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByIdJoinFetchDogs(Long id) {
+    public User findByIdJoinFetchDogs(Long id) {
         User user = userRepository.findUserJoinFetchDogs(id);
 
         if (user == null) {
@@ -52,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findUserByEmailJoinFetchDogs(String email) {
+    public User findByEmailJoinFetchDogs(String email) {
         User user = userRepository.findUserJoinFetchDogs(email);
         if (user == null) {
             throw new UsernameNotFoundException(userWithEmailNotFoundExceptionMessage.formatted(email));
@@ -62,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User findUserByEmailFetchFriends(String email) {
+    public User findByEmailFetchFriends(String email) {
 
         Optional<User> foundUser = userRepository.findUserByEmailFetchFriends(email);
         return foundUser.orElseThrow(() -> new ResourceNotFoundException(userWithEmailNotFoundExceptionMessage.formatted("User", email)));

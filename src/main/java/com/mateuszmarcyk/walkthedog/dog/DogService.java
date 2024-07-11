@@ -4,12 +4,12 @@ import java.util.List;
 
 public interface DogService {
 
-    Dog add(Dog dog);
+    Dog save(Dog dog);
 
     Dog findById(Long id);
 
     List<Dog> getAll();
 
-    Dog delete(Long id);
+    Dog deleteById(Long id);
 
 }

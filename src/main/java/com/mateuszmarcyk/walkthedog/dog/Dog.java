@@ -93,13 +93,13 @@ public class Dog {
     @OneToMany(cascade = CascadeType.ALL)
     private List<DogPhoto> photos;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    })
     @JoinColumn(name = "owner_id")
     private User owner;
 
 
-    public void setOwner(User user) {
-        this.owner = user;
-        owner.addDog(this);
-    }
 }
