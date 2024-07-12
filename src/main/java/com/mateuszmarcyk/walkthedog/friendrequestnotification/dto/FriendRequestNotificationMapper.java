@@ -1,7 +1,6 @@
-package com.mateuszmarcyk.walkthedog.friendrequestnotification.mapper;
+package com.mateuszmarcyk.walkthedog.friendrequestnotification.dto;
 
 import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotification;
-import com.mateuszmarcyk.walkthedog.friendrequestnotification.dto.FriendRequestNotificationDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
