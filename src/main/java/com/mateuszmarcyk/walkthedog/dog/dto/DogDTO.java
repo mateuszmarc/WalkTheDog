@@ -1,11 +1,10 @@
-package com.mateuszmarcyk.walkthedog.dog;
+package com.mateuszmarcyk.walkthedog.dog.dto;
 
 import com.mateuszmarcyk.walkthedog.dog.dogenums.ActivityLevel;
 import com.mateuszmarcyk.walkthedog.dog.dogenums.Gender;
-import com.mateuszmarcyk.walkthedog.dogphoto.DogPhoto;
-import com.mateuszmarcyk.walkthedog.dogphoto.DogProfilePhoto;
-import com.mateuszmarcyk.walkthedog.user.User;
-import jakarta.persistence.*;
+import com.mateuszmarcyk.walkthedog.dogphoto.dto.DogPhotoDTO;
+import com.mateuszmarcyk.walkthedog.dogphoto.dto.DogProfilePhotoDTO;
+import com.mateuszmarcyk.walkthedog.user.dto.UserDTO;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,91 +14,64 @@ import lombok.ToString;
 import java.time.LocalDate;
 import java.util.List;
 
+
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-@Entity
-@Table(name = "dog")
-public class Dog {
+public class DogDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Long id;
 
     @NotNull(message = "Imię jest wymagane")
     @Size(min = 1, message = "Imię jest wymagane")
-    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "breed")
     private String breed;
 
     @NotNull(message = "Ta informacja jest wymagana")
     @Past(message = "Data urodzenia musi być z przeszłości")
-    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
     @NotNull(message = "Płeć jest wymagana")
-    @Column(name = "gender", nullable = false)
-    @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @NotNull(message = "Ta informacja jest wymagana")
-    @Column(name = "spayed", nullable = false)
     private Boolean spayed;
 
     @NotNull(message = "Ta informacja jest wymagana")
     @Min(value = 1, message = "Wpisz poprawną wagę, większą niż 1kg")
     @Max(value = 80, message = "Wpisz poprawną wagę, mniejsza niż 80kg")
-    @Column(name = "weight", nullable = false)
     private double weight;
 
     @NotNull(message = "Ta informacja jest wymagana")
     @Min(value = 15, message = "Wpisz poprawną wagę, większą niż 5cm")
-    @Column(name = "height", nullable = false)
     private double height;
 
-    @Column(name = "preferred_activities")
     private String preferredActivities;
 
     @NotNull(message = "Ta informacja jest wymagana")
-    @Column(name = "activity_level", nullable = false)
-    @Enumerated(EnumType.STRING)
     private ActivityLevel activityLevel;
 
-    @Column(name = "general_behaviour")
     private String generalBehaviour;
 
     @NotNull(message = "Ta informacja jest wymagana")
-    @Column(name = "training_level", nullable = false)
     private int trainingLevel;
 
     @NotNull(message = "Ta informacja jest wymagana")
-    @Column(name = "socialization_level", nullable = false)
     private int socializationLevel;
 
-    @Column(name = "behavioral_issues")
+
     private String behavioralIssues;
 
-    @Column(name = "triggers")
     private String triggers;
 
-    @Column(name = "microchip_number")
     private String microChipNumber;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "profile_photo_id")
-    private DogProfilePhoto profilePhoto;
+    private DogProfilePhotoDTO profilePhoto;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<DogPhoto> photos;
+    private List<DogPhotoDTO> photos;
 
-    @ManyToOne(cascade = {
-            CascadeType.DETACH,
-            CascadeType.REFRESH
-    })
-    @JoinColumn(name = "owner_id")
-    private User owner;
+    private UserDTO owner;
 }
+

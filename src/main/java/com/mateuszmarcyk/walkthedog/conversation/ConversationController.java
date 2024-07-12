@@ -1,6 +1,7 @@
 package com.mateuszmarcyk.walkthedog.conversation;
 
-import com.mateuszmarcyk.walkthedog.conversation.dto.ConversationDto;
+
+import com.mateuszmarcyk.walkthedog.conversation.dto.ConversationDTO;
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.user.UserService;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +31,7 @@ public class ConversationController {
 
         User user = userService.findByEmailFetchConversations(email);
 
-        List<ConversationDto> conversationDTOs = conversationService.getConversationDtos(user);
+        List<ConversationDTO> conversationDTOs = conversationService.getConversationDtos(user);
 
         model.addAttribute("conversations", conversationDTOs);
         model.addAttribute("user", user);

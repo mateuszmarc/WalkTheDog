@@ -1,4 +1,4 @@
-package com.mateuszmarcyk.walkthedog.dogfunfact;
+package com.mateuszmarcyk.walkthedog.dogfunfact.dto;
 
 import jakarta.persistence.*;
 

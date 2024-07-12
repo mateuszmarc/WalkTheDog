@@ -46,7 +46,7 @@
     </div>
     <div class="info-group">
       <label>Wysokość  cm:</label>
-      <p th:height="${dog.height}" id="dogHeight">Height</p>
+      <p th:text="${dog.height}" id="dogHeight">Height</p>
     </div>
     <div class="info-group">
       <label>Preferowana aktywność:</label>
@@ -88,8 +88,9 @@
       </div>
     </div>
       <div class="dog-box">
-        <a th:href="@{/users/dogs/edit/{id}(id=${dog.id})}"></a>
-        <button class="btn btn-primary">Edytuj</button>
+        <a th:href="@{/users/dogs/edit/{id}(id=${dog.id})}">
+          <button class="btn btn-primary">Edytuj</button>
+        </a>
 
         <a th:href="@{/users/dogs/delete/{id}(id=${dog.id})}">
           <button class="btn btn-danger btn-sm" onclick="confirmAction()">Usuń</button>
