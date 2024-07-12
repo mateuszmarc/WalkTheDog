@@ -37,7 +37,11 @@ public class WalkEventInvitation {
     @Column(name = "responded_at")
     private LocalDateTime respondedAt;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    })
     @JoinColumn(name = "walk_event")
     private WalkEvent walkEvent;
 

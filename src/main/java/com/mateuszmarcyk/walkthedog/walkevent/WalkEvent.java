@@ -8,6 +8,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -53,4 +54,12 @@ public class WalkEvent {
     public void removeParticipant(User user) {
         participants.remove(user);
     }
+
+
+    @ManyToMany(mappedBy = "walkEventsUserIsInvitedFor", cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    })
+    private List<User> invitedUsers = new ArrayList<>();
 }

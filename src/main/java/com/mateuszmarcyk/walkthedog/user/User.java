@@ -7,9 +7,9 @@ import com.mateuszmarcyk.walkthedog.friendrequest.FriendRequest;
 import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotification;
 import com.mateuszmarcyk.walkthedog.message.Message;
 import com.mateuszmarcyk.walkthedog.messagenotification.MessageNotification;
-import com.mateuszmarcyk.walkthedog.walkinvitationnotification.WalkEventInvitationNotification;
 import com.mateuszmarcyk.walkthedog.walkevent.WalkEvent;
 import com.mateuszmarcyk.walkthedog.walkeventinvitation.WalkEventInvitation;
+import com.mateuszmarcyk.walkthedog.walkinvitationnotification.WalkEventInvitationNotification;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
@@ -102,6 +102,16 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "walk_event_id")
     )
     private List<WalkEvent> walkEvents = new ArrayList<>();
+
+    @ManyToMany(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    })
+    @JoinTable(name = "users_walk_events_invited_for",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "walk_event_id"))
+    private List<WalkEvent> walkEventsUserIsInvitedFor;
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FriendRequestNotification> friendRequestNotifications = new ArrayList<>();
@@ -278,4 +288,13 @@ public class User {
         walkEventInvitationNotifications.remove(invitationNotification);
     }
 
+
+    public void addWalkEventUserIsInvitedFor(WalkEvent walkEvent) {
+        walkEventsUserIsInvitedFor.add(walkEvent);
+
+    }
+
+    public void removeWalkEventsUserIsInvitedFor(WalkEvent walkEvent) {
+        walkEventsUserIsInvitedFor.remove(walkEvent);
+    }
 }
