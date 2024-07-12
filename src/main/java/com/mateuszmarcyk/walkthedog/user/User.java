@@ -124,6 +124,15 @@ public class User {
     private List<WalkEvent> createdWalkEvents = new ArrayList<>();
 
 
+    public User(String firstName, String lastName, String username, String email, String password, String userRole) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.appUserRole = userRole;
+    }
+
     public void addConversation(Conversation conversation) {
         conversations.add(conversation);
         conversation.getUsers().add(this);
