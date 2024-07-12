@@ -27,6 +27,20 @@ public class WalkEventServiceImpl implements WalkEventService {
     private final UserService userService;
 
     @Override
+    public WalkEvent findById(Long id) {
+        Optional<WalkEvent> walkEvent = walkEventRepository.findById(id);
+
+        return walkEvent.orElseThrow(() -> new ResourceNotFoundException(resourceNotFoundExceptionMessage.formatted("Walk Event", id)));
+    }
+
+    @Override
+    public WalkEvent findByIdFetchParticipants(Long id) {
+        Optional<WalkEvent> walkEvent = walkEventRepository.findByIdFetchParticipants(id);
+
+        return walkEvent.orElseThrow(() -> new ResourceNotFoundException(resourceNotFoundExceptionMessage.formatted("Walk Event", id)));
+    }
+
+    @Override
     public WalkEvent save(WalkEvent walkEvent) {
         User creator = walkEvent.getCreator();
         List<User> participants = walkEvent.getParticipants();
@@ -44,30 +58,23 @@ public class WalkEventServiceImpl implements WalkEventService {
 
     @Override
     public WalkEvent removeById(Long id) {
-        Optional<WalkEvent> walkEvent = walkEventRepository.findById(id);
+        WalkEvent walkEvent = findByIdFetchParticipants(id);
 
-        return walkEvent.map(foundWalkEvent -> {
 
-                    User creator = foundWalkEvent.getCreator();
-                    List<User> participants = foundWalkEvent.getParticipants();
+        User creator = walkEvent.getCreator();
+        List<User> participants = walkEvent.getParticipants();
 
-                    creator.removeCreatedWalkEvent(foundWalkEvent);
+        creator.removeCreatedWalkEvent(walkEvent);
 
                     participants.forEach(participant -> {
 
-                        participant.removeWalkEvent(foundWalkEvent);
+                        participant.removeWalkEvent(walkEvent);
                         userService.save(participant);
                     });
 
-                    walkEventRepository.delete(foundWalkEvent);
-                    return foundWalkEvent;
-                })
-                .orElseThrow(() -> new ResourceNotFoundException(resourceNotFoundExceptionMessage.formatted("Walk Event", id)));
+        walkEventRepository.delete(walkEvent);
+        return walkEvent;
 
     }
 
-    @Override
-    public WalkEvent remove(WalkEvent walkEvent) {
-        return null;
-    }
 }
