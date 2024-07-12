@@ -93,15 +93,14 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException(USER_ALREADY_EXISTS_MESSAGE.formatted(request.getEmail()));
         }
 
-        User user = new User();
-
-        user.setFirstName(request.getFirstName());
-        user.setLastName(request.getLastName());
-        user.setUsername(request.getUsername());
-        user.setEmail(request.getEmail());
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setAppUserRole(request.getRole());
-
+        User user = new User(
+                request.getFirstName(),
+                request.getLastName(),
+                request.getUsername(),
+                request.getEmail(),
+                passwordEncoder.encode(request.getPassword()),
+                request.getRole()
+        );
 
         return userRepository.save(user);
     }
