@@ -45,24 +45,7 @@ public class DogController {
         return "user-dog-form";
     }
 
-    @PostMapping("/users/dogs/addDog")
-    private String processDogForm(@Valid @ModelAttribute("dog") Dog dog,
-                                  @AuthenticationPrincipal UserDetails userDetails,
-                                  BindingResult bindingResult) {
-
-        if (bindingResult.hasErrors()) {
-            return "index";
-        } else {
-            String email = userDetails.getUsername();
-            User dogOwner = userService.findByEmail(email);
-            dog.setOwner(dogOwner);
-            dogService.save(dog);
-            return "redirect:/users/dogs";
-        }
-    }
-
-
-    @GetMapping("/editDog/{dogId}")
+    @GetMapping("/users/dogs/edit/{dogId}")
     private String showEditDogForm(@PathVariable Long dogId, Model model) {
 
         Dog dog = dogService.findById(dogId);
@@ -73,12 +56,30 @@ public class DogController {
 
     }
 
-    @DeleteMapping("/deleteDog/{dogId}")
-    private String deleteDogById( @PathVariable Long dogId) {
+    @PostMapping("/users/dogs/dogForm")
+    private String processDogForm(@Valid @ModelAttribute("dog") Dog dog,
+                                  @AuthenticationPrincipal UserDetails userDetails,
+                                  BindingResult bindingResult) {
 
-//        User user = userService.findUserByEmail(userDetails.getUsername());
+        if (bindingResult.hasErrors()) {
+            return "index";
+        } else {
+            String email = userDetails.getUsername();
+            User dogOwner = userService.findByEmail(email);
 
-        dogService.deleteById(dogId);
+            dogService.save(dog, dogOwner);
+            return "redirect:/users/dogs";
+        }
+    }
+
+
+
+    @GetMapping("/users/dogs/delete/{dogId}")
+    private String deleteDogById(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long dogId) {
+
+        User user = userService.findByEmail(userDetails.getUsername());
+
+        dogService.deleteById(dogId, user);
         return "redirect:/users/dogs";
     }
 }

@@ -9,6 +9,8 @@ public interface UserService {
 
     User findById(Long id);
 
+    User findByEmail(String email);
+
     User findByIdJoinFetchDogs(Long id);
 
     User findByEmailJoinFetchDogs(String email);
@@ -21,8 +23,6 @@ public interface UserService {
     List<User> getAll();
 
     User register(RegistrationRequest request);
-
-    User findByEmail(String email);
 
     void saveVerificationToken(User user, String verificationToken);
 

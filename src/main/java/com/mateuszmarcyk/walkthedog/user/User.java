@@ -67,7 +67,11 @@ public class User {
     private Boolean enabled = false;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", cascade = {
+            CascadeType.REFRESH,
+            CascadeType.REMOVE,
+            CascadeType.DETACH
+    }, orphanRemoval = true)
     private List<Dog> dogs = new ArrayList<>();
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -144,13 +148,13 @@ public class User {
     }
 
     public void addDog(Dog dog) {
+        dogs.removeIf(dog1 -> dog1.getId().equals(dog.getId()));
         dogs.add(dog);
-        dog.setOwner(this);
     }
 
+
     public void removeDog(Dog dog) {
-        dogs.remove(dog);
-        dog.setOwner(null);
+        dogs.removeIf(dog1 -> dog1.getId().equals(dog.getId()));
     }
 
     public void removeReceivedFriendRequest(FriendRequest friendRequest) {

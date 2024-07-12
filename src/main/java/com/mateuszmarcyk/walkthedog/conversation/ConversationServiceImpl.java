@@ -1,6 +1,6 @@
 package com.mateuszmarcyk.walkthedog.conversation;
 
-import com.mateuszmarcyk.walkthedog.conversation.dto.ConversationDto;
+import com.mateuszmarcyk.walkthedog.conversation.dto.ConversationDTO;
 import com.mateuszmarcyk.walkthedog.exception.ResourceNotFoundException;
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.user.UserServiceImpl;
@@ -71,22 +71,27 @@ public class ConversationServiceImpl implements ConversationService {
     }
 
     @Override
-    public List<ConversationDto> getConversationDtos(User user) {
-        return user.getConversations().stream().map(conversation ->
-        {
-            User firstUser = conversation.getUsers().get(0);
-            User secondUser = conversation.getUsers().get(1);
-
-            if (!conversation.getUsers().get(0).equals(user)) {
-                firstUser = conversation.getUsers().get(1);
-                secondUser = conversation.getUsers().get(0);
-            }
-
-            return new ConversationDto(
-                    conversation.getId(),
-                    firstUser,
-                    secondUser
-            );
-        }).toList();
+    public List<ConversationDTO> getConversationDtos(User user) {
+        return null;
     }
+
+//    @Override
+//    public List<ConversationDto> getConversationDtos(User user) {
+//        return user.getConversations().stream().map(conversation ->
+//        {
+//            User firstUser = conversation.getUsers().get(0);
+//            User secondUser = conversation.getUsers().get(1);
+//
+//            if (!conversation.getUsers().get(0).equals(user)) {
+//                firstUser = conversation.getUsers().get(1);
+//                secondUser = conversation.getUsers().get(0);
+//            }
+//
+//            return new ConversationDto(
+//                    conversation.getId(),
+//                    firstUser,
+//                    secondUser
+//            );
+//        }).toList();
+//    }
 }

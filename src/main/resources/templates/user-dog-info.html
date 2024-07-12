@@ -46,7 +46,7 @@
     </div>
     <div class="info-group">
       <label>Wysokość  cm:</label>
-      <p th:height="${dog.height}" id="dogHeight">Height</p>
+      <p th:text="${dog.height}" id="dogHeight">Height</p>
     </div>
     <div class="info-group">
       <label>Preferowana aktywność:</label>
@@ -88,11 +88,13 @@
       </div>
     </div>
       <div class="dog-box">
-        <a th:href="@{/users/dogs/edit/{id}(id=${dog.id})}"></a>
-        <button class="btn btn-primary">Edytuj</button>
+        <a th:href="@{/users/dogs/edit/{id}(id=${dog.id})}">
+          <button class="btn btn-primary">Edytuj</button>
+        </a>
 
-        <a th:href="@{/users/dogs/delete/{id}(id=${dog.id})}"></a>
-        <button class="btn btn-primary">Usuń</button>
+        <a th:href="@{/users/dogs/delete/{id}(id=${dog.id})}">
+          <button class="btn btn-danger btn-sm" onclick="confirmAction()">Usuń</button>
+        </a>
 
       </div>
   </div>
@@ -101,6 +103,20 @@
 <div th:insert="~{commonviewparts/footer :: footer}"></div>
 
 <th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+
+<script type="text/javascript">
+  function confirmAction() {
+    const confirmed = confirm("Czy jesteś tego pewien?");
+    if (confirmed) {
+      // Action confirmed
+      alert("Usunięto pomyślnie!");
+    } else {
+      // Action canceled
+      alert("Akcja przerwana.");
+    }
+  }
+</script>
+
 </body>
 </html>
 
