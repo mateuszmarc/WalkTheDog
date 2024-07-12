@@ -1,10 +1,14 @@
 package com.mateuszmarcyk.walkthedog.user;
 
+import com.mateuszmarcyk.walkthedog.dog.dto.DogDTO;
+import com.mateuszmarcyk.walkthedog.dog.dto.DogMapper;
 import com.mateuszmarcyk.walkthedog.exception.ResourceNotFoundException;
 import com.mateuszmarcyk.walkthedog.exception.UserAlreadyExistsException;
 import com.mateuszmarcyk.walkthedog.registration.RegistrationRequest;
 import com.mateuszmarcyk.walkthedog.registration.token.VerificationToken;
 import com.mateuszmarcyk.walkthedog.registration.token.VerificationTokenRepository;
+import com.mateuszmarcyk.walkthedog.user.dto.UserDTO;
+import com.mateuszmarcyk.walkthedog.user.dto.UserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +38,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final VerificationTokenRepository verificationTokenRepository;
+    private final UserMapper userMapper;
+    private final DogMapper dogMapper;
 
 
     @Override
@@ -54,12 +60,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmailJoinFetchDogs(String email) {
+    public UserDTO findByEmailJoinFetchDogs(String email) {
         User user = userRepository.findUserJoinFetchDogs(email);
         if (user == null) {
             throw new UsernameNotFoundException(userWithEmailNotFoundExceptionMessage.formatted(email));
         }
-        return user;
+
+        UserDTO userDTO =  userMapper.toDTO(user);
+        List<DogDTO> dogDTOs = user.getDogs().stream().map(dogMapper::toDTO).toList();
+        userDTO.setDogsDto(dogDTOs);
+        return userDTO;
+
     }
 
 
