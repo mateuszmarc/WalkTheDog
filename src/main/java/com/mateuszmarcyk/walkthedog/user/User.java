@@ -7,9 +7,9 @@ import com.mateuszmarcyk.walkthedog.friendrequest.FriendRequest;
 import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotification;
 import com.mateuszmarcyk.walkthedog.message.Message;
 import com.mateuszmarcyk.walkthedog.messagenotification.MessageNotification;
-import com.mateuszmarcyk.walkthedog.notification.WalkEventInvitationNotification;
+import com.mateuszmarcyk.walkthedog.walkinvitationnotification.WalkEventInvitationNotification;
 import com.mateuszmarcyk.walkthedog.walkevent.WalkEvent;
-import com.mateuszmarcyk.walkthedog.walkinvitation.WalkInvitation;
+import com.mateuszmarcyk.walkthedog.walkeventinvitation.WalkEventInvitation;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
@@ -67,19 +67,19 @@ public class User {
     private Boolean enabled = false;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Dog> dogs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FriendRequest> sentFriendRequests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FriendRequest> receivedFriendRequests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> sentMessages;
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> receivedMessages;
 
     @ManyToMany
@@ -103,27 +103,24 @@ public class User {
     )
     private List<WalkEvent> walkEvents = new ArrayList<>();
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FriendRequestNotification> friendRequestNotifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WalkEventInvitationNotification> walkEventInvitationNotifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MessageNotification> messageNotifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    private List<WalkInvitation> walkInvitations = new ArrayList<>();
-
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-    private List<WalkInvitation> sentWalkInvitations = new ArrayList<>();
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WalkEventInvitation> sentWalkEventInvitations = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    private List<WalkInvitation> receivedWalkInvitations = new ArrayList<>();
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<WalkEventInvitation> receivedWalkEventInvitations = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "creator")
+    @OneToMany(mappedBy = "creator", orphanRemoval = true)
     private List<WalkEvent> createdWalkEvents = new ArrayList<>();
 
 
@@ -256,4 +253,29 @@ public class User {
         walkEvents.remove(walkEvent);
         walkEvent.removeParticipant(this);
     }
+
+    public void addSentWalkInvitation(WalkEventInvitation walkEventInvitation) {
+        sentWalkEventInvitations.add(walkEventInvitation);
+    }
+
+    public void removeSentWalkInvitation(WalkEventInvitation walkEventInvitation) {
+        receivedWalkEventInvitations.remove(walkEventInvitation);
+    }
+
+    public void addReceivedWalkInvitation(WalkEventInvitation walkEventInvitation) {
+        receivedWalkEventInvitations.add(walkEventInvitation);
+    }
+
+    public void removeReceivedWalkInvitation(WalkEventInvitation walkEventInvitation) {
+        receivedWalkEventInvitations.remove(walkEventInvitation);
+    }
+
+    public void addWalkInvitationNotification(WalkEventInvitationNotification invitationNotification) {
+        walkEventInvitationNotifications.add(invitationNotification);
+    }
+
+    public void removeWalkInvitationNotification(WalkEventInvitationNotification invitationNotification) {
+        walkEventInvitationNotifications.remove(invitationNotification);
+    }
+
 }
