@@ -7,7 +7,7 @@ import com.mateuszmarcyk.walkthedog.friendrequest.FriendRequest;
 import com.mateuszmarcyk.walkthedog.friendrequestnotification.FriendRequestNotification;
 import com.mateuszmarcyk.walkthedog.message.Message;
 import com.mateuszmarcyk.walkthedog.messagenotification.MessageNotification;
-import com.mateuszmarcyk.walkthedog.notification.WalkEventInvitationNotification;
+import com.mateuszmarcyk.walkthedog.walkinvitationnotification.WalkEventInvitationNotification;
 import com.mateuszmarcyk.walkthedog.walkevent.WalkEvent;
 import com.mateuszmarcyk.walkthedog.walkinvitation.WalkInvitation;
 import jakarta.persistence.*;
@@ -269,4 +269,9 @@ public class User {
     public void removeReceivedWalkInvitation(WalkInvitation walkInvitation) {
         receivedWalkInvitations.remove(walkInvitation);
     }
+
+    public void addWalkInvitationNotification(WalkEventInvitationNotification invitationNotification) {
+        walkEventInvitationNotifications.add(invitationNotification);
+    }
+
 }

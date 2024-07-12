@@ -1,5 +1,7 @@
-package com.mateuszmarcyk.walkthedog.notification;
+package com.mateuszmarcyk.walkthedog.walkinvitationnotification;
 
+import com.mateuszmarcyk.walkthedog.notification.Notification;
+import com.mateuszmarcyk.walkthedog.notification.NotificationStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.walkinvitation.WalkInvitation;
 import jakarta.persistence.*;
