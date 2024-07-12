@@ -67,19 +67,19 @@ public class User {
     private Boolean enabled = false;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Dog> dogs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FriendRequest> sentFriendRequests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FriendRequest> receivedFriendRequests = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> sentMessages;
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Message> receivedMessages;
 
     @ManyToMany
@@ -103,24 +103,24 @@ public class User {
     )
     private List<WalkEvent> walkEvents = new ArrayList<>();
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FriendRequestNotification> friendRequestNotifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WalkEventInvitationNotification> walkEventInvitationNotifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MessageNotification> messageNotifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WalkEventInvitation> sentWalkEventInvitations = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WalkEventInvitation> receivedWalkEventInvitations = new ArrayList<>();
 
 
-    @OneToMany(mappedBy = "creator")
+    @OneToMany(mappedBy = "creator", orphanRemoval = true)
     private List<WalkEvent> createdWalkEvents = new ArrayList<>();
 
 
@@ -272,6 +272,10 @@ public class User {
 
     public void addWalkInvitationNotification(WalkEventInvitationNotification invitationNotification) {
         walkEventInvitationNotifications.add(invitationNotification);
+    }
+
+    public void removeWalkInvitationNotification(WalkEventInvitationNotification invitationNotification) {
+        walkEventInvitationNotifications.remove(invitationNotification);
     }
 
 }

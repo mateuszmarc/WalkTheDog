@@ -62,12 +62,27 @@ public class WalkEventInvitationServiceImpl implements WalkEventInvitationServic
 
     @Override
     public WalkEventInvitation deleteById(Long id) {
-        return null;
 
+        WalkEventInvitation walkEventInvitation = findById(id);
+
+        User sender = walkEventInvitation.getSender();
+        User receiver = walkEventInvitation.getReceiver();
+        WalkEventInvitationNotification walkEventInvitationNotification = walkEventInvitation.getWalkEventInvitationNotification();
+
+        sender.removeSentWalkInvitation(walkEventInvitation);
+
+        receiver.removeReceivedWalkInvitation(walkEventInvitation);
+        if (walkEventInvitationNotification != null) {
+            receiver.removeWalkInvitationNotification(walkEventInvitationNotification);
+        }
+
+        userService.save(sender);
+        userService.save(receiver);
+        return walkEventInvitation;
     }
 
     @Override
-    public WalkEventInvitation delete(WalkEventInvitation walkinvitation) {
+    public WalkEventInvitation delete(WalkEventInvitation walkEventInvitation) {
         return null;
     }
 }
