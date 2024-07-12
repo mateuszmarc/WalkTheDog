@@ -3,9 +3,17 @@ package com.mateuszmarcyk.walkthedog.walkinvitationnotification;
 import com.mateuszmarcyk.walkthedog.notification.Notification;
 import com.mateuszmarcyk.walkthedog.notification.NotificationStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
-import com.mateuszmarcyk.walkthedog.walkinvitation.WalkInvitation;
+import com.mateuszmarcyk.walkthedog.walkeventinvitation.WalkEventInvitation;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "walk_event_invitation_notification")
 public class WalkEventInvitationNotification implements Notification {
@@ -25,5 +33,11 @@ public class WalkEventInvitationNotification implements Notification {
 
     @OneToOne
     @JoinColumn(name = "walk_invitation")
-    private WalkInvitation invitation;
+    private WalkEventInvitation invitation;
+
+    public WalkEventInvitationNotification(User receiver, WalkEventInvitation invitation) {
+        this.receiver = receiver;
+        this.status = NotificationStatus.UNREAD;
+        this.invitation = invitation;
+    }
 }

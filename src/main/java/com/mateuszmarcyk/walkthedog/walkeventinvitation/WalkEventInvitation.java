@@ -1,8 +1,9 @@
-package com.mateuszmarcyk.walkthedog.walkinvitation;
+package com.mateuszmarcyk.walkthedog.walkeventinvitation;
 
 import com.mateuszmarcyk.walkthedog.friendrequest.enums.RequestStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.walkevent.WalkEvent;
+import com.mateuszmarcyk.walkthedog.walkinvitationnotification.WalkEventInvitationNotification;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "walk_invitation")
-public class WalkInvitation {
+public class WalkEventInvitation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,4 +57,6 @@ public class WalkInvitation {
     @JoinColumn(name = "receiver")
     private User receiver;
 
+    @OneToOne(mappedBy = "invitation", cascade = CascadeType.ALL)
+    private WalkEventInvitationNotification walkEventInvitationNotification;
 }

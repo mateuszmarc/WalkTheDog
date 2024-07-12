@@ -9,7 +9,7 @@ import com.mateuszmarcyk.walkthedog.message.Message;
 import com.mateuszmarcyk.walkthedog.messagenotification.MessageNotification;
 import com.mateuszmarcyk.walkthedog.walkinvitationnotification.WalkEventInvitationNotification;
 import com.mateuszmarcyk.walkthedog.walkevent.WalkEvent;
-import com.mateuszmarcyk.walkthedog.walkinvitation.WalkInvitation;
+import com.mateuszmarcyk.walkthedog.walkeventinvitation.WalkEventInvitation;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
@@ -113,11 +113,11 @@ public class User {
     private List<MessageNotification> messageNotifications = new ArrayList<>();
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
-    private List<WalkInvitation> sentWalkInvitations = new ArrayList<>();
+    private List<WalkEventInvitation> sentWalkEventInvitations = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    private List<WalkInvitation> receivedWalkInvitations = new ArrayList<>();
+    private List<WalkEventInvitation> receivedWalkEventInvitations = new ArrayList<>();
 
 
     @OneToMany(mappedBy = "creator")
@@ -254,20 +254,20 @@ public class User {
         walkEvent.removeParticipant(this);
     }
 
-    public void addSentWalkInvitation(WalkInvitation walkInvitation) {
-        sentWalkInvitations.add(walkInvitation);
+    public void addSentWalkInvitation(WalkEventInvitation walkEventInvitation) {
+        sentWalkEventInvitations.add(walkEventInvitation);
     }
 
-    public void removeSentWalkInvitation(WalkInvitation walkInvitation) {
-        receivedWalkInvitations.remove(walkInvitation);
+    public void removeSentWalkInvitation(WalkEventInvitation walkEventInvitation) {
+        receivedWalkEventInvitations.remove(walkEventInvitation);
     }
 
-    public void addReceivedWalkInvitation(WalkInvitation walkInvitation) {
-        receivedWalkInvitations.add(walkInvitation);
+    public void addReceivedWalkInvitation(WalkEventInvitation walkEventInvitation) {
+        receivedWalkEventInvitations.add(walkEventInvitation);
     }
 
-    public void removeReceivedWalkInvitation(WalkInvitation walkInvitation) {
-        receivedWalkInvitations.remove(walkInvitation);
+    public void removeReceivedWalkInvitation(WalkEventInvitation walkEventInvitation) {
+        receivedWalkEventInvitations.remove(walkEventInvitation);
     }
 
     public void addWalkInvitationNotification(WalkEventInvitationNotification invitationNotification) {
