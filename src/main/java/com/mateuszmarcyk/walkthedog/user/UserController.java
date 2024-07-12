@@ -1,5 +1,6 @@
 package com.mateuszmarcyk.walkthedog.user;
 
+import com.mateuszmarcyk.walkthedog.user.dto.UserDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -35,9 +36,9 @@ private final UserService userService;
 
         String email = userDetails.getUsername();
 
-        User user = userService.findByEmailJoinFetchDogs(email);
+        UserDTO userDTO = userService.findByEmailJoinFetchDogs(email);
 
-        model.addAttribute("user", user);
+        model.addAttribute("user", userDTO);
 
         return "user-profile";
 

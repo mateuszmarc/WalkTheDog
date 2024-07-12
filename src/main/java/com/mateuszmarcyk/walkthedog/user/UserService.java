@@ -1,6 +1,7 @@
 package com.mateuszmarcyk.walkthedog.user;
 
 import com.mateuszmarcyk.walkthedog.registration.RegistrationRequest;
+import com.mateuszmarcyk.walkthedog.user.dto.UserDTO;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ public interface UserService {
 
     User findByIdJoinFetchDogs(Long id);
 
-    User findByEmailJoinFetchDogs(String email);
+    UserDTO findByEmailJoinFetchDogs(String email);
 
     User findByEmailFetchFriends(String email);
 
