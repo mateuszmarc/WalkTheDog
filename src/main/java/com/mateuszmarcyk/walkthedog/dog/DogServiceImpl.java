@@ -2,7 +2,7 @@ package com.mateuszmarcyk.walkthedog.dog;
 
 import com.mateuszmarcyk.walkthedog.exception.ResourceNotFoundException;
 import com.mateuszmarcyk.walkthedog.user.User;
-import com.mateuszmarcyk.walkthedog.user.UserRepository;
+import com.mateuszmarcyk.walkthedog.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,24 +22,28 @@ public class DogServiceImpl implements DogService{
     private String resourceNotFoundExceptionMessage;
 
     private final DogRepository dogRepository;
-    private final UserRepository userRepository;
+    private final UserService userService;
+
 
     @Override
     public Dog save(Dog dog) {
+
+        return dogRepository.save(dog);
+    }
+
+    @Override
+    public Dog save(Dog dog, User user) {
+
         log.info(" New dog {}", dog);
 
-        dogRepository.save(dog);
-
-        User user = dog.getOwner();
-
         if (user != null) {
-            List<Dog> ownerDogs = user.getDogs();
-            if (!ownerDogs.contains(dog)) {
-                ownerDogs.add(dog);
-                userRepository.save(user);
-            }
+            user.addDog(dog);
         }
-        return dog;
+
+        dogRepository.save(dog);
+        userService.save(user);
+
+        return save(dog);
     }
 
     @Override
@@ -55,14 +59,16 @@ public class DogServiceImpl implements DogService{
     }
 
     @Override
-    public Dog deleteById(Long id) {
+    public Dog deleteById(Long id, User user) {
+        
         Optional<Dog> dog = dogRepository.findById(id);
 
         return dog.map(foundDog -> {
-                    User owner = foundDog.getOwner();
-                    foundDog.getOwner().removeDog(foundDog);
+                    user.removeDog(foundDog);
+                    foundDog.setOwner(null);
 
-                    userRepository.save(owner);
+                    userService.save(user);
+                    
                     dogRepository.delete(foundDog);
                     return foundDog;
                 })

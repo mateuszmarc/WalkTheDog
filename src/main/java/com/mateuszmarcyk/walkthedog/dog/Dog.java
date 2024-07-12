@@ -54,7 +54,7 @@ public class Dog {
     @Column(name = "weight")
     private double weight;
 
-    @Min(value = 5, message = "Wpisz poprawną wagę, większą niż 5cm")
+    @Min(value = 15, message = "Wpisz poprawną wagę, większą niż 5cm")
     @Column(name = "height")
     private double height;
 
@@ -95,7 +95,6 @@ public class Dog {
 
     @ManyToOne(cascade = {
             CascadeType.DETACH,
-            CascadeType.MERGE,
             CascadeType.REFRESH
     })
     @JoinColumn(name = "owner_id")
