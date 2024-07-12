@@ -112,9 +112,6 @@ public class User {
     @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
     private List<MessageNotification> messageNotifications = new ArrayList<>();
 
-    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
-    private List<WalkInvitation> walkInvitations = new ArrayList<>();
-
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
     private List<WalkInvitation> sentWalkInvitations = new ArrayList<>();
 
@@ -255,5 +252,21 @@ public class User {
 
         walkEvents.remove(walkEvent);
         walkEvent.removeParticipant(this);
+    }
+
+    public void addSentWalkInvitation(WalkInvitation walkInvitation) {
+        sentWalkInvitations.add(walkInvitation);
+    }
+
+    public void removeSentWalkInvitation(WalkInvitation walkInvitation) {
+        receivedWalkInvitations.remove(walkInvitation);
+    }
+
+    public void addReceivedWalkInvitation(WalkInvitation walkInvitation) {
+        receivedWalkInvitations.add(walkInvitation);
+    }
+
+    public void removeReceivedWalkInvitation(WalkInvitation walkInvitation) {
+        receivedWalkInvitations.remove(walkInvitation);
     }
 }

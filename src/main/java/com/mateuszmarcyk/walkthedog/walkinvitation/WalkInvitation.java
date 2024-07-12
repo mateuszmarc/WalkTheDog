@@ -4,9 +4,19 @@ import com.mateuszmarcyk.walkthedog.friendrequest.enums.RequestStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.walkevent.WalkEvent;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 import java.time.LocalDateTime;
 
+@Slf4j
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
 @Entity
 @Table(name = "walk_invitation")
 public class WalkInvitation {
@@ -26,15 +36,23 @@ public class WalkInvitation {
     @Column(name = "responded_at")
     private LocalDateTime respondedAt;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "walk_event")
     private WalkEvent walkEvent;
 
-    @ManyToOne
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    })
     @JoinColumn(name = "sender")
     private User sender;
 
-    @ManyToOne
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    })
     @JoinColumn(name = "receiver")
     private User receiver;
 
