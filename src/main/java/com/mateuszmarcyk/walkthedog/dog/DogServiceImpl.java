@@ -34,6 +34,7 @@ public class DogServiceImpl implements DogService {
     @Override
     public DogDTO save(DogDTO dogDto, User user) {
 
+        log.info("{}", dogDto);
         Dog dog = dogMapper.toEntity(dogDto);
 
         log.info(" New dog {}", dog);

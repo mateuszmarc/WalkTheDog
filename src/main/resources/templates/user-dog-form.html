@@ -104,6 +104,8 @@
         <label for="dogMicrochip">Numer microchipu</label>
         <input type="text" class="form-control" id="dogMicrochip" th:field="*{microChipNumber}">
       </div>
+
+      <input type="hidden" th:field="${dog.id}">
       <div class="btn-container">
         <button type="submit" class="btn btn-success" id="saveDogBtn">Zapisz</button>
       </div>
