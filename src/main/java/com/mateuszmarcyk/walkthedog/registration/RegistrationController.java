@@ -31,7 +31,7 @@ public class RegistrationController {
     public String displayRegistrationForm(Model model) {
         model.addAttribute("request", new RegistrationRequest());
 
-        return "register-form";
+        return "app-register-form";
     }
 
     @PostMapping
@@ -42,7 +42,7 @@ public class RegistrationController {
         User user = userService.register(request);
 
         publisher.publishEvent(new RegistrationCompleteEvent(user, applicationUrl(httpServletRequest)));
-        return "register-email-info";
+        return "app-register-email-info";
     }
 
     public String applicationUrl(HttpServletRequest httpServletRequest) {

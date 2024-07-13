@@ -45,7 +45,7 @@ private final UserService userService;
 
         model.addAttribute("userDTO", userDTO);
 
-        return "dashboard";
+        return "user-dashboard";
     }
 
     @GetMapping("/profile")

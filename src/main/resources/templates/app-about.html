@@ -11,7 +11,8 @@
 </head>
 <body>
 
-<div th:insert="~{commonviewparts/index-navbar :: navbar}"></div>
+<div th:if="${authenticated == true}" th:insert="~{commonviewparts/user-logged-index-navbar :: navbar}"></div>
+<div th:unless="${authenticated == true}" th:insert="~{commonviewparts/index-navbar :: navbar}"></div>
 
 <!-- About App Section -->
 <section class="container py-5">
