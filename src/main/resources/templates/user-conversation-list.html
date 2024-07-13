@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <th:block th:replace="~{commonviewparts/metadata}"></th:block>
+  <title>Aplikacja do spacerów z psami - wiadomości</title>
+  <th:block th:replace="~{commonviewparts/css-styles-links.html}"></th:block>
+  <link rel="stylesheet" th:href="@{/css/custom-styles-dashboard.css}">
+</head>
+
+<body>
+
+<div class="wrapper">
+  <!-- Navigation Bar -->
+  <div th:insert="~{commonviewparts/dashboard-navbar :: navbar}"></div>
+
+  <!-- Main Content -->
+  <div class="content container py-5">
+    <button class="btn btn-secondary mb-3" onclick="history.back()">
+      <i class="fas fa-arrow-left"></i> Go Back
+    </button>
+    <h2 class="mb-4">Rozmowy</h2>
+    <div class="message-item" th:each="conversation : ${conversations}">
+      <div class="message-info">
+        <p>Rozmowa z <strong th:text="${conversation.user2}"></strong></p>
+      </div>
+      <div class="message-actions">
+        <a th:href="@{/users/conversation/messages}" class="btn btn-primary btn-sm">Zobacz rozmowę</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- Stopka -->
+<div th:insert="~{commonviewparts/footer :: footer}"></div>
+
+<th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+</body>
+</html>

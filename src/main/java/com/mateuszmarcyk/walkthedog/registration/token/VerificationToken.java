@@ -2,9 +2,11 @@ package com.mateuszmarcyk.walkthedog.registration.token;
 
 import com.mateuszmarcyk.walkthedog.user.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Value;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -12,11 +14,13 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "verification_token")
 public class VerificationToken {
 
-    private static final int EXPIRATION_TIME = 15;
+    @Value("${tokenExpirationTime}")
+    private int TOKEN_EXPIRATION_TIME;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,12 +49,12 @@ public class VerificationToken {
         this.expirationTime = getTokenExpirationTime();
     }
 
-    private static Date getTokenExpirationTime() {
+    private Date getTokenExpirationTime() {
         Calendar calendar = Calendar.getInstance();
 
         calendar.setTimeInMillis(new Date().getTime());
 
-        calendar.add(Calendar.MINUTE, EXPIRATION_TIME);
+        calendar.add(Calendar.MINUTE, TOKEN_EXPIRATION_TIME);
 
         return new Date(calendar.getTime().getTime());
     }

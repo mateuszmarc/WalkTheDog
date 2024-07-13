@@ -1,11 +1,20 @@
 package com.mateuszmarcyk.walkthedog.message;
 
 import com.mateuszmarcyk.walkthedog.conversation.Conversation;
+import com.mateuszmarcyk.walkthedog.messagenotification.MessageNotification;
 import com.mateuszmarcyk.walkthedog.user.User;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
+@Setter
+@Getter
+@ToString
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -15,7 +24,11 @@ public class Message {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    })
     @JoinColumn(name = "conversation_id")
     private Conversation conversation;
 
@@ -23,10 +36,17 @@ public class Message {
     @JoinColumn(name = "sender_id")
     private User sender;
 
+    @ManyToOne
+    @JoinColumn(name = "receiver_id")
+    private User receiver;
+
     @Column(name = "content")
     private String content;
 
     @Column(name = "sent_at")
     private LocalDateTime sentAt;
+
+    @OneToOne(mappedBy = "message" , cascade = CascadeType.ALL)
+    private MessageNotification messageNotification;
 
 }
