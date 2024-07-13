@@ -3,6 +3,7 @@ package com.mateuszmarcyk.walkthedog.walkevent;
 
 import com.mateuszmarcyk.walkthedog.exception.ResourceNotFoundException;
 import com.mateuszmarcyk.walkthedog.user.User;
+import com.mateuszmarcyk.walkthedog.user.UserRepository;
 import com.mateuszmarcyk.walkthedog.user.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @Service
 public class WalkEventServiceImpl implements WalkEventService {
 
+    private final UserRepository userRepository;
     @Value("${resourceNotFoundExceptionMessage}")
     private String resourceNotFoundExceptionMessage;
 
@@ -46,11 +48,11 @@ public class WalkEventServiceImpl implements WalkEventService {
         List<User> participants = walkEvent.getParticipants();
 
         creator.addCreatedWAlkEvent(walkEvent);
-        userService.save(creator);
+        userRepository.save(creator);
 
         participants.forEach(participant -> {
             participant.addWalkEvent(walkEvent);
-            userService.save(participant);
+            userRepository.save(participant);
         });
 
         return walkEventRepository.save(walkEvent);
@@ -69,7 +71,7 @@ public class WalkEventServiceImpl implements WalkEventService {
                     participants.forEach(participant -> {
 
                         participant.removeWalkEvent(walkEvent);
-                        userService.save(participant);
+                        userRepository.save(participant);
                     });
 
         walkEventRepository.delete(walkEvent);

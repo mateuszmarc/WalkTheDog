@@ -2,12 +2,16 @@ package com.mateuszmarcyk.walkthedog.user;
 
 import com.mateuszmarcyk.walkthedog.user.dto.UserDTO;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +23,13 @@ import java.util.List;
 public class UserController {
 
 private final UserService userService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
+
 
     @GetMapping
     @ResponseBody
@@ -57,19 +68,32 @@ private final UserService userService;
         String email = userDetails.getUsername();
         UserDTO userDTO = userService.findByEmail(email);
 
-        model.addAttribute("user", userDTO);
+        model.addAttribute("userDTO", userDTO);
 
         return "user-edit-form";
     }
 
     @PostMapping("/profile/edit")
-    public String processForm(@ModelAttribute User user) {
+    public String processForm(@Valid @ModelAttribute UserDTO userDTO,
+                              BindingResult bindingResult,
+                              @AuthenticationPrincipal UserDetails userDetails) {
 
-        log.info("Updated user form: {}", user);
+        String email = userDetails.getUsername();
 
-        userService.save(user);
+        User loggedInUser = userService.findUserByEmail(email);
 
-        return "redirect:/users/dashboard";
+        if (bindingResult.hasErrors()) {
+
+            bindingResult.getAllErrors().forEach(error -> log.info("{}", error.toString()));
+
+            return "user-edit-form";
+        }
+
+        log.info("Updated user form: {}", userDTO);
+
+        userService.save(loggedInUser, userDTO);
+
+        return "redirect:/users/profile/edit";
     }
 
     @GetMapping("/friends")
@@ -85,30 +109,27 @@ private final UserService userService;
         return "user-friends";
     }
 
+
     @PostMapping("/profile/editPassword")
-    private String changePassword(@AuthenticationPrincipal UserDetails userDetails, HttpServletRequest request, Model model) {
+    private String changePassword(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, @AuthenticationPrincipal UserDetails userDetails, HttpServletRequest request, Model model) {
 
         User user = userService.findUserByEmail(userDetails.getUsername());
 
-        String plainPassword = request.getParameter("password");
+        String plainPassword = userDTO.getPassword();
         String plainPasswordRepeat = request.getParameter("passwordRepeat");
 
         String info = "Niepowodzenie. Hasła muszą być identyczne";
 
 
         if (plainPassword.equals(plainPasswordRepeat)) {
-          UserDTO userDTO = userService.updatePassword(user, plainPassword);
 
-          model.addAttribute("user", userDTO);
+            if (!bindingResult.hasErrors()) {
 
-             info = "Sukces. Hasło zostało zmienione";
+                userService.changePassword(user, plainPassword);
 
+                info = "Sukces. Hasło zostało zmienione";
+            }
         }
-
-        UserDTO userDTO = userService.findByEmail(userDetails.getUsername());
-
-
-        model.addAttribute("user", userDTO);
 
 
         model.addAttribute("info", info);

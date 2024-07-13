@@ -11,6 +11,9 @@ import com.mateuszmarcyk.walkthedog.walkinvitationnotification.WalkEventInvitati
 import com.mateuszmarcyk.walkthedog.walkevent.WalkEvent;
 import com.mateuszmarcyk.walkthedog.walkeventinvitation.WalkEventInvitation;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.NaturalId;
 
@@ -31,20 +34,26 @@ public class User {
     @Column(name = "id")
     private Long id;
 
+    @NotNull(message = "Imię jest wymagane")
     @Column(name = "first_name")
     private String firstName;
 
     @Column(name = "last_name")
     private String lastName;
 
-
+    @NotNull(message = "Nazwa użytkownika jest wymagana")
+    @Size(min = 3, max = 20, message = "Nazwa użytkownika musi mieć od 3 do 20 znaków")
     @Column(name = "username", unique = true)
     private String username;
 
+    @NotNull(message = "Email jest wymagany")
+    @Email(message = "Niepoprawny email")
     @NaturalId(mutable = true)
     @Column(name = "email")
     private String email;
 
+    @NotNull(message = "Hasło nie może być puste")
+    @Size(min = 6, message = "Hasło musi mieć co najmniej 6 znaków")
     @Column(name = "password")
     private String password;
 

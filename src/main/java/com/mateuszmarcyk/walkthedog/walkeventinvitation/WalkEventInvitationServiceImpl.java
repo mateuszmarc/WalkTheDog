@@ -2,6 +2,7 @@ package com.mateuszmarcyk.walkthedog.walkeventinvitation;
 
 import com.mateuszmarcyk.walkthedog.exception.ResourceNotFoundException;
 import com.mateuszmarcyk.walkthedog.user.User;
+import com.mateuszmarcyk.walkthedog.user.UserRepository;
 import com.mateuszmarcyk.walkthedog.user.UserService;
 import com.mateuszmarcyk.walkthedog.walkinvitationnotification.WalkEventInvitationNotification;
 import jakarta.transaction.Transactional;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @Service
 public class WalkEventInvitationServiceImpl implements WalkEventInvitationService {
 
+    private final UserRepository userRepository;
     @Value("${resourceNotFoundExceptionMessage}")
     private String resourceNotFoundExceptionMessage;
 
@@ -52,8 +54,8 @@ public class WalkEventInvitationServiceImpl implements WalkEventInvitationServic
             walkEventInvitation.setReceiver(receiver);
             receiver.addWalkInvitationNotification(notification);
 
-            userService.save(sender);
-            userService.save(receiver);
+            userRepository.save(sender);
+            userRepository.save(receiver);
             return walkEventInvitation;
         } else {
             throw new ResourceNotFoundException("Walk event needs to have sender and receiver assigned");
@@ -76,8 +78,8 @@ public class WalkEventInvitationServiceImpl implements WalkEventInvitationServic
             receiver.removeWalkInvitationNotification(walkEventInvitationNotification);
         }
 
-        userService.save(sender);
-        userService.save(receiver);
+        userRepository.save(sender);
+        userRepository.save(receiver);
         return walkEventInvitation;
     }
 

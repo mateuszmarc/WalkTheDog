@@ -33,7 +33,7 @@ public interface UserService {
 
     String validateToken(String token);
 
-    UserDTO save(User user);
+    UserDTO save(User user, UserDTO userDTO);
 
-    UserDTO updatePassword(User user, String password);
+    UserDTO changePassword(User user, String password);
 }
