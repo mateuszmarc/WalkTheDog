@@ -67,11 +67,7 @@ public class User {
     private Boolean enabled = false;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "owner", cascade = {
-            CascadeType.REFRESH,
-            CascadeType.REMOVE,
-            CascadeType.DETACH
-    }, orphanRemoval = true)
+    @OneToMany(mappedBy = "owner", cascade = {CascadeType.ALL}, orphanRemoval = true)
     private List<Dog> dogs = new ArrayList<>();
 
     @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, orphanRemoval = true)

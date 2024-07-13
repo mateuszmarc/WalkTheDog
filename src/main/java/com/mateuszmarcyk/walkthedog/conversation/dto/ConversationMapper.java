@@ -4,7 +4,7 @@ import com.mateuszmarcyk.walkthedog.conversation.Conversation;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ConversationMapper {
     ConversationMapper INSTANCE = Mappers.getMapper(ConversationMapper.class);
 

@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface DogService {
 
-    DogDTO save(DogDTO dogDTO);
 
     DogDTO save(DogDTO dogDTO, User user);
 

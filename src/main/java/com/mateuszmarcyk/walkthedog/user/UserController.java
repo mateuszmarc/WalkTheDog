@@ -21,12 +21,18 @@ private final UserService userService;
 
     @GetMapping
     @ResponseBody
-    public List<User> findAll() {
-        return userService.getAll();
+    public List<UserDTO> findAll() {
+        return userService.findAll();
     }
 
     @GetMapping("/dashboard")
-    public String displayDashboard(@AuthenticationPrincipal UserDetails userDetails) {
+    public String displayDashboard(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+
+        String email = userDetails.getUsername();
+
+        UserDTO userDTO = userService.findByEmail(email);
+
+        model.addAttribute("userDTO", userDTO);
 
         return "dashboard";
     }
@@ -48,9 +54,9 @@ private final UserService userService;
     public String showUserEditForm(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
         String email = userDetails.getUsername();
-        User user = userService.findByEmail(email);
+        UserDTO userDTO = userService.findByEmail(email);
 
-        model.addAttribute("user", user);
+        model.addAttribute("user", userDTO);
 
         return "user-edit-form";
     }
@@ -70,10 +76,10 @@ private final UserService userService;
 
         String email = userDetails.getUsername();
 
-        User user = userService.findByEmailFetchFriends(email);
+        UserDTO userDTO = userService.findByEmailFetchFriends(email);
 
-        log.info(user.toString());
-        model.addAttribute("user", user);
+        log.info(userDTO.toString());
+        model.addAttribute("user", userDTO);
 
         return "user-friends";
     }

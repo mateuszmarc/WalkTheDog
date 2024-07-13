@@ -75,7 +75,7 @@ public class DogController {
 
         } else {
             String email = userDetails.getUsername();
-            User dogOwner = userService.findByEmail(email);
+            User dogOwner = userService.findUserByEmail(email);
 
             dogService.save(dogDTO, dogOwner);
             return "redirect:/users/dogs";
@@ -87,7 +87,7 @@ public class DogController {
     @GetMapping("/users/dogs/delete/{dogId}")
     private String deleteDogById(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long dogId) {
 
-        User user = userService.findByEmail(userDetails.getUsername());
+        User user = userService.findUserByEmail(userDetails.getUsername());
 
         dogService.deleteById(dogId, user);
         return "redirect:/users/dogs";
