@@ -31,7 +31,7 @@ public class RegistrationController {
     public String displayRegistrationForm(Model model) {
         model.addAttribute("request", new RegistrationRequest());
 
-        return "register";
+        return "register-form";
     }
 
     @PostMapping
