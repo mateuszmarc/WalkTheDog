@@ -6,6 +6,7 @@ import com.mateuszmarcyk.walkthedog.messagenotification.MessageNotification;
 import com.mateuszmarcyk.walkthedog.messagenotification.MessageNotificationService;
 import com.mateuszmarcyk.walkthedog.notification.NotificationStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
+import com.mateuszmarcyk.walkthedog.user.UserRepository;
 import com.mateuszmarcyk.walkthedog.user.UserService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class MessageServiceImpl implements MessageService {
 
 
     private final UserService userService;
+    private final UserRepository userRepository;
     @Value("${spring.mail.properties.mail.smtp.starttls.required}")
     private String resourceNotFoundExceptionMessage;
 
@@ -60,8 +62,8 @@ public class MessageServiceImpl implements MessageService {
         conversation.addMessage(message);
 
 
-        userService.save(sender);
-        userService.save(receiver);
+        userRepository.save(sender);
+        userRepository.save(receiver);
 
         return message;
     }
@@ -89,8 +91,8 @@ public class MessageServiceImpl implements MessageService {
                 }
                 messageRepository.deleteById(id);
 
-                userService.save(sender);
-                userService.save(receiver);
+                userRepository.save(sender);
+                userRepository.save(receiver);
 
                 return foundMessage;
             } else {

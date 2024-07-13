@@ -74,7 +74,7 @@ public class DogServiceImpl implements DogService {
                     user.removeDog(foundDog);
                     foundDog.setOwner(null);
 
-                    userService.save(user);
+                    userRepository.save(user);
                     
 //                    dogRepository.delete(foundDog);
                     return dogMapper.toDTO(foundDog);

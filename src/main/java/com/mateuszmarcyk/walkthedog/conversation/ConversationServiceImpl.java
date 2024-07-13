@@ -3,6 +3,7 @@ package com.mateuszmarcyk.walkthedog.conversation;
 import com.mateuszmarcyk.walkthedog.conversation.dto.ConversationDTO;
 import com.mateuszmarcyk.walkthedog.exception.ResourceNotFoundException;
 import com.mateuszmarcyk.walkthedog.user.User;
+import com.mateuszmarcyk.walkthedog.user.UserRepository;
 import com.mateuszmarcyk.walkthedog.user.UserServiceImpl;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import java.util.Optional;
 @Service
 public class ConversationServiceImpl implements ConversationService {
 
+    private final UserRepository userRepository;
     @Value("${resourceNotFoundExceptionMessage}")
     private String resourceNotFoundExceptionMessage;
 
@@ -46,7 +48,7 @@ public class ConversationServiceImpl implements ConversationService {
         conversation.getUsers().forEach(user -> {
             if (!user.getConversations().contains(conversation)) {
                 user.addConversation(conversation);
-                userService.save(user);
+                userRepository.save(user);
             }
         });
 
@@ -62,7 +64,7 @@ public class ConversationServiceImpl implements ConversationService {
 
                     foundConversation.getUsers().forEach(user -> {
                         user.removeConversation(foundConversation);
-                        userService.save(user);
+                        userRepository.save(user);
                     });
                     conversationRepository.deleteById(id);
                     return foundConversation;

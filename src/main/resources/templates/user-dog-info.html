@@ -92,8 +92,8 @@
           <button class="btn btn-primary">Edytuj</button>
         </a>
 
-        <a th:href="@{/users/dogs/delete/{id}(id=${dog.id})}">
-          <button class="btn btn-danger btn-sm" onclick="confirmAction()">Usuń</button>
+        <a th:href="@{/users/dogs/delete/{id}(id=${dog.id})}" class="delete-link">
+          <button class="btn btn-danger btn-sm">Usuń</button>
         </a>
 
       </div>
@@ -105,16 +105,19 @@
 <th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
 
 <script type="text/javascript">
-  function confirmAction() {
-    const confirmed = confirm("Czy jesteś tego pewien?");
-    if (confirmed) {
-      // Action confirmed
-      alert("Usunięto pomyślnie!");
-    } else {
-      // Action canceled
-      alert("Akcja przerwana.");
-    }
-  }
+  document.addEventListener("DOMContentLoaded", function() {
+    document.querySelectorAll('.delete-link').forEach(function(element) {
+      element.addEventListener('click', function(event) {
+        const confirmed = confirm("Czy jesteś tego pewien?");
+        if (!confirmed) {
+          event.preventDefault(); // Prevent the default link behavior
+          alert("Akcja przerwana.");
+        } else {
+          alert("Usunięto pomyślnie!");
+        }
+      });
+    });
+  });
 </script>
 
 </body>

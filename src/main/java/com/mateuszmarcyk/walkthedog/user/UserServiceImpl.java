@@ -198,15 +198,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO save(User user) {
+    public UserDTO save(User user, UserDTO userDTO) {
 
-//        String plainPassword = user.getPassword();
-//
-//        user.setPassword(passwordEncoder.encode(plainPassword));
+        setUserFieldsFromUserDTO(user, userDTO);
 
-       User saved = userRepository.save(user);
+        User saved = userRepository.save(user);
        return userMapper.toDTO(saved);
 
+    }
+
+    private static void setUserFieldsFromUserDTO(User user, UserDTO userDTO) {
+        user.setFirstName(userDTO.getFirstName());
+        user.setLastName(userDTO.getLastName());
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+        user.setPhoneNumber(userDTO.getPhoneNumber());
+        user.setAddress(userDTO.getAddress());
+        user.setBio(userDTO.getBio());
+        user.setProfileImageUrl(userDTO.getProfileImageUrl());
+    }
+
+    @Override
+    public UserDTO changePassword(User user, String password) {
+
+        String encodedPassword = passwordEncoder.encode(password);
+        user.setPassword(encodedPassword);
+
+        userRepository.save(user);
+
+        return userMapper.toDTO(user);
     }
 
 
