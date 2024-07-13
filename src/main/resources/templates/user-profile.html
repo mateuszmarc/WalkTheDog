@@ -34,7 +34,7 @@
         <section class="dogs-section container py-5">
             <h4 class="text-center mb-4">Moje Psy</h4>
             <div class="row">
-                <div class="dog-box" th:each="dog : ${user.dogs}">
+                <div class="dog-box" th:each="dog : ${user.dogsDto}">
                     <img alt="Dog picture" th:src="${dog.profilePhoto}">
                     <h5 th:text="${dog.name}"></h5>
                     <a th:href="@{/users/dogs/{id}(id=${dog.id})}">
