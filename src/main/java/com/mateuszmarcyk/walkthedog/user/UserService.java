@@ -8,20 +8,24 @@ import java.util.List;
 
 public interface UserService {
 
-    User findById(Long id);
+    List<UserDTO> findAll();
 
-    User findByEmail(String email);
+    UserDTO findById(Long id);
 
-    User findByIdJoinFetchDogs(Long id);
+    User findUserById(Long id);
+
+    UserDTO findByEmail(String email);
+
+    User findUserByEmail(String email);
+
+    UserDTO findByIdJoinFetchDogs(Long id);
 
     UserDTO findByEmailJoinFetchDogs(String email);
 
-    User findByEmailFetchFriends(String email);
+    UserDTO findByEmailFetchFriends(String email);
 
-    User findByEmailFetchConversations(String email);
+    UserDTO findByEmailFetchConversations(String email);
 
-
-    List<User> getAll();
 
     User register(RegistrationRequest request);
 
@@ -29,5 +33,5 @@ public interface UserService {
 
     String validateToken(String token);
 
-    User save(User user);
+    UserDTO save(User user);
 }

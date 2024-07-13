@@ -97,6 +97,7 @@ public class Dog {
     private List<DogPhoto> photos;
 
     @ManyToOne(cascade = {
+            CascadeType.MERGE,
             CascadeType.DETACH,
             CascadeType.REFRESH
     })

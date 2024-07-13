@@ -29,14 +29,7 @@ public class DogServiceImpl implements DogService {
     private final UserService userService;
     private final DogMapper dogMapper;
 
-    @Override
-    public DogDTO save(DogDTO dogDto) {
 
-        Dog dog = dogMapper.toEntity(dogDto);
-
-        Dog savedDog = dogRepository.save(dog);
-        return dogMapper.toDTO(savedDog);
-    }
 
     @Override
     public DogDTO save(DogDTO dogDto, User user) {
@@ -48,10 +41,10 @@ public class DogServiceImpl implements DogService {
         user.addDog(dog);
         dog.setOwner(user);
 
-        Dog savedDog = dogRepository.save(dog);
+//        Dog savedDog = dogRepository.save(dog);
         userRepository.save(user);
 
-        DogDTO dogDTO =  dogMapper.toDTO(savedDog);
+        DogDTO dogDTO =  dogMapper.toDTO(dog);
         log.info("{}", dogDTO.getOwner());
         return dogDTO;
     }
@@ -82,7 +75,7 @@ public class DogServiceImpl implements DogService {
 
                     userService.save(user);
                     
-                    dogRepository.delete(foundDog);
+//                    dogRepository.delete(foundDog);
                     return dogMapper.toDTO(foundDog);
                 })
                 .orElseThrow(() -> new ResourceNotFoundException(resourceNotFoundExceptionMessage.formatted("Dog", id)));
