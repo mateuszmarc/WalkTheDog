@@ -7,15 +7,14 @@ import com.mateuszmarcyk.walkthedog.user.dto.UserDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -25,6 +24,11 @@ public class DogController {
     private final DogServiceImpl dogService;
     private final UserService userService;
 
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
 
     @GetMapping("/users/dogs")
     public String showAllDogsForUser(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -68,8 +72,8 @@ public class DogController {
 
     @PostMapping("/users/dogs/dogForm")
     private String processDogForm(@Valid @ModelAttribute("dog") DogDTO dogDTO,
-                                  @AuthenticationPrincipal UserDetails userDetails,
-                                  BindingResult bindingResult) {
+                                  BindingResult bindingResult,
+                                  @AuthenticationPrincipal UserDetails userDetails) {
 
         if (bindingResult.hasErrors()) {
 

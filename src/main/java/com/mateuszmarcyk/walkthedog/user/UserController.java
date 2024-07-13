@@ -30,7 +30,6 @@ private final UserService userService;
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-
     @GetMapping
     @ResponseBody
     public List<UserDTO> findAll() {

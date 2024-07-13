@@ -23,42 +23,41 @@ public class DogDTO {
 
     private Long id;
 
-//    @NotNull(message = "Imię jest wymagane")
-    @Size(min = 1, message = "Imię jest wymagane")
+    @NotNull(message = "Imię jest wymagane")
     private String name;
 
     private String breed;
 
-//    @NotNull(message = "Ta informacja jest wymagana")
-//    @Past(message = "Data urodzenia musi być z przeszłości")
+    @NotNull(message = "Ta informacja jest wymagana")
+    @Past(message = "Data urodzenia musi być z przeszłości")
     private LocalDate dateOfBirth;
 
-//    @NotNull(message = "Płeć jest wymagana")
+    @NotNull(message = "Płeć jest wymagana")
     private Gender gender;
 
-//    @NotNull(message = "Ta informacja jest wymagana")
+    @NotNull(message = "Ta informacja jest wymagana")
     private Boolean spayed;
 
-//    @NotNull(message = "Ta informacja jest wymagana")
-//    @Min(value = 1, message = "Wpisz poprawną wagę, większą niż 1kg")
-//    @Max(value = 80, message = "Wpisz poprawną wagę, mniejsza niż 80kg")
+    @NotNull(message = "Ta informacja jest wymagana")
+    @Min(value = 1, message = "Wpisz poprawną wagę, większą niż 1kg")
+    @Max(value = 80, message = "Wpisz poprawną wagę, mniejsza niż 80kg")
     private Double weight;
 
-//    @NotNull(message = "Ta informacja jest wymagana")
-//    @Min(value = 15, message = "Wpisz poprawną wagę, większą niż 5cm")
+    @NotNull(message = "Ta informacja jest wymagana")
+    @Min(value = 15, message = "Wpisz poprawną wysokość, większą niż 15cm")
     private Double height;
 
     private String preferredActivities;
 
-//    @NotNull(message = "Ta informacja jest wymagana")
+    @NotNull(message = "Ta informacja jest wymagana")
     private ActivityLevel activityLevel;
 
     private String generalBehaviour;
 
-//    @NotNull(message = "Ta informacja jest wymagana")
+    @NotNull(message = "Ta informacja jest wymagana")
     private Integer trainingLevel;
 
-//    @NotNull(message = "Ta informacja jest wymagana")
+    @NotNull(message = "Ta informacja jest wymagana")
     private Integer socializationLevel;
 
 
