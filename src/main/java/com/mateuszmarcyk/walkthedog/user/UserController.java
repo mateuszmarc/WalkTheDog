@@ -1,6 +1,7 @@
 package com.mateuszmarcyk.walkthedog.user;
 
 import com.mateuszmarcyk.walkthedog.user.dto.UserDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -82,5 +83,35 @@ private final UserService userService;
         model.addAttribute("user", userDTO);
 
         return "user-friends";
+    }
+
+    @PostMapping("/profile/editPassword")
+    private String changePassword(@AuthenticationPrincipal UserDetails userDetails, HttpServletRequest request, Model model) {
+
+        User user = userService.findUserByEmail(userDetails.getUsername());
+
+        String plainPassword = request.getParameter("password");
+        String plainPasswordRepeat = request.getParameter("passwordRepeat");
+
+        String info = "Niepowodzenie. Hasła muszą być identyczne";
+
+
+        if (plainPassword.equals(plainPasswordRepeat)) {
+          UserDTO userDTO = userService.updatePassword(user, plainPassword);
+
+          model.addAttribute("user", userDTO);
+
+             info = "Sukces. Hasło zostało zmienione";
+
+        }
+
+        UserDTO userDTO = userService.findByEmail(userDetails.getUsername());
+
+
+        model.addAttribute("user", userDTO);
+
+
+        model.addAttribute("info", info);
+        return "user-edit-form";
     }
 }

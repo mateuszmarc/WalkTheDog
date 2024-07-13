@@ -34,4 +34,6 @@ public interface UserService {
     String validateToken(String token);
 
     UserDTO save(User user);
+
+    UserDTO updatePassword(User user, String password);
 }

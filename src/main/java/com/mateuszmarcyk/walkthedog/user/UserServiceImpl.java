@@ -209,5 +209,16 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public UserDTO updatePassword(User user, String password) {
+
+        String encodedPassword = passwordEncoder.encode(password);
+        user.setPassword(encodedPassword);
+
+        userRepository.save(user);
+
+        return userMapper.toDTO(user);
+    }
+
 
 }
