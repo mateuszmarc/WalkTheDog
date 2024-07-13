@@ -29,40 +29,42 @@ public class Dog {
     private Long id;
 
     @NotNull(message = "Imię jest wymagane")
-    @Size(min = 1, message = "Imię jest wymagane")
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "breed")
     private String breed;
 
+    @NotNull(message = "Ta informacja jest wymagana")
     @Past(message = "Data urodzenia musi być z przeszłości")
-    @Column(name = "date_of_birth")
+    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dateOfBirth;
 
     @NotNull(message = "Płeć jest wymagana")
-    @Column(name = "gender")
+    @Column(name = "gender", nullable = false)
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
     @NotNull(message = "Ta informacja jest wymagana")
-    @Column(name = "spayed")
+    @Column(name = "spayed", nullable = false)
     private Boolean spayed;
 
+    @NotNull(message = "Ta informacja jest wymagana")
     @Min(value = 1, message = "Wpisz poprawną wagę, większą niż 1kg")
     @Max(value = 80, message = "Wpisz poprawną wagę, mniejsza niż 80kg")
-    @Column(name = "weight")
+    @Column(name = "weight", nullable = false)
     private double weight;
 
-    @Min(value = 5, message = "Wpisz poprawną wagę, większą niż 5cm")
-    @Column(name = "height")
+    @NotNull(message = "Ta informacja jest wymagana")
+    @Min(value = 15, message = "Wpisz poprawną wysokość, większą niż 15cm")
+    @Column(name = "height", nullable = false)
     private double height;
 
     @Column(name = "preferred_activities")
     private String preferredActivities;
 
     @NotNull(message = "Ta informacja jest wymagana")
-    @Column(name = "activity_level")
+    @Column(name = "activity_level", nullable = false)
     @Enumerated(EnumType.STRING)
     private ActivityLevel activityLevel;
 
@@ -70,11 +72,11 @@ public class Dog {
     private String generalBehaviour;
 
     @NotNull(message = "Ta informacja jest wymagana")
-    @Column(name = "training_level")
+    @Column(name = "training_level", nullable = false)
     private int trainingLevel;
 
     @NotNull(message = "Ta informacja jest wymagana")
-    @Column(name = "socialization_level")
+    @Column(name = "socialization_level", nullable = false)
     private int socializationLevel;
 
     @Column(name = "behavioral_issues")
@@ -93,13 +95,11 @@ public class Dog {
     @OneToMany(cascade = CascadeType.ALL)
     private List<DogPhoto> photos;
 
-    @ManyToOne(cascade = {CascadeType.DETACH, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = {
+            CascadeType.MERGE,
+            CascadeType.DETACH,
+            CascadeType.REFRESH
+    })
     @JoinColumn(name = "owner_id")
     private User owner;
-
-
-    public void setOwner(User user) {
-        this.owner = user;
-        owner.addDog(this);
-    }
 }

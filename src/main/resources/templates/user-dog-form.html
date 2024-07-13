@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.tymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <th:block th:replace="~{commonviewparts/metadata}"></th:block>
   <title>My Profile - Dodaj Psa</title>
@@ -21,160 +21,99 @@
 
   <!-- Dog Form -->
   <div class="dog-form">
-    <form id="dogForm" th:action="@{/users/dogs/addDog}" th:method="POST" th:object="${dog}">
+    <form id="dogForm" th:action="@{/users/dogs/dogForm}" th:method="POST" th:object="${dog}">
       <div class="form-group">
         <label for="dogName">Imię</label>
-        <input type="text" class="form-control" id="dogName" th:field="${dog.name}">
-
-        <span th:if="${#fields.hasErrors('name')}"
-              th:errors="${dog.name}"
-              class="alert alert-danger">
-        </span>
-
+        <input type="text" class="form-control" id="dogName" th:field="*{name}">
+        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="alert alert-danger"></div>
       </div>
       <div class="form-group">
         <label for="dogBreed">Rasa</label>
-        <input type="text" class="form-control" id="dogBreed" th:field="${dog.breed}">
+        <input type="text" class="form-control" id="dogBreed" th:field="*{breed}">
       </div>
-
       <div class="form-group">
         <label for="dogDob">Data urodzenia</label>
-        <input type="date" class="form-control" id="dogDob" th:field="${dog.dateOfBirth}">
-
-        <span th:if="${#fields.hasErrors('dateOfBirth')}"
-              th:errors="${dog.dateOfBirth}"
-              class="alert alert-danger">
-        </span>
+        <input type="date" class="form-control" id="dogDob" th:field="*{dateOfBirth}">
+        <div th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}" class="alert alert-danger"></div>
       </div>
-
       <div class="form-group">
         <label for="dogGender">Płeć</label>
-        <select class="form-control" id="dogGender" th:field="${dog.gender}">
-          <option value="">Wybierz preć</option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
+        <select class="form-control" id="dogGender" th:field="*{gender}">
+          <option value="">Wybierz płeć</option>
+          <option value="MALE">Male</option>
+          <option value="FEMALE">Female</option>
         </select>
-
-        <span th:if="${#fields.hasErrors('gender')}"
-              th:errors="${dog.gender}"
-              class="alert alert-danger">
-
-        </span>
+        <div th:if="${#fields.hasErrors('gender')}" th:errors="*{gender}" class="alert alert-danger"></div>
       </div>
-
       <div class="form-group">
         <label for="dogSpayed">Sterylizowany</label>
-        <select class="form-control" id="dogSpayed" th:field="${dog.spayed}">
+        <select class="form-control" id="dogSpayed" th:field="*{spayed}">
           <option value="">Wybierz</option>
-          <option value="yes">Tak</option>
-          <option value="no">Nie</option>
+          <option value="true">Tak</option>
+          <option value="false">Nie</option>
         </select>
-
-        <span th:if="${#fields.hasErrors('spayed')}"
-              th:errors="${dog.spayed}"
-              class="alert alert-danger">
-        </span>
+        <div th:if="${#fields.hasErrors('spayed')}" th:errors="*{spayed}" class="alert alert-danger"></div>
       </div>
-
       <div class="form-group">
         <label for="dogWeight">Waga (kg)</label>
-        <input type="number" class="form-control" id="dogWeight" th:field="${dog.weight}">
-
-        <span th:if="${#fields.hasErrors('weight')}"
-              th:errors="${dog.weight}"
-              class="alert alert-danger">
-        </span>
+        <input type="number" class="form-control" id="dogWeight" th:field="*{weight}">
+        <div th:if="${#fields.hasErrors('weight')}" th:errors="*{weight}" class="alert alert-danger"></div>
       </div>
-
       <div class="form-group">
         <label for="dogHeight">Wysokość (cm)</label>
-        <input type="number" class="form-control" id="dogHeight" th:field="${dog.height}">
-        <span th:if="${#fields.hasErrors('height')}"
-              th:errors="${dog.height}"
-              class="alert alert-danger">
-        </span>
+        <input type="number" class="form-control" id="dogHeight" th:field="*{height}">
+        <div th:if="${#fields.hasErrors('height')}" th:errors="*{height}" class="alert alert-danger"></div>
       </div>
-
-
       <div class="form-group">
         <label for="dogActivities">Preferowana aktywność</label>
-        <input type="text" class="form-control" id="dogActivities" th:field="${dog.preferredActivities}">
+        <input type="text" class="form-control" id="dogActivities" th:field="*{preferredActivities}">
       </div>
-
       <div class="form-group">
         <label for="dogActivityLevel">Poziom aktywności</label>
-        <select class="form-control" id="dogActivityLevel" th:field="${dog.activityLevel}">
+        <select class="form-control" id="dogActivityLevel" th:field="*{activityLevel}">
           <option value="">Wybierz poziom aktywności</option>
-          <option value="low">Low</option>
-          <option value="medium">Medium</option>
-          <option value="high">High</option>
+          <option value="LOW">Low</option>
+          <option value="MEDIUM">Medium</option>
+          <option value="HIGH">High</option>
         </select>
-
-        <span th:if="${#fields.hasErrors('activityLevel')}"
-              th:errors="${dog.activityLevel}"
-              class="alert alert-danger">
-        </span>
+        <div th:if="${#fields.hasErrors('activityLevel')}" th:errors="*{activityLevel}" class="alert alert-danger"></div>
       </div>
-
       <div class="form-group">
         <label for="dogBehaviour">Zachowanie</label>
-        <input type="text" class="form-control" id="dogBehaviour" th:field="${dog.generalBehaviour}">
+        <input type="text" class="form-control" id="dogBehaviour" th:field="*{generalBehaviour}">
       </div>
-
       <div class="form-group">
         <label for="dogSocialization">Poziom socjalizacji</label>
-        <input type="range" min="0" max="10" class="form-control" id="dogSocialization" th:field="${dog.socializationLevel}">
-        <span th:if="${#fields.hasErrors('socializationLevel')}"
-              th:errors="${dog.socializationLevel}"
-              class="alert alert-danger">
-        </span>
+        <input type="range" min="0" max="10" class="form-control" id="dogSocialization" th:field="*{socializationLevel}">
+        <div th:if="${#fields.hasErrors('socializationLevel')}" th:errors="*{socializationLevel}" class="alert alert-danger"></div>
       </div>
-
       <div class="form-group">
         <label for="dogTraining">Poziom wytrenowania</label>
-        <input type="range" min="0" max="10" class="form-control" id="dogTraining" th:field="${dog.trainingLevel}">
-        <span th:if="${#fields.hasErrors('trainingLevel')}"
-              th:errors="${dog.trainingLevel}"
-              class="alert alert-danger">
-        </span>
+        <input type="range" min="0" max="10" class="form-control" id="dogTraining" th:field="*{trainingLevel}">
+        <div th:if="${#fields.hasErrors('trainingLevel')}" th:errors="*{trainingLevel}" class="alert alert-danger"></div>
       </div>
-
       <div class="form-group">
         <label for="dogIssues">Problemy behawioralne</label>
-        <input type="text" class="form-control" id="dogIssues" th:field="${dog.behavioralIssues}">
+        <input type="text" class="form-control" id="dogIssues" th:field="*{behavioralIssues}">
       </div>
-
       <div class="form-group">
         <label for="dogTriggers">Triggery</label>
-        <input type="text" class="form-control" id="dogTriggers" th:field="${dog.triggers}" >
+        <input type="text" class="form-control" id="dogTriggers" th:field="*{triggers}">
       </div>
-
       <div class="form-group">
         <label for="dogMicrochip">Numer microchipu</label>
-        <input type="text" class="form-control" id="dogMicrochip" th:field="${dog.microChipNumber}">
+        <input type="text" class="form-control" id="dogMicrochip" th:field="*{microChipNumber}">
       </div>
 
-      <div class="form-group">
-        <label for="dogPhotos">Zdjęcie profilowe</label>
-        <input type="file" class="form-control" id="dogPhotos" th:field="${dog.profilePhoto}">
-      </div>
-
-      <div class="form-group">
-        <label for="profilePhoto">Wiecej zdjęć</label>
-        <input type="file" class="form-control" id="profilePhoto" multiple th:field="${dog.photos}">
-      </div>
-
+      <input type="hidden" th:field="${dog.id}">
       <div class="btn-container">
         <button type="submit" class="btn btn-success" id="saveDogBtn">Zapisz</button>
       </div>
-
     </form>
   </div>
-
 </div>
 <!-- Footer -->
 <div th:insert="~{commonviewparts/footer :: footer}"></div>
-
 <!-- Bootstrap JS and dependencies (jQuery, Popper.js) -->
 <th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
 </body>

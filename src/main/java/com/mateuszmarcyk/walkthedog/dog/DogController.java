@@ -1,15 +1,19 @@
 package com.mateuszmarcyk.walkthedog.dog;
 
+import com.mateuszmarcyk.walkthedog.dog.dto.DogDTO;
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.user.UserService;
+import com.mateuszmarcyk.walkthedog.user.dto.UserDTO;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -20,66 +24,79 @@ public class DogController {
     private final DogServiceImpl dogService;
     private final UserService userService;
 
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
 
     @GetMapping("/users/dogs")
-    public String findAllDogsForUser(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+    public String showAllDogsForUser(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
-        User user = userService.findUserByEmailJoinFetchDogs(userDetails.getUsername());
-        log.info("{}", user.getDogs());
-        model.addAttribute("dogs", user.getDogs());
+        UserDTO userDTO = userService.findByEmailJoinFetchDogs(userDetails.getUsername());
+
+        log.info("{}", userDTO.getDogsDto());
+
+        model.addAttribute("dogs", userDTO.getDogsDto());
         return "user-dogs";
     }
 
     @GetMapping("/users/dogs/{id}")
     public String showDogDetails(@PathVariable Long id, Model model) {
-        Dog dog =  dogService.findById(id);
-        log.info("{}", dog);
-        model.addAttribute("dog", dog);
+        DogDTO dogDTO =  dogService.findById(id);
+        log.info("{}", dogDTO);
+        model.addAttribute("dog", dogDTO);
 
         return "user-dog-info";
     }
 
     @GetMapping("/users/dogs/addDog")
     public String showAddDogForm(Model model) {
-        model.addAttribute("dog", new Dog());
+        model.addAttribute("dog", new DogDTO());
 
         return "user-dog-form";
     }
 
-    @PostMapping("/users/dogs/addDog")
-    private String processDogForm(@Valid @ModelAttribute("dog") Dog dog,
-                                  @AuthenticationPrincipal UserDetails userDetails,
-                                  BindingResult bindingResult) {
+    @GetMapping("/users/dogs/edit/{dogId}")
+    private String showEditDogForm(@PathVariable Long dogId, Model model) {
+
+        DogDTO dogDTO = dogService.findById(dogId);
+
+        log.info("{}", dogDTO);
+
+        model.addAttribute("dog", dogDTO);
+
+        return "user-dog-form";
+
+    }
+
+    @PostMapping("/users/dogs/dogForm")
+    private String processDogForm(@Valid @ModelAttribute("dog") DogDTO dogDTO,
+                                  BindingResult bindingResult,
+                                  @AuthenticationPrincipal UserDetails userDetails) {
 
         if (bindingResult.hasErrors()) {
-            return "index";
+
+            return "user-dog-form";
+
         } else {
             String email = userDetails.getUsername();
-            User dogOwner = userService.findByEmail(email);
-            dog.setOwner(dogOwner);
-            dogService.add(dog);
+            User dogOwner = userService.findUserByEmail(email);
+
+             DogDTO saved = dogService.save(dogDTO, dogOwner);
+             log.info("{}",saved);
             return "redirect:/users/dogs";
         }
     }
 
 
-    @GetMapping("/editDog/{dogId}")
-    private String showEditDogForm(@PathVariable Long dogId, Model model) {
 
-        Dog dog = dogService.findById(dogId);
+    @GetMapping("/users/dogs/delete/{dogId}")
+    private String deleteDogById(@AuthenticationPrincipal UserDetails userDetails, @PathVariable Long dogId) {
 
-        model.addAttribute("dog", dog);
+        User user = userService.findUserByEmail(userDetails.getUsername());
 
-        return "user-dog-form";
-
-    }
-
-    @DeleteMapping("/deleteDog/{dogId}")
-    private String deleteDogById( @PathVariable Long dogId) {
-
-//        User user = userService.findUserByEmail(userDetails.getUsername());
-
-        dogService.delete(dogId);
+        dogService.deleteById(dogId, user);
         return "redirect:/users/dogs";
     }
 }
