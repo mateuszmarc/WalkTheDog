@@ -58,6 +58,8 @@ public class DogController {
 
         DogDTO dogDTO = dogService.findById(dogId);
 
+        log.info("{}", dogDTO);
+
         model.addAttribute("dog", dogDTO);
 
         return "user-dog-form";
@@ -77,7 +79,8 @@ public class DogController {
             String email = userDetails.getUsername();
             User dogOwner = userService.findUserByEmail(email);
 
-            dogService.save(dogDTO, dogOwner);
+             DogDTO saved = dogService.save(dogDTO, dogOwner);
+             log.info("{}",saved);
             return "redirect:/users/dogs";
         }
     }
