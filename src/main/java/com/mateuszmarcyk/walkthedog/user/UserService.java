@@ -1,32 +1,39 @@
 package com.mateuszmarcyk.walkthedog.user;
 
 import com.mateuszmarcyk.walkthedog.registration.RegistrationRequest;
+import com.mateuszmarcyk.walkthedog.user.dto.UserDTO;
 
 import java.util.List;
 
 
 public interface UserService {
 
-    User findById(Long id);
+    List<UserDTO> findAll();
 
-    User findByIdJoinFetchDogs(Long id);
+    UserDTO findById(Long id);
 
-    User findByEmailJoinFetchDogs(String email);
+    User findUserById(Long id);
 
-    User findByEmailFetchFriends(String email);
+    UserDTO findByEmail(String email);
 
-    User findByEmailFetchConversations(String email);
+    User findUserByEmail(String email);
 
+    UserDTO findByIdJoinFetchDogs(Long id);
 
-    List<User> getAll();
+    UserDTO findByEmailJoinFetchDogs(String email);
+
+    UserDTO findByEmailFetchFriends(String email);
+
+    UserDTO findByEmailFetchConversations(String email);
+
 
     User register(RegistrationRequest request);
-
-    User findByEmail(String email);
 
     void saveVerificationToken(User user, String verificationToken);
 
     String validateToken(String token);
 
-    User save(User user);
+    UserDTO save(User user, UserDTO userDTO);
+
+    UserDTO changePassword(User user, String password);
 }

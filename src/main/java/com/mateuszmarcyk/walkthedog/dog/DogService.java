@@ -1,15 +1,19 @@
 package com.mateuszmarcyk.walkthedog.dog;
 
+import com.mateuszmarcyk.walkthedog.dog.dto.DogDTO;
+import com.mateuszmarcyk.walkthedog.user.User;
+
 import java.util.List;
 
 public interface DogService {
 
-    Dog save(Dog dog);
 
-    Dog findById(Long id);
+    DogDTO save(DogDTO dogDTO, User user);
 
-    List<Dog> getAll();
+    DogDTO findById(Long id);
 
-    Dog deleteById(Long id);
+    List<DogDTO> getAll();
+
+    DogDTO deleteById(Long id, User user);
 
 }

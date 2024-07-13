@@ -1,7 +1,6 @@
 package com.mateuszmarcyk.walkthedog.messagenotification;
 
 import com.mateuszmarcyk.walkthedog.message.Message;
-import com.mateuszmarcyk.walkthedog.notification.Notification;
 import com.mateuszmarcyk.walkthedog.notification.NotificationStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
 import jakarta.persistence.*;
@@ -14,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "notification")
-public class MessageNotification implements Notification {
+public class MessageNotification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

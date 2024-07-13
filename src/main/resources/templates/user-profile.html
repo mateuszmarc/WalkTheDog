@@ -34,7 +34,7 @@
         <section class="dogs-section container py-5">
             <h4 class="text-center mb-4">Moje Psy</h4>
             <div class="row">
-                <div class="dog-box" th:each="dog : ${user.dogs}">
+                <div class="dog-box" th:each="dog : ${user.dogsDto}">
                     <img alt="Dog picture" th:src="${dog.profilePhoto}">
                     <h5 th:text="${dog.name}"></h5>
                     <a th:href="@{/users/dogs/{id}(id=${dog.id})}">
@@ -43,8 +43,8 @@
                     <a th:href="@{/users/dogs/edit/{id}(id=${dog.id})}">
                         <button class="btn btn-primary btn-sm">Edytuj</button>
                     </a>
-                    <a th:href="@{/users/dogs/delete/{id}(id=${dog.id})}">
-                        <button class="btn btn-danger btn-sm" onclick="confirmAction()">Usuń</button>
+                    <a th:href="@{/users/dogs/delete/{id}(id=${dog.id})}" class="delete-link">
+                        <button class="btn btn-danger btn-sm">Usuń</button>
                     </a>
                 </div>
             </div>
@@ -56,5 +56,22 @@
 <div th:insert="~{commonviewparts/footer :: footer}"></div>
 
 <th:block th:replace="~{commonviewparts/common-scripts}"></th:block>
+
+<script type="text/javascript">
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.delete-link').forEach(function(element) {
+            element.addEventListener('click', function(event) {
+                const confirmed = confirm("Czy jesteś tego pewien?");
+                if (!confirmed) {
+                    event.preventDefault(); // Prevent the default link behavior
+                    alert("Akcja przerwana.");
+                } else {
+                    alert("Usunięto pomyślnie!");
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

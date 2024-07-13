@@ -1,11 +1,17 @@
 package com.mateuszmarcyk.walkthedog.user;
 
+import com.mateuszmarcyk.walkthedog.user.dto.UserDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,14 +24,27 @@ public class UserController {
 
 private final UserService userService;
 
+    @InitBinder
+    public void initBinder(WebDataBinder dataBinder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+    }
+
+
     @GetMapping
     @ResponseBody
-    public List<User> findAll() {
-        return userService.getAll();
+    public List<UserDTO> findAll() {
+        return userService.findAll();
     }
 
     @GetMapping("/dashboard")
-    public String displayDashboard(@AuthenticationPrincipal UserDetails userDetails) {
+    public String displayDashboard(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+
+        String email = userDetails.getUsername();
+
+        UserDTO userDTO = userService.findByEmail(email);
+
+        model.addAttribute("userDTO", userDTO);
 
         return "dashboard";
     }
@@ -35,9 +54,9 @@ private final UserService userService;
 
         String email = userDetails.getUsername();
 
-        User user = userService.findByEmailJoinFetchDogs(email);
+        UserDTO userDTO = userService.findByEmailJoinFetchDogs(email);
 
-        model.addAttribute("user", user);
+        model.addAttribute("user", userDTO);
 
         return "user-profile";
 
@@ -47,21 +66,34 @@ private final UserService userService;
     public String showUserEditForm(@AuthenticationPrincipal UserDetails userDetails, Model model) {
 
         String email = userDetails.getUsername();
-        User user = userService.findByEmail(email);
+        UserDTO userDTO = userService.findByEmail(email);
 
-        model.addAttribute("user", user);
+        model.addAttribute("userDTO", userDTO);
 
         return "user-edit-form";
     }
 
     @PostMapping("/profile/edit")
-    public String processForm(@ModelAttribute User user) {
+    public String processForm(@Valid @ModelAttribute UserDTO userDTO,
+                              BindingResult bindingResult,
+                              @AuthenticationPrincipal UserDetails userDetails) {
 
-        log.info("Updated user form: {}", user);
+        String email = userDetails.getUsername();
 
-        userService.save(user);
+        User loggedInUser = userService.findUserByEmail(email);
 
-        return "redirect:/users/dashboard";
+        if (bindingResult.hasErrors()) {
+
+            bindingResult.getAllErrors().forEach(error -> log.info("{}", error.toString()));
+
+            return "user-edit-form";
+        }
+
+        log.info("Updated user form: {}", userDTO);
+
+        userService.save(loggedInUser, userDTO);
+
+        return "redirect:/users/profile/edit";
     }
 
     @GetMapping("/friends")
@@ -69,11 +101,38 @@ private final UserService userService;
 
         String email = userDetails.getUsername();
 
-        User user = userService.findByEmailFetchFriends(email);
+        UserDTO userDTO = userService.findByEmailFetchFriends(email);
 
-        log.info(user.toString());
-        model.addAttribute("user", user);
+        log.info(userDTO.toString());
+        model.addAttribute("user", userDTO);
 
         return "user-friends";
+    }
+
+
+    @PostMapping("/profile/editPassword")
+    private String changePassword(@Valid @ModelAttribute UserDTO userDTO, BindingResult bindingResult, @AuthenticationPrincipal UserDetails userDetails, HttpServletRequest request, Model model) {
+
+        User user = userService.findUserByEmail(userDetails.getUsername());
+
+        String plainPassword = userDTO.getPassword();
+        String plainPasswordRepeat = request.getParameter("passwordRepeat");
+
+        String info = "Niepowodzenie. Hasła muszą być identyczne";
+
+
+        if (plainPassword.equals(plainPasswordRepeat)) {
+
+            if (!bindingResult.hasErrors()) {
+
+                userService.changePassword(user, plainPassword);
+
+                info = "Sukces. Hasło zostało zmienione";
+            }
+        }
+
+
+        model.addAttribute("info", info);
+        return "user-edit-form";
     }
 }

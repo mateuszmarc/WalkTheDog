@@ -1,7 +1,6 @@
 package com.mateuszmarcyk.walkthedog.friendrequestnotification;
 
 import com.mateuszmarcyk.walkthedog.friendrequest.FriendRequest;
-import com.mateuszmarcyk.walkthedog.notification.Notification;
 import com.mateuszmarcyk.walkthedog.notification.NotificationStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
 import jakarta.persistence.*;
@@ -16,7 +15,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "friend_request_notification")
-public class FriendRequestNotification implements Notification {
+public class FriendRequestNotification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

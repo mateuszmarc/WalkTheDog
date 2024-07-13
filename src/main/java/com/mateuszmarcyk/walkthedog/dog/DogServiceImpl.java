@@ -1,8 +1,11 @@
 package com.mateuszmarcyk.walkthedog.dog;
 
+import com.mateuszmarcyk.walkthedog.dog.dto.DogDTO;
+import com.mateuszmarcyk.walkthedog.dog.dto.DogMapper;
 import com.mateuszmarcyk.walkthedog.exception.ResourceNotFoundException;
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.user.UserRepository;
+import com.mateuszmarcyk.walkthedog.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,55 +19,65 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class DogServiceImpl implements DogService{
+public class DogServiceImpl implements DogService {
 
     @Value("${resourceNotFoundExceptionMessage}")
     private String resourceNotFoundExceptionMessage;
 
-    private final DogRepository dogRepository;
     private final UserRepository userRepository;
+    private final DogRepository dogRepository;
+    private final UserService userService;
+    private final DogMapper dogMapper;
+
+
 
     @Override
-    public Dog save(Dog dog) {
+    public DogDTO save(DogDTO dogDto, User user) {
+
+        log.info("{}", dogDto);
+        Dog dog = dogMapper.toEntity(dogDto);
+
         log.info(" New dog {}", dog);
 
-        dogRepository.save(dog);
+        user.addDog(dog);
+        dog.setOwner(user);
 
-        User user = dog.getOwner();
+//        Dog savedDog = dogRepository.save(dog);
+        userRepository.save(user);
 
-        if (user != null) {
-            List<Dog> ownerDogs = user.getDogs();
-            if (!ownerDogs.contains(dog)) {
-                ownerDogs.add(dog);
-                userRepository.save(user);
-            }
-        }
-        return dog;
+        DogDTO dogDTO =  dogMapper.toDTO(dog);
+        log.info("{}", dogDTO.getOwner());
+        return dogDTO;
     }
 
     @Override
-    public Dog findById(Long id) {
+    public DogDTO findById(Long id) {
         Optional<Dog> optionalDog = dogRepository.findById(id);
 
-        return optionalDog.orElseThrow(() -> new ResourceNotFoundException(resourceNotFoundExceptionMessage.formatted("Dog", id)));
+        return optionalDog.map(dogMapper::toDTO)
+                .orElseThrow(() -> new ResourceNotFoundException(resourceNotFoundExceptionMessage.formatted("Dog", id)));
     }
 
     @Override
-    public List<Dog> getAll() {
-        return List.of();
+    public List<DogDTO> getAll() {
+        List<Dog> dogs = dogRepository.findAll();
+
+        return dogs.stream().map(dogMapper::toDTO).toList();
     }
 
     @Override
-    public Dog deleteById(Long id) {
+    public DogDTO deleteById(Long id, User user) {
+        
         Optional<Dog> dog = dogRepository.findById(id);
 
         return dog.map(foundDog -> {
-                    User owner = foundDog.getOwner();
-                    foundDog.getOwner().removeDog(foundDog);
+                    user.removeDog(foundDog);
+                    foundDog.setOwner(null);
 
-                    userRepository.save(owner);
-                    dogRepository.delete(foundDog);
-                    return foundDog;
+                    userRepository.save(user);
+                    
+//                    dogRepository.delete(foundDog);
+                    return dogMapper.toDTO(foundDog);
                 })
                 .orElseThrow(() -> new ResourceNotFoundException(resourceNotFoundExceptionMessage.formatted("Dog", id)));
     }

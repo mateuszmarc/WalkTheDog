@@ -1,6 +1,5 @@
 package com.mateuszmarcyk.walkthedog.walkinvitationnotification;
 
-import com.mateuszmarcyk.walkthedog.notification.Notification;
 import com.mateuszmarcyk.walkthedog.notification.NotificationStatus;
 import com.mateuszmarcyk.walkthedog.user.User;
 import com.mateuszmarcyk.walkthedog.walkeventinvitation.WalkEventInvitation;
@@ -16,7 +15,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Entity
 @Table(name = "walk_event_invitation_notification")
-public class WalkEventInvitationNotification implements Notification {
+public class WalkEventInvitationNotification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
