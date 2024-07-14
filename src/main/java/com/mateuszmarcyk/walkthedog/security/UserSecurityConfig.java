@@ -40,12 +40,12 @@ public class UserSecurityConfig {
                 .formLogin(login -> login
                         .loginPage("/login")
                         .defaultSuccessUrl("/users/dashboard", true)
-                        .permitAll());
-//                .logout(logout -> logout
-//                        .logoutUrl("/logout")
-//                        .logoutSuccessUrl("/login")
-//                        .permitAll()
-//                )
+                        .permitAll())
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/main")
+                        .permitAll()
+                );
 //                .sessionManagement(session -> session
 //                        .invalidSessionUrl("/login")
 //                );

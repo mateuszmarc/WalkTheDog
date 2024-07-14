@@ -769,3 +769,28 @@ body {
 .profile-form .btn-container .btn {
     margin-left: 10px;
 }
+
+
+.navbar-nav .btn-logout {
+    background: none;
+    border: none;
+    padding: 0;
+    color: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.navbar-nav .btn-logout i {
+    margin-right: 5px;
+}
+
+.navbar-nav .btn-logout:hover {
+    background-color: #e6910c;
+    border-radius: 5px;
+}
+
